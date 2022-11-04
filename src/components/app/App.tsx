@@ -1,13 +1,19 @@
 import React from 'react';
 import AppHeader from '../app-header/AppHeader';
+import BurgerIngredients from '../burger-ingredients/BurgerIngredients';
+import BurgerConstructor from '../burger-constructor/BurgerConstructor';
 
-import './App.css';
+import data from '../../utils/data';
 
 function App() {
   return (
-    <div className="app">
+    <React.Fragment>
       <AppHeader />
-    </div>
+      <main className="app-main">
+        <BurgerIngredients ingredients={ data } />
+        <BurgerConstructor />
+      </main>
+    </React.Fragment>
   );
 }
 
