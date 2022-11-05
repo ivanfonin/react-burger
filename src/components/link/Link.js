@@ -2,7 +2,7 @@ import { BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer
 
 import styles from './Link.module.css';
 
-function NavLink(props) {
+function Link(props) {
 
   function getType() {
     return props.current ? 'primary' : 'secondary';
@@ -31,4 +31,4 @@ function NavLink(props) {
   );
 }
 
-export default NavLink;
+export default Link;
