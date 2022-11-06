@@ -1,4 +1,4 @@
-@import-normalize;
+@import "normalize";
 
 :root {
   --color-text-inactive: #8585ad;
