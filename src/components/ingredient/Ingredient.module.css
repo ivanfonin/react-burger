@@ -2,8 +2,3 @@
   text-align: center;
   position: relative;
 }
-
-.item__price {
-  display: flex;
-  justify-content: center;
-}

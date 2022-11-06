@@ -1,10 +1,42 @@
+import Price from '../price/Price';
+import { ConstructorElement, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 
+import styles from './BurgerConstructor.module.css';
+
 function BurgerConstructor({ ingredients }) {
+  const total = ingredients.reduce((prev, current, index, arr) => arr[index].price + prev, 0 );
+  const getType = (index) => {
+    if ( 0 === index ) {
+      return 'top';
+    } else if ( index == ingredients.length - 1 ) {
+      return 'bottom';
+    }
+  }
+
+  const createOrder = () => {
+    console.log('Оформляем заказ');
+  }
+
   return (
-    <section className="burger-constructor">
-      {/* { ingredients } */}
-    </section>
+    <>
+      <section className={ `${styles.section } custom-scroll pl-4 pr-4` } style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+        { ingredients.map((ingredient, index) => {
+          return <ConstructorElement
+            key={ ingredient._id }
+            type={ getType(index) }
+            isLocked={ 'bun' === ingredient.type ? 1 : 0 }
+            text={ ingredient.name }
+            price={ ingredient.price }
+            thumbnail={ ingredient.image }
+          />
+        })}
+      </section>
+      <div className={ `${styles.total} pl-4 pr-4` }>
+        <Price icon="primary" size="medium" value={ total } classes='pr-10' />
+        <Button htmlType='button' size="large" onClick={ createOrder }>Оформить заказ</Button>
+      </div>
+    </>
   )
 }
 
