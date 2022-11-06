@@ -20,3 +20,15 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.Price {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Price__medium svg {
+  width: 33px;
+  height: 33px;
+}
+

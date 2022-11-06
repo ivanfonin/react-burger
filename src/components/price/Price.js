@@ -1,7 +1,5 @@
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import styles from './Price.css';
-
 function Price({ icon, size, value, classes }) {
   return (
     <div className={ `Price Price__${size} ${classes}` }>

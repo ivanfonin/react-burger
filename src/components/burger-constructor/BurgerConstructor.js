@@ -8,7 +8,7 @@ function BurgerConstructor({ ingredients }) {
   const getType = (index) => {
     if ( 0 === index ) {
       return 'top';
-    } else if ( index == ingredients.length - 1 ) {
+    } else if ( index === ingredients.length - 1 ) {
       return 'bottom';
     }
   }
