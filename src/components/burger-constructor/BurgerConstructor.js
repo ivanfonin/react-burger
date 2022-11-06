@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import styles from './BurgerConstructor.module.css';
 
 function BurgerConstructor({ ingredients }) {
-  const total = ingredients.reduce((prev, current, index, arr) => arr[index].price + prev, 0 );
   const getType = (index) => {
     if ( 0 === index ) {
       return 'top';
@@ -20,7 +19,7 @@ function BurgerConstructor({ ingredients }) {
 
   return (
     <>
-      <section className={ `${styles.section } custom-scroll pl-4 pr-4` } style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+      <section className={ `${styles.section } pl-4 pr-4` } style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
         { ingredients.map((ingredient, index) => {
           return <ConstructorElement
             key={ ingredient._id }
@@ -33,7 +32,7 @@ function BurgerConstructor({ ingredients }) {
         })}
       </section>
       <div className={ `${styles.total} pl-4 pr-4` }>
-        <Price icon="primary" size="medium" value={ total } classes='pr-10' />
+        <Price icon="primary" size="medium" value={ ingredients.reduce((prev, current, index, arr) => arr[index].price + prev, 0 ) } classes='pr-10' />
         <Button htmlType='button' size="large" onClick={ createOrder }>Оформить заказ</Button>
       </div>
     </>

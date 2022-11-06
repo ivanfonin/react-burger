@@ -1,5 +1,17 @@
-.container {
+.section {
   max-height: 756px;
   overflow-y: scroll;
   overflow-x: hidden;
+}
+
+.section::-webkit-scrollbar {
+  width: 8px;
+}
+
+.section::-webkit-scrollbar-track {
+  background: var(--color-bg-muted);
+}
+
+.section::-webkit-scrollbar-thumb {
+  background-color: var(--color-text-inactive);
 }
