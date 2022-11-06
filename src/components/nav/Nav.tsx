@@ -2,12 +2,14 @@ import Link from '../link/Link';
 
 const links = [
   {
+    id: 1,
     href: '/',
     name: 'Конструктор',
     current: true,
     icon: 'burger'
   },
   {
+    id: 2,
     href: '/orders',
     name: 'Лента заказов',
     current: false,
@@ -18,7 +20,7 @@ const links = [
 function Nav() {
   return (
     <nav className="app-nav">
-      { links.map(link => <Link { ...link } />) }
+      { links.map((link, index) => <Link key={ index.toString() } { ...link } />) }
     </nav>
   );
 }
