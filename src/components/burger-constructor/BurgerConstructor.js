@@ -32,7 +32,7 @@ function BurgerConstructor({ ingredients }) {
         })}
       </section>
       <div className={ `${styles.total} pl-4 pr-4` }>
-        <Price icon="primary" size="medium" value={ ingredients.reduce((prev, current, index, arr) => arr[index].price + prev, 0 ) } classes='pr-10' />
+        <Price icon="primary" size="medium" value={ ingredients.reduce((prev, current) => current.price + prev, 0 ) } classes='pr-10' />
         <Button htmlType='button' size="large" onClick={ createOrder }>Оформить заказ</Button>
       </div>
     </>
