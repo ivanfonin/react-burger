@@ -1,5 +1,7 @@
 import Link from '../link/Link';
 
+import styles from './Profile.module.css';
+
 const link = {
   href: '/profile',
   name: 'Личный кабинет',
@@ -9,7 +11,9 @@ const link = {
 
 function Profile() {
   return (
-    <Link { ...link } />
+    <div className={ styles.profile }>
+      <Link { ...link } />
+    </div>
   );
 }
 

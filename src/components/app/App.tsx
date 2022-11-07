@@ -1,5 +1,4 @@
 import AppHeader from '../app-header/AppHeader';
-import Section from '../section/Section';
 import BurgerIngredients from '../burger-ingredients/BurgerIngredients';
 import BurgerConstructor from '../burger-constructor/BurgerConstructor';
 import { data as ingredients } from '../../utils/data';
@@ -11,12 +10,12 @@ function App() {
     <>
       <AppHeader />
       <main className={ `${styles.App} pt-10` }>
-        <Section>
+        <section className={ styles.App__section }>
           <BurgerIngredients ingredients={ ingredients } />
-        </Section>
-        <Section>
+        </section>
+        <section className={ styles.App__section }>
           <BurgerConstructor ingredients={ ingredients } />
-        </Section>
+        </section>
       </main>
     </>
   );

@@ -1,5 +1,7 @@
 import Link from '../link/Link';
 
+import styles from './Nav.module.css';
+
 const links = [
   {
     id: 1,
@@ -19,7 +21,7 @@ const links = [
 
 function Nav() {
   return (
-    <nav className="app-nav">
+    <nav className={ styles.nav }>
       { links.map((link, index) => <Link key={ index.toString() } { ...link } />) }
     </nav>
   );
