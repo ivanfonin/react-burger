@@ -19,7 +19,7 @@ function BurgerConstructor({ ingredients }) {
 
   return (
     <>
-      <section className={ `${styles.section } pl-4 pr-4` } style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+      <section className={ `${styles.section } pl-4 pr-4` }>
         { ingredients.map((ingredient, index) => {
           return <ConstructorElement
             key={ ingredient._id }
