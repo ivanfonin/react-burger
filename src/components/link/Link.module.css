@@ -1,0 +1,25 @@
+.Link {
+  align-items: center;
+  display: inline-flex;
+  text-decoration: none;
+  color: var(--color-text-inactive);
+  transition: color .25s ease-in-out;
+}
+
+.Link svg {
+  transition: fill .25s ease-in-out;
+}
+
+.Link:hover,
+.Link:focus {
+  color: var(--color-text-primary);
+}
+
+.Link:hover svg,
+.Link:focus svg {
+  fill: var(--color-text-primary);
+}
+
+.Link__active {
+  color: var(--color-text-primary);
+}
