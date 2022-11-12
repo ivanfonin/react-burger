@@ -39,10 +39,14 @@ function App() {
       <AppHeader />
       <main className={ `${styles.main} pt-10` }>
         <section className={ styles.section }>
-          { ingredients && <BurgerIngredients ingredients={ ingredients } showIngredient={ handleIngredientSelected } /> }
+          { ingredients && (
+            <BurgerIngredients ingredients={ ingredients } showIngredient={ handleIngredientSelected } />
+          ) }
         </section>
         <section className={ styles.section }>
-          { ingredients && <BurgerConstructor ingredients={ ingredients } createOrder={ handleOrderCreated } /> }
+          { ingredients && (
+            <BurgerConstructor ingredients={ ingredients } createOrder={ handleOrderCreated } />
+          ) }
         </section>
       </main>
       { ingredient && (
