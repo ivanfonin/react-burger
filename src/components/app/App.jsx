@@ -4,14 +4,25 @@ import BurgerConstructor from '../burger-constructor/BurgerConstructor';
 import Modal from '../modal/Modal';
 import IngredientDetails from '../ingredient-details/IngredientDetails';
 import OrderDetails from '../order-details/OrderDetails';
-import { data as ingredients } from '../../utils/data';
-import { useState } from 'react';
+import config from '../../utils/config';
+import { useState, useEffect } from 'react';
 
 import styles from './App.module.css';
 
 function App() {
+  const [ingredients, setIngredients] = useState(null);
   const [ingredient, setIngredient] = useState(null);
   const [order, setOrder] = useState(null);
+
+  useEffect(() => {
+    const getIngredientsData = async () => {
+      const res = await fetch(config.api.url);
+      const json = await res.json();
+      setIngredients(json.data);
+    }
+
+    getIngredientsData();
+  }, []);
 
   const handleCloseModal = () => {
     setIngredient(null);
@@ -31,10 +42,10 @@ function App() {
       <AppHeader />
       <main className={ `${styles.main} pt-10` }>
         <section className={ styles.section }>
-          <BurgerIngredients ingredients={ ingredients } showIngredient={ handleIngredientSelected } />
+          { ingredients && <BurgerIngredients ingredients={ ingredients } showIngredient={ handleIngredientSelected } /> }
         </section>
         <section className={ styles.section }>
-          <BurgerConstructor ingredients={ ingredients } createOrder={ handleOrderCreated } />
+          { ingredients && <BurgerConstructor ingredients={ ingredients } createOrder={ handleOrderCreated } /> }
         </section>
       </main>
       { ingredient && (
