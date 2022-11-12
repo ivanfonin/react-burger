@@ -1,4 +1,6 @@
+import { PropTypes } from 'prop-types';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
+import { ingredientPropTypes } from '../../utils/constants';
 import Price from '../price/Price';
 
 import styles from './Ingredient.module.css';
@@ -26,6 +28,11 @@ function Ingredient({ ingredient, showIngredient }) {
       </div>
     </>
   );
+}
+
+Ingredient.propTypes = {
+  ingredient: ingredientPropTypes,
+  showIngredient: PropTypes.func.isRequired
 }
 
 export default Ingredient;

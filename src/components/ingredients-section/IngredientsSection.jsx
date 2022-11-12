@@ -1,5 +1,7 @@
 import Ingredient from '../ingredient/Ingredient';
 import IngredientsSectionTitle from './ingredients-section-title/IngredientsSectionTitle';
+import { ingredientsPropTypes } from '../../utils/constants';
+import { PropTypes } from 'prop-types';
 
 import styles from './IngredientsSection.module.css';
 
@@ -18,6 +20,12 @@ function IngredientsSection({ type, ingredients, showIngredient }) {
       </ul>
     </section>
   );
+}
+
+IngredientsSection.propTypes = {
+  type: PropTypes.string.isRequired,
+  ingredients: ingredientsPropTypes,
+  showIngredient: PropTypes.func.isRequired
 }
 
 export default IngredientsSection;

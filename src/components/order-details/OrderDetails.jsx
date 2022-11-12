@@ -1,3 +1,4 @@
+import { PropTypes } from 'prop-types';
 import doneImagePath from '../../images/done.svg';
 
 import styles from './OrderDetails.module.css';
@@ -13,5 +14,9 @@ function OrderDetails({ _id }) {
     </div>
   );
 };
+
+OrderDetails.propTypes = {
+  _id: PropTypes.string.isRequired
+}
 
 export default OrderDetails;

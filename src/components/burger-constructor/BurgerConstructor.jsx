@@ -1,6 +1,7 @@
 import Price from '../price/Price';
 import { ConstructorElement, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { ingredientPropTypes } from '../../utils/constants';
+import { ingredientsPropTypes } from '../../utils/constants';
+import { PropTypes } from 'prop-types';
 
 import styles from './BurgerConstructor.module.css';
 
@@ -36,7 +37,8 @@ function BurgerConstructor({ ingredients, createOrder }) {
 }
 
 BurgerConstructor.propTypes = {
-  ingredients: ingredientPropTypes
+  ingredients: ingredientsPropTypes,
+  createOrder: PropTypes.func.isRequired
 }
 
 export default BurgerConstructor;

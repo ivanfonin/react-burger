@@ -1,3 +1,4 @@
+import { PropTypes } from 'prop-types';
 import { BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './Link.module.css';
@@ -29,6 +30,13 @@ function Link(props) {
       { icon } <span className='pl-2'>{ props.name }</span>
     </a>
   );
+}
+
+Link.propTypes = {
+  current: PropTypes.bool.isRequired,
+  icon: PropTypes.string.isRequired,
+  href: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired
 }
 
 export default Link;

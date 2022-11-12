@@ -1,7 +1,8 @@
 import Tabs from '../tabs/Tabs';
 import IngredientsSection from '../ingredients-section/IngredientsSection';
 import { groupBy } from '../../utils/helpers';
-import { ingredientPropTypes } from '../../utils/constants';
+import { ingredientsPropTypes } from '../../utils/constants';
+import { PropTypes } from 'prop-types';
 
 import styles from './BurgerIngredients.module.css';
 
@@ -23,7 +24,8 @@ function BurgerIngredients({ ingredients, showIngredient }) {
 }
 
 BurgerIngredients.propTypes = {
-  ingredients: ingredientPropTypes
+  ingredients: ingredientsPropTypes,
+  showIngredient: PropTypes.func.isRequired
 }
 
 export default BurgerIngredients;
