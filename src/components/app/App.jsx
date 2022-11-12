@@ -44,7 +44,7 @@ function App() {
       ) }
       { order && (
         <Modal onClose={ handleCloseModal }>
-          <OrderDetails { ...order.data } />
+          <OrderDetails { ...order } />
         </Modal>
       ) }
     </>
