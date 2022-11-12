@@ -1,3 +1,4 @@
+import { PropTypes } from 'prop-types';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 function Price({ icon, size, value, classes }) {
@@ -7,6 +8,13 @@ function Price({ icon, size, value, classes }) {
       <CurrencyIcon type={ icon } className='xxxlarge' />
     </div>
   )
+}
+
+Price.propTypes = {
+  icon: PropTypes.string.isRequired,
+  size: PropTypes.string.isRequired,
+  value: PropTypes.number.isRequired,
+  classes: PropTypes.string.isRequired
 }
 
 export default Price;
