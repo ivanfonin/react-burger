@@ -5,11 +5,11 @@ import { ingredientPropTypes } from '../../utils/constants';
 
 import styles from './BurgerIngredients.module.css';
 
-function BurgerIngredients({ ingredients }) {
+function BurgerIngredients({ ingredients, showIngredient }) {
   const groups = groupBy(ingredients, 'type');
   const ingredientsSections = [];
   for (let type in groups) {
-    ingredientsSections.push(<IngredientsSection key={ type } type={ type } ingredients={ groups[type] } />);
+    ingredientsSections.push(<IngredientsSection key={ type } type={ type } ingredients={ groups[type] } showIngredient={ showIngredient } />);
   }
   return (
     <>

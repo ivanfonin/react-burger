@@ -4,17 +4,13 @@ import { ingredientPropTypes } from '../../utils/constants';
 
 import styles from './BurgerConstructor.module.css';
 
-function BurgerConstructor({ ingredients }) {
+function BurgerConstructor({ ingredients, createOrder }) {
   const getType = (index) => {
     if ( 0 === index ) {
       return 'top';
     } else if ( index === ingredients.length - 1 ) {
       return 'bottom';
     }
-  }
-
-  const createOrder = () => {
-    console.log('Оформляем заказ');
   }
 
   return (
