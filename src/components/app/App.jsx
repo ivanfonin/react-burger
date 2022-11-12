@@ -10,20 +10,20 @@ import { useState } from 'react';
 import styles from './App.module.css';
 
 function App() {
-  const [ingredient, setIngredient] = useState({ selected: false, data: null });
-  const [order, setOrder] = useState({ created: false, data: null });
+  const [ingredient, setIngredient] = useState(null);
+  const [order, setOrder] = useState(null);
 
   const handleCloseModal = () => {
-    setIngredient({ selected: false, data: null });
-    setOrder({ created: false, data: null });
+    setIngredient(null);
+    setOrder(null);
   }
 
   const handleIngredientSelected = (ingredient) => {
-    setIngredient({ selected: true, data: ingredient });
+    setIngredient(ingredient);
   }
 
   const handleOrderCreated = () => {
-    setOrder({ created: true, data: { "_id": "034536" } });
+    setOrder({ "_id": "034536" });
   }
 
   return (
@@ -37,16 +37,16 @@ function App() {
           <BurgerConstructor ingredients={ ingredients } createOrder={ handleOrderCreated } />
         </section>
       </main>
-      { ingredient.selected && ingredient.data &&
+      { ingredient && (
         <Modal onClose={ handleCloseModal }>
-          <IngredientDetails { ...ingredient.data } />
+          <IngredientDetails { ...ingredient } />
         </Modal>
-      }
-      { order.created && order.data &&
+      ) }
+      { order && (
         <Modal onClose={ handleCloseModal }>
           <OrderDetails { ...order.data } />
         </Modal>
-      }
+      ) }
     </>
   );
 }
