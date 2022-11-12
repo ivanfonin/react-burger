@@ -1,6 +1,6 @@
 const config = {
   api: {
-    url: 'https://norma.nomoreparties.space/api/ingredients'
+    baseUrl: 'https://norma.nomoreparties.space/api'
   }
 }
 

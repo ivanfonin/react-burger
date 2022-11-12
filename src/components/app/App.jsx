@@ -5,23 +5,20 @@ import Modal from '../modal/Modal';
 import IngredientDetails from '../ingredient-details/IngredientDetails';
 import OrderDetails from '../order-details/OrderDetails';
 import config from '../../utils/config';
+import { Api } from '../api/Api';
 import { useState, useEffect } from 'react';
 
 import styles from './App.module.css';
 
 function App() {
+  const server = new Api(config.api);
   const [ingredients, setIngredients] = useState(null);
   const [ingredient, setIngredient] = useState(null);
   const [order, setOrder] = useState(null);
 
   useEffect(() => {
-    const getIngredientsData = async () => {
-      const res = await fetch(config.api.url);
-      const json = await res.json();
-      setIngredients(json.data);
-    }
-
-    getIngredientsData();
+    server.get('/ingredients')
+      .then((res) => setIngredients(res.data));
   }, []);
 
   const handleCloseModal = () => {
