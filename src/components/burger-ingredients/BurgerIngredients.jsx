@@ -8,17 +8,17 @@ import { createRef } from 'react';
 import styles from './BurgerIngredients.module.css';
 
 function BurgerIngredients({ ingredients, showIngredient }) {
-  const groups = groupBy(ingredients, 'type');
   const tabRefs = [];
-
-  const handleTabSelected = (type) => {
-    tabRefs[type].current.scrollIntoView({ behavior: 'smooth' });
-  }
-  
   const ingredientsSections = [];
+  const groups = groupBy(ingredients, 'type');
+  
   for (let type in groups) {
     tabRefs[type] = createRef();
     ingredientsSections.push(<IngredientsSection ref={ tabRefs[type] } key={ type } type={ type } ingredients={ groups[type] } showIngredient={ showIngredient } />);
+  }
+
+  const handleTabSelected = (type) => {
+    tabRefs[type].current.scrollIntoView({ behavior: 'smooth' });
   }
 
   return (

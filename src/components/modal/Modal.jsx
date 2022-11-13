@@ -8,15 +8,10 @@ import styles from './Modal.module.css';
 
 function Modal({ children, onClose }) {
   useEffect(() => {
-    window.addEventListener('keydown', handleKeyDown);
-    return () => document.removeEventListener('keydown', handleKeyDown);
+    const handleEscKeyDown = (e) => 'Escape' === e.key && onClose();
+    window.addEventListener('keydown', handleEscKeyDown);
+    return () => document.removeEventListener('keydown', handleEscKeyDown);
   }, []);
-
-  const handleKeyDown = (e) => {
-    if ('Escape' === e.key) {
-      onClose();
-    }
-  }
 
   const modalRoot = document.getElementById('app-modals');
 

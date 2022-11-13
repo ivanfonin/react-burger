@@ -35,10 +35,10 @@ function IngredientDetails(props) {
 
 IngredientDetails.propTypes = {
   name: PropTypes.string.isRequired,
-  proteins: PropTypes.string.isRequired,
-  fat: PropTypes.string.isRequired,
-  carbohydrates: PropTypes.string.isRequired,
-  calories: PropTypes.string.isRequired,
+  proteins: PropTypes.number.isRequired,
+  fat: PropTypes.number.isRequired,
+  carbohydrates: PropTypes.number.isRequired,
+  calories: PropTypes.number.isRequired,
   image_large: PropTypes.string.isRequired
 }
 
