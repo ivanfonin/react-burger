@@ -6,94 +6,71 @@ import IngredientDetails from '../ingredient-details/IngredientDetails';
 import OrderDetails from '../order-details/OrderDetails';
 import config from '../../utils/config';
 import { Api } from '../api/Api';
-import { useState, useEffect, useReducer, useMemo } from 'react';
-import { ConstructorContext } from '../../store/constructorContext';
+import { useEffect, useReducer, useMemo } from 'react';
+import { ConstructorContext, reducer as constructorReducer } from '../../context/constructor-context/constructorContext';
+import { IngredientsContext, reducer as ingredientsReducer } from '../../context/ingredients-context/ingredientsContext';
+import { ModalContext, reducer as modalReducer } from '../../context/modal-context/modalContext';
 
 import styles from './App.module.css';
 
 function App() {
-  const server = useMemo(() => {
-    return new Api(config.api);
-  }, []);
-  const [ingredients, setIngredients] = useState(null);
-  const [ingredient, setIngredient] = useState(null);
-  const [showOrder, setShowOrder] = useState(null);
-
-  function reducer(state, action) {
-    if ('set-ingredients' === action.type ) {
-      state.ingredients = action.payload.filter(ingredient => ingredient.type !== 'bun');
-      state.bun = action.payload.find(ingredient => ingredient.type === 'bun');
-      return state;
-    }
-
-    if ('set-order' === action.type) {
-      state.order = action.payload;
-      return state;
-    }
-
-    throw new Error(`Wrong type of action: ${action.type}`);
-  }
-
-  const constructorInitialState = {
-    bun: null,
-    ingredients: [],
-    order: null
-  }
-
-  const [constructorState, constructorDispatcher] = useReducer(reducer, constructorInitialState);
+  const server = useMemo(() => new Api(config.api), []);
+  const [ingredientsState, ingredientsDispatcher] = useReducer(ingredientsReducer, {ingredients: []});
+  const [constructorState, constructorDispatcher] = useReducer(constructorReducer, {bun: null, ingredients: []});
+  const [modalState, modalDispatcher] = useReducer(modalReducer, {order: null, ingredient: null});
 
   useEffect(() => {
     server.get('/ingredients')
       .then((res) => {
-        setIngredients(res.data);
-        constructorDispatcher({type: 'set-ingredients', payload: res.data});
+        ingredientsDispatcher({type: 'set', payload: res.data});
+        constructorDispatcher({type: 'set', payload: res.data});
       });
   }, [server]);
 
   const handleCloseModal = () => {
-    setIngredient(null);
-    setShowOrder(null);
+    modalDispatcher({type: 'reset'});
   }
 
   const handleIngredientSelected = (ingredient) => {
-    setIngredient(ingredient);
+    modalDispatcher({type: 'ingredient', payload: ingredient});
   }
 
-  const handleOrderCreated = (data) => {
-    server.post('/orders', data)
-      .then((res) => {
-        constructorDispatcher({ 'type': 'set-order', 'payload': res.order });
-      })
-      .then(setShowOrder(true));
+  const handleOrderCreated = (order) => {
+    server.post('/orders', order)
+      .then((res) => modalDispatcher({type: 'order', payload: res.order}));
   }
 
   return (
     <>
       <AppHeader />
       <main className={ `${styles.main} pt-10` }>
-        <ConstructorContext.Provider value={{ constructorState, constructorDispatcher }}>
-          <section className={ styles.section }>
-            { ingredients && (
-              <BurgerIngredients ingredients={ ingredients } showIngredient={ handleIngredientSelected } />
-            ) }
-          </section>
-          <section className={ styles.section }>
-            { constructorState.ingredients && (
+        <section className={ styles.section }>
+          { ingredientsState.ingredients && (
+            <IngredientsContext.Provider value={{ ingredientsState, ingredientsDispatcher }}>
+              <BurgerIngredients showIngredient={ handleIngredientSelected } />
+            </IngredientsContext.Provider>
+          ) }
+        </section>
+        <section className={ styles.section }>
+          { constructorState.ingredients && (
+            <ConstructorContext.Provider value={{ constructorState, constructorDispatcher }}>
               <BurgerConstructor createOrder={ handleOrderCreated } />
-            ) }
-          </section>
-        </ConstructorContext.Provider>
+            </ConstructorContext.Provider>
+          ) }
+        </section>
       </main>
-      { ingredient && (
-        <Modal onClose={ handleCloseModal }>
-          <IngredientDetails { ...ingredient } />
-        </Modal>
-      ) }
-      { showOrder && (
-        <Modal onClose={ handleCloseModal }>
-          <OrderDetails { ...constructorState.order } />
-        </Modal>
-      ) }
+      <ModalContext.Provider value={{ modalState, modalDispatcher }}>
+        { modalState.ingredient && (
+          <Modal onClose={ handleCloseModal }>
+            <IngredientDetails />
+          </Modal>
+        ) }
+        { modalState.order && (
+          <Modal onClose={ handleCloseModal }>
+            <OrderDetails />
+          </Modal>
+        ) }
+      </ModalContext.Provider>
     </>
   );
 }

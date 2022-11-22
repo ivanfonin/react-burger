@@ -2,7 +2,7 @@ import Price from '../price/Price';
 import { ConstructorElement, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { PropTypes } from 'prop-types';
 import { useContext } from 'react';
-import { ConstructorContext } from '../../store/constructorContext';
+import { ConstructorContext } from '../../context/constructor-context/constructorContext';
 import { useMemo } from 'react';
 
 import styles from './BurgerConstructor.module.css';
@@ -20,8 +20,8 @@ function BurgerConstructor({ createOrder }) {
     constructorState.bun
   ]);
 
-  const handleDelete = (e) => {
-    console.log('delete', e);
+  const handleDelete = () => {
+    console.log('delete');
   }
 
   const handleCheckout = () => {
@@ -46,6 +46,7 @@ function BurgerConstructor({ createOrder }) {
         ) }
         { constructorState.ingredients.map((ingredient, index) => {
           return <ConstructorElement
+            index={ index }
             key={ ingredient._id }
             text={ ingredient.name }
             price={ ingredient.price }

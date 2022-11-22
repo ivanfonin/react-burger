@@ -1,15 +1,17 @@
-import { PropTypes } from 'prop-types';
+import { useContext } from 'react';
+import { ModalContext } from '../../context/modal-context/modalContext';
 
 import styles from './IngredientDetails.module.css';
 
-function IngredientDetails(props) {
-  const { name, proteins, fat, carbohydrates, calories, image_large } = props;
+function IngredientDetails() {
+  const { modalState } = useContext(ModalContext);
+  const { name, proteins, fat, carbohydrates, calories, image_large } = modalState.ingredient;
   return (
     <>
       <div className={ `${styles.header} pl-10 pt-10 pr-10` }>
         <h3 className="text text_type_main-large pr-15">Детали ингредиента</h3>
       </div>
-      <img className={ styles.image } src={ image_large } alt={ name } />
+      <img className={ styles.image } src={ image_large } alt={ name } width="480" height="240" />
       <p className={ `${styles.name} text text_type_main-medium pl-25 pr-25 pt-4` }>{ name }</p>
       <ul className={ `${styles.details} pt-8 pl-25 pr-25 pb-15` }>
         <li className={ styles.detail }>
@@ -31,15 +33,6 @@ function IngredientDetails(props) {
       </ul>
     </>
   );
-}
-
-IngredientDetails.propTypes = {
-  name: PropTypes.string.isRequired,
-  proteins: PropTypes.number.isRequired,
-  fat: PropTypes.number.isRequired,
-  carbohydrates: PropTypes.number.isRequired,
-  calories: PropTypes.number.isRequired,
-  image_large: PropTypes.string.isRequired
 }
 
 export default IngredientDetails;
