@@ -6,32 +6,38 @@ import IngredientDetails from '../ingredient-details/IngredientDetails';
 import OrderDetails from '../order-details/OrderDetails';
 import config from '../../utils/config';
 import { Api } from '../api/Api';
-import { useState, useEffect } from 'react';
+import { useEffect, useReducer, useMemo } from 'react';
+import { ConstructorContext, reducer as constructorReducer } from '../../context/constructor-context/constructorContext';
+import { IngredientsContext, reducer as ingredientsReducer } from '../../context/ingredients-context/ingredientsContext';
+import { ModalContext, reducer as modalReducer } from '../../context/modal-context/modalContext';
 
 import styles from './App.module.css';
 
 function App() {
-  const server = new Api(config.api);
-  const [ingredients, setIngredients] = useState(null);
-  const [ingredient, setIngredient] = useState(null);
-  const [order, setOrder] = useState(null);
+  const server = useMemo(() => new Api(config.api), []);
+  const [ingredientsState, ingredientsDispatcher] = useReducer(ingredientsReducer, {ingredients: []});
+  const [constructorState, constructorDispatcher] = useReducer(constructorReducer, {bun: null, ingredients: []});
+  const [modalState, modalDispatcher] = useReducer(modalReducer, {order: null, ingredient: null});
 
   useEffect(() => {
     server.get('/ingredients')
-      .then((res) => setIngredients(res.data));
-  }, []);
+      .then((res) => {
+        ingredientsDispatcher({type: 'set', payload: res.data});
+        constructorDispatcher({type: 'set', payload: res.data});
+      });
+  }, [server]);
 
   const handleCloseModal = () => {
-    setIngredient(null);
-    setOrder(null);
+    modalDispatcher({type: 'reset'});
   }
 
   const handleIngredientSelected = (ingredient) => {
-    setIngredient(ingredient);
+    modalDispatcher({type: 'ingredient', payload: ingredient});
   }
 
-  const handleOrderCreated = () => {
-    setOrder({ "_id": "034536" });
+  const handleOrderCreated = (order) => {
+    server.post('/orders', order)
+      .then((res) => modalDispatcher({type: 'order', payload: res.order}));
   }
 
   return (
@@ -39,26 +45,32 @@ function App() {
       <AppHeader />
       <main className={ `${styles.main} pt-10` }>
         <section className={ styles.section }>
-          { ingredients && (
-            <BurgerIngredients ingredients={ ingredients } showIngredient={ handleIngredientSelected } />
+          { ingredientsState.ingredients && (
+            <IngredientsContext.Provider value={{ ingredientsState, ingredientsDispatcher }}>
+              <BurgerIngredients showIngredient={ handleIngredientSelected } />
+            </IngredientsContext.Provider>
           ) }
         </section>
         <section className={ styles.section }>
-          { ingredients && (
-            <BurgerConstructor ingredients={ ingredients } createOrder={ handleOrderCreated } />
+          { constructorState.ingredients && (
+            <ConstructorContext.Provider value={{ constructorState, constructorDispatcher }}>
+              <BurgerConstructor createOrder={ handleOrderCreated } />
+            </ConstructorContext.Provider>
           ) }
         </section>
       </main>
-      { ingredient && (
-        <Modal onClose={ handleCloseModal }>
-          <IngredientDetails { ...ingredient } />
-        </Modal>
-      ) }
-      { order && (
-        <Modal onClose={ handleCloseModal }>
-          <OrderDetails { ...order } />
-        </Modal>
-      ) }
+      <ModalContext.Provider value={{ modalState, modalDispatcher }}>
+        { modalState.ingredient && (
+          <Modal onClose={ handleCloseModal }>
+            <IngredientDetails />
+          </Modal>
+        ) }
+        { modalState.order && (
+          <Modal onClose={ handleCloseModal }>
+            <OrderDetails />
+          </Modal>
+        ) }
+      </ModalContext.Provider>
     </>
   );
 }

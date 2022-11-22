@@ -4,13 +4,16 @@ import { groupBy } from '../../utils/helpers';
 import { ingredientsPropTypes } from '../../utils/constants';
 import { PropTypes } from 'prop-types';
 import { createRef } from 'react';
+import { useContext } from 'react';
+import { IngredientsContext } from '../../context/ingredients-context/ingredientsContext';
 
 import styles from './BurgerIngredients.module.css';
 
-function BurgerIngredients({ ingredients, showIngredient }) {
+function BurgerIngredients({ showIngredient }) {
+  const { ingredientsState } = useContext(IngredientsContext);
   const tabRefs = [];
   const ingredientsSections = [];
-  const groups = groupBy(ingredients, 'type');
+  const groups = groupBy(ingredientsState.ingredients, 'type');
   
   for (let type in groups) {
     tabRefs[type] = createRef();
@@ -18,7 +21,7 @@ function BurgerIngredients({ ingredients, showIngredient }) {
   }
 
   const handleTabSelected = (type) => {
-    tabRefs[type].current.scrollIntoView({ behavior: 'smooth' });
+    tabRefs[type]?.current.scrollIntoView({ behavior: 'smooth' });
   }
 
   return (
