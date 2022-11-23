@@ -9,10 +9,5 @@ export const reducer = (state, action) => {
     return state;
   }
 
-  if ('set-order' === action.type) {
-    state.order = action.payload;
-    return state;
-  }
-
   throw new Error(`Wrong type of action: ${action.type}`);
 }
