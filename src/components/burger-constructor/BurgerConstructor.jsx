@@ -3,22 +3,11 @@ import { ConstructorElement, Button } from '@ya.praktikum/react-developer-burger
 import { PropTypes } from 'prop-types';
 import { useContext } from 'react';
 import { ConstructorContext } from '../../context/constructor-context/constructorContext';
-import { useMemo } from 'react';
 
 import styles from './BurgerConstructor.module.css';
 
 function BurgerConstructor({ createOrder }) {
   const { constructorState } = useContext(ConstructorContext);
-
-  const orderTotal = useMemo(() => {
-    let total = 0;
-    total += constructorState.ingredients?.reduce((prev, current) => current.price + prev, 0 );
-    total += constructorState.bun?.price * 2;
-    return (total >= 0) ? total : 0;
-  }, [
-    constructorState.ingredients,
-    constructorState.bun
-  ]);
 
   const handleDelete = () => {
     console.log('delete');
@@ -65,7 +54,7 @@ function BurgerConstructor({ createOrder }) {
         ) }
       </section>
       <div className={ `${styles.total} pl-4 pr-4` }>
-        <Price icon="primary" size="medium" value={ orderTotal } classes='pr-10' />
+        <Price icon="primary" size="medium" value={ constructorState.total } classes='pr-10' />
         <Button htmlType='button' size="large" onClick={ handleCheckout }>Оформить заказ</Button>
       </div>
     </>

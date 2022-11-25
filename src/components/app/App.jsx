@@ -16,7 +16,7 @@ import styles from './App.module.css';
 function App() {
   const server = useMemo(() => new Api(config.api), []);
   const [ingredientsState, ingredientsDispatcher] = useReducer(ingredientsReducer, {ingredients: []});
-  const [constructorState, constructorDispatcher] = useReducer(constructorReducer, {bun: null, ingredients: []});
+  const [constructorState, constructorDispatcher] = useReducer(constructorReducer, {bun: null, ingredients: [], total: 0});
   const [modalState, modalDispatcher] = useReducer(modalReducer, {order: null, ingredient: null});
 
   useEffect(() => {
@@ -46,20 +46,20 @@ function App() {
       <main className={ `${styles.main} pt-10` }>
         <section className={ styles.section }>
           { ingredientsState.ingredients && (
-            <IngredientsContext.Provider value={{ ingredientsState, ingredientsDispatcher }}>
+            <IngredientsContext.Provider value={{ ingredientsState }}>
               <BurgerIngredients showIngredient={ handleIngredientSelected } />
             </IngredientsContext.Provider>
           ) }
         </section>
         <section className={ styles.section }>
           { constructorState.ingredients && (
-            <ConstructorContext.Provider value={{ constructorState, constructorDispatcher }}>
+            <ConstructorContext.Provider value={{ constructorState }}>
               <BurgerConstructor createOrder={ handleOrderCreated } />
             </ConstructorContext.Provider>
           ) }
         </section>
       </main>
-      <ModalContext.Provider value={{ modalState, modalDispatcher }}>
+      <ModalContext.Provider value={{ modalState }}>
         { modalState.ingredient && (
           <Modal onClose={ handleCloseModal }>
             <IngredientDetails />
