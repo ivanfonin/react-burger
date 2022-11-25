@@ -8,13 +8,13 @@ import styles from './Ingredient.module.css';
 function Ingredient({ ingredient, showIngredient }) {
   const { name, image, price } = ingredient;
 
-  const f = () => {
+  const handleIngredientClick = () => {
     showIngredient(ingredient);
   }
 
   return (
     <>
-      <div className={ styles.item } onClick={ f }>
+      <div className={ styles.item } onClick={ handleIngredientClick }>
         <Counter count={1} size="default" />
         <figure>
           <img className={ styles.image } src={ image } alt={ name }/>
