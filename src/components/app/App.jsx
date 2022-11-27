@@ -13,10 +13,9 @@ import { SET_INGREDIENT, RESET_INGREDIENT } from '../../services/actions/ingredi
 import styles from './App.module.css';
 
 function App() {
-  const { ingredient, order, orderRequest } = useSelector(state => ({
+  const { ingredient, order } = useSelector(state => ({
     ingredient: state.ingredient,
-    order: state.checkout.order,
-    orderRequest: state.checkout.orderRequest
+    order: state.checkout.order
   }));
 
   const dispatch = useDispatch();
