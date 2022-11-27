@@ -1,19 +1,17 @@
 import Tabs from '../tabs/Tabs';
 import IngredientsSection from '../ingredients-section/IngredientsSection';
 import { groupBy } from '../../utils/helpers';
-import { ingredientsPropTypes } from '../../utils/constants';
 import { PropTypes } from 'prop-types';
 import { createRef } from 'react';
-import { useContext } from 'react';
-import { IngredientsContext } from '../../context/ingredients-context/ingredientsContext';
+import { useSelector } from 'react-redux';
 
 import styles from './BurgerIngredients.module.css';
 
 function BurgerIngredients({ showIngredient }) {
-  const { ingredientsState } = useContext(IngredientsContext);
+  const { items } = useSelector(state => state.ingredients);
   const tabRefs = [];
   const ingredientsSections = [];
-  const groups = groupBy(ingredientsState.ingredients, 'type');
+  const groups = groupBy(items, 'type');
   
   for (let type in groups) {
     tabRefs[type] = createRef();
@@ -36,7 +34,6 @@ function BurgerIngredients({ showIngredient }) {
 }
 
 BurgerIngredients.propTypes = {
-  ingredients: ingredientsPropTypes,
   showIngredient: PropTypes.func.isRequired
 }
 

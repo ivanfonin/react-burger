@@ -1,13 +1,12 @@
 import Price from '../price/Price';
 import { ConstructorElement, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { PropTypes } from 'prop-types';
-import { useContext } from 'react';
-import { ConstructorContext } from '../../context/constructor-context/constructorContext';
+import { useSelector } from 'react-redux';
 
 import styles from './BurgerConstructor.module.css';
 
 function BurgerConstructor({ createOrder }) {
-  const { constructorState } = useContext(ConstructorContext);
+  const { burger } = useSelector(state => state);
 
   const handleDelete = () => {
     console.log('delete');
@@ -15,25 +14,25 @@ function BurgerConstructor({ createOrder }) {
 
   const handleCheckout = () => {
     const ingredients = [];
-    ingredients.push(constructorState.bun._id)
-    constructorState.ingredients.forEach(ingredient => ingredients.push(ingredient._id))
-    ingredients.push(constructorState.bun._id)
+    ingredients.push(burger.bun._id)
+    burger.ingredients.forEach(ingredient => ingredients.push(ingredient._id))
+    ingredients.push(burger.bun._id)
     createOrder({ "ingredients": ingredients });
   }
 
   return (
     <>
       <section className={ `${styles.section } pl-4 pr-4` }>
-        { constructorState.bun && (
+        { burger.bun && (
           <ConstructorElement
             type='top'
             isLocked={ true }
-            text={ constructorState.bun.name }
-            price={ constructorState.bun.price }
-            thumbnail={ constructorState.bun.image }
+            text={ burger.bun.name }
+            price={ burger.bun.price }
+            thumbnail={ burger.bun.image }
           />
         ) }
-        { constructorState.ingredients.map((ingredient, index) => {
+        { burger.ingredients.map((ingredient, index) => {
           return <ConstructorElement
             index={ index }
             key={ ingredient._id }
@@ -43,18 +42,18 @@ function BurgerConstructor({ createOrder }) {
             handleClose={ handleDelete }
           />
         }) }
-        { constructorState.bun && (
+        { burger.bun && (
           <ConstructorElement
             type='bottom'
             isLocked={ true }
-            text={ constructorState.bun.name }
-            price={ constructorState.bun.price }
-            thumbnail={ constructorState.bun.image }
+            text={ burger.bun.name }
+            price={ burger.bun.price }
+            thumbnail={ burger.bun.image }
           />
         ) }
       </section>
       <div className={ `${styles.total} pl-4 pr-4` }>
-        <Price icon="primary" size="medium" value={ constructorState.total } classes='pr-10' />
+        <Price icon="primary" size="medium" value={ burger.total } classes='pr-10' />
         <Button htmlType='button' size="large" onClick={ handleCheckout }>Оформить заказ</Button>
       </div>
     </>
