@@ -4,12 +4,21 @@ import { Loader } from '../loader/loader';
 import { groupBy } from '../../utils/helpers';
 import { PropTypes } from 'prop-types';
 import { createRef } from 'react';
-import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getIngredients } from '../../services/actions/ingredients';
 
 import styles from './BurgerIngredients.module.css';
 
 function BurgerIngredients({ showIngredient }) {
   const { items, ingredientsRequest } = useSelector(state => state.ingredients);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getIngredients());
+  }, [dispatch]);
+
   const tabRefs = [];
   const ingredientsSections = [];
   const groups = groupBy(items, 'type');

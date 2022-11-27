@@ -4,9 +4,7 @@ import BurgerConstructor from '../burger-constructor/BurgerConstructor';
 import Modal from '../modal/Modal';
 import IngredientDetails from '../ingredient-details/IngredientDetails';
 import OrderDetails from '../order-details/OrderDetails';
-import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getIngredients } from '../../services/actions/ingredients';
 import { checkout, RESET_ORDER } from '../../services/actions/checkout';
 import { SET_INGREDIENT, RESET_INGREDIENT } from '../../services/actions/ingredient';
 
@@ -19,10 +17,6 @@ function App() {
   }));
 
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getIngredients());
-  }, [dispatch]);
 
   const handleCloseOrderModal = () => {
     dispatch({type: RESET_ORDER});
