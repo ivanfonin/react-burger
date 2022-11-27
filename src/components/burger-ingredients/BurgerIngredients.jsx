@@ -1,5 +1,6 @@
 import Tabs from '../tabs/Tabs';
 import IngredientsSection from '../ingredients-section/IngredientsSection';
+import { Loader } from '../loader/loader';
 import { groupBy } from '../../utils/helpers';
 import { PropTypes } from 'prop-types';
 import { createRef } from 'react';
@@ -8,7 +9,7 @@ import { useSelector } from 'react-redux';
 import styles from './BurgerIngredients.module.css';
 
 function BurgerIngredients({ showIngredient }) {
-  const { items } = useSelector(state => state.ingredients);
+  const { items, ingredientsRequest } = useSelector(state => state.ingredients);
   const tabRefs = [];
   const ingredientsSections = [];
   const groups = groupBy(items, 'type');
@@ -27,7 +28,11 @@ function BurgerIngredients({ showIngredient }) {
       <h1 className="text text_type_main-large">Соберите бургер</h1>
       <Tabs onTabClick={ handleTabSelected } />
       <div className={ `${styles.section}` }>
-        { ingredientsSections }
+        { ingredientsRequest ? (
+          <Loader size="large" />
+        ) : (
+          ingredientsSections
+        ) }
       </div>
     </>
   );

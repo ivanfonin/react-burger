@@ -1,4 +1,5 @@
 import Price from '../price/Price';
+import { Loader } from '../loader/loader';
 import { ConstructorElement, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { PropTypes } from 'prop-types';
 import { useSelector } from 'react-redux';
@@ -6,7 +7,10 @@ import { useSelector } from 'react-redux';
 import styles from './BurgerConstructor.module.css';
 
 function BurgerConstructor({ createOrder }) {
-  const { burger } = useSelector(state => state);
+  const { burger, orderRequest } = useSelector(state => ({
+    burger: state.burger,
+    orderRequest: state.checkout.orderRequest
+  }));
 
   const handleDelete = () => {
     console.log('delete');
@@ -53,8 +57,11 @@ function BurgerConstructor({ createOrder }) {
         ) }
       </section>
       <div className={ `${styles.total} pl-4 pr-4` }>
+        { orderRequest && ( <Loader size="medium" /> ) }
         <Price icon="primary" size="medium" value={ burger.total } classes='pr-10' />
-        <Button htmlType='button' size="large" onClick={ handleCheckout }>Оформить заказ</Button>
+        <Button htmlType='button' size="large" onClick={ handleCheckout }>
+            Оформить заказ
+        </Button>
       </div>
     </>
   )
