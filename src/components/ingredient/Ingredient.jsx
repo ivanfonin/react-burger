@@ -1,15 +1,18 @@
-import { PropTypes } from 'prop-types';
+import Price from '../price/Price';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ingredientPropTypes } from '../../utils/constants';
-import Price from '../price/Price';
+import { useDispatch } from 'react-redux';
+import { SET_INGREDIENT } from '../../services/actions/ingredient';
 
 import styles from './Ingredient.module.css';
 
-function Ingredient({ ingredient, showIngredient }) {
+function Ingredient({ ingredient }) {
   const { name, image, price } = ingredient;
 
+  const dispatch = useDispatch();
+
   const handleIngredientClick = () => {
-    showIngredient(ingredient);
+    dispatch({type: SET_INGREDIENT, ingredient});
   }
 
   return (
@@ -31,8 +34,7 @@ function Ingredient({ ingredient, showIngredient }) {
 }
 
 Ingredient.propTypes = {
-  ingredient: ingredientPropTypes,
-  showIngredient: PropTypes.func.isRequired
+  ingredient: ingredientPropTypes
 }
 
 export default Ingredient;

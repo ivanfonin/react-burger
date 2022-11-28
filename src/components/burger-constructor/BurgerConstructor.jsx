@@ -1,16 +1,18 @@
 import Price from '../price/Price';
 import { Loader } from '../loader/loader';
 import { ConstructorElement, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { PropTypes } from 'prop-types';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { checkout } from '../../services/actions/checkout';
 
 import styles from './BurgerConstructor.module.css';
 
-function BurgerConstructor({ createOrder }) {
+function BurgerConstructor() {
   const { burger, orderRequest } = useSelector(state => ({
     burger: state.burger,
     orderRequest: state.checkout.orderRequest
   }));
+
+  const dispatch = useDispatch();
 
   const handleDelete = () => {
     console.log('delete');
@@ -18,10 +20,12 @@ function BurgerConstructor({ createOrder }) {
 
   const handleCheckout = () => {
     const ingredients = [];
-    ingredients.push(burger.bun._id)
-    burger.ingredients.forEach(ingredient => ingredients.push(ingredient._id))
-    ingredients.push(burger.bun._id)
-    createOrder({ "ingredients": ingredients });
+
+    ingredients.push(burger.bun._id);
+    burger.ingredients.forEach(ingredient => ingredients.push(ingredient._id));
+    ingredients.push(burger.bun._id);
+
+    dispatch(checkout({ "ingredients": ingredients }));
   }
 
   return (
@@ -65,10 +69,6 @@ function BurgerConstructor({ createOrder }) {
       </div>
     </>
   )
-}
-
-BurgerConstructor.propTypes = {
-  createOrder: PropTypes.func.isRequired
 }
 
 export default BurgerConstructor;

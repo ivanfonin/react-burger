@@ -6,7 +6,7 @@ import { forwardRef } from 'react';
 
 import styles from './IngredientsSection.module.css';
 
-const IngredientsSection = forwardRef(({ type, ingredients, showIngredient }, ref) => {
+const IngredientsSection = forwardRef(({ type, ingredients }, ref) => {
   return (
     <section className={ type } ref={ ref }>
       <IngredientsSectionTitle type={ type } />
@@ -14,7 +14,7 @@ const IngredientsSection = forwardRef(({ type, ingredients, showIngredient }, re
         { ingredients.map(ingredient => {
           return (
             <li className={ styles.item } key={ ingredient._id }>
-              <Ingredient ingredient={ ingredient } showIngredient={ showIngredient } />
+              <Ingredient ingredient={ ingredient } />
             </li>
           );
         } ) }
@@ -25,8 +25,7 @@ const IngredientsSection = forwardRef(({ type, ingredients, showIngredient }, re
 
 IngredientsSection.propTypes = {
   type: PropTypes.string.isRequired,
-  ingredients: ingredientsPropTypes,
-  showIngredient: PropTypes.func.isRequired
+  ingredients: ingredientsPropTypes
 }
 
 export default IngredientsSection;

@@ -2,7 +2,6 @@ import Tabs from '../tabs/Tabs';
 import IngredientsSection from '../ingredients-section/IngredientsSection';
 import { Loader } from '../loader/loader';
 import { groupBy } from '../../utils/helpers';
-import { PropTypes } from 'prop-types';
 import { createRef } from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,7 +9,7 @@ import { getIngredients } from '../../services/actions/ingredients';
 
 import styles from './BurgerIngredients.module.css';
 
-function BurgerIngredients({ showIngredient }) {
+function BurgerIngredients() {
   const { items, ingredientsRequest } = useSelector(state => state.ingredients);
 
   const dispatch = useDispatch();
@@ -25,7 +24,7 @@ function BurgerIngredients({ showIngredient }) {
   
   for (let type in groups) {
     tabRefs[type] = createRef();
-    ingredientsSections.push(<IngredientsSection ref={ tabRefs[type] } key={ type } type={ type } ingredients={ groups[type] } showIngredient={ showIngredient } />);
+    ingredientsSections.push(<IngredientsSection ref={ tabRefs[type] } key={ type } type={ type } ingredients={ groups[type] } />);
   }
 
   const handleTabSelected = (type) => {
@@ -45,10 +44,6 @@ function BurgerIngredients({ showIngredient }) {
       </div>
     </>
   );
-}
-
-BurgerIngredients.propTypes = {
-  showIngredient: PropTypes.func.isRequired
 }
 
 export default BurgerIngredients;

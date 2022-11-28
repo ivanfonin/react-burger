@@ -5,8 +5,8 @@ import Modal from '../modal/Modal';
 import IngredientDetails from '../ingredient-details/IngredientDetails';
 import OrderDetails from '../order-details/OrderDetails';
 import { useSelector, useDispatch } from 'react-redux';
-import { checkout, RESET_ORDER } from '../../services/actions/checkout';
-import { SET_INGREDIENT, RESET_INGREDIENT } from '../../services/actions/ingredient';
+import { RESET_ORDER } from '../../services/actions/checkout';
+import { RESET_INGREDIENT } from '../../services/actions/ingredient';
 
 import styles from './App.module.css';
 
@@ -18,20 +18,12 @@ function App() {
 
   const dispatch = useDispatch();
 
-  const handleCloseOrderModal = () => {
-    dispatch({type: RESET_ORDER});
-  }
-
   const handleCloseIngredientModal = () => {
     dispatch({type: RESET_INGREDIENT});
   }
 
-  const handleIngredientSelected = (ingredient) => {
-    dispatch({type: SET_INGREDIENT, ingredient});
-  }
-
-  const handleCheckout = (order) => {
-    dispatch(checkout(order));
+  const handleCloseOrderModal = () => {
+    dispatch({type: RESET_ORDER});
   }
 
   return (
@@ -39,10 +31,10 @@ function App() {
       <AppHeader />
       <main className={ `${styles.main} pt-10` }>
         <section className={ styles.section }>
-          <BurgerIngredients showIngredient={ handleIngredientSelected } />
+          <BurgerIngredients />
         </section>
         <section className={ styles.section }>
-          <BurgerConstructor createOrder={ handleCheckout } />
+          <BurgerConstructor />
         </section>
       </main>
       { ingredient && (
