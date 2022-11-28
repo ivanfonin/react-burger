@@ -1,3 +1,4 @@
+import { PropTypes } from 'prop-types';
 import { useEffect, useState } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 
@@ -6,7 +7,7 @@ function Tabs({ onTabClick }) {
 
   useEffect(() => {
     onTabClick(current);
-  }, [current]);
+  }, [onTabClick, current]);
 
   return (
     <nav className="pt-5">
@@ -23,6 +24,10 @@ function Tabs({ onTabClick }) {
       </ul>
     </nav>
   );
+}
+
+Tabs.propTypes = {
+  onTabClick: PropTypes.func.isRequired
 }
 
 export default Tabs;
