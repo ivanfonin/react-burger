@@ -35,7 +35,7 @@ function BurgerIngredients() {
     <>
       <h1 className="text text_type_main-large">Соберите бургер</h1>
       <Tabs onTabClick={ handleTabSelected } />
-      <div className={ `${styles.section}` }>
+      <div className={ `burger-ingredients ${styles.section}` }>
         { ingredientsRequest ? (
           <Loader size="large" />
         ) : (

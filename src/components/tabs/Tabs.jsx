@@ -1,24 +1,21 @@
 import { PropTypes } from 'prop-types';
-import { useEffect, useState } from 'react';
+// import { useEffect } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useSelector } from 'react-redux';
 
 function Tabs({ onTabClick }) {
-  const [current, setCurrent] = useState('bun');
-
-  useEffect(() => {
-    onTabClick(current);
-  }, [onTabClick, current]);
+  const active = useSelector(state => state.tab);
 
   return (
     <nav className="pt-5">
       <ul style={{ display: "flex", margin: 0, padding: 0 }}>
-        <Tab value="bun" active={ current === 'bun' } onClick={ setCurrent }>
+        <Tab value="bun" active={ active === 'bun' } onClick={ onTabClick }>
           Булки
         </Tab>
-        <Tab value="main" active={ current === 'main' } onClick={ setCurrent }>
+        <Tab value="main" active={ active === 'main' } onClick={ onTabClick }>
           Начинки
         </Tab>
-        <Tab value="sauce" active={ current === 'sauce' } onClick={ setCurrent }>
+        <Tab value="sauce" active={ active === 'sauce' } onClick={ onTabClick }>
           Соусы
         </Tab>
       </ul>
