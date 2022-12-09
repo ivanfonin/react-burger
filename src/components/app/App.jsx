@@ -7,6 +7,8 @@ import OrderDetails from '../order-details/OrderDetails';
 import { useSelector, useDispatch } from 'react-redux';
 import { RESET_ORDER } from '../../services/actions/checkout';
 import { RESET_INGREDIENT } from '../../services/actions/ingredient';
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
 import styles from './App.module.css';
 
@@ -30,12 +32,14 @@ function App() {
     <>
       <AppHeader />
       <main className={ `${styles.main} pt-10` }>
-        <section className={ styles.section }>
-          <BurgerIngredients />
-        </section>
-        <section className={ styles.section }>
-          <BurgerConstructor />
-        </section>
+        <DndProvider backend={HTML5Backend}>
+          <section className={ styles.section }>
+            <BurgerIngredients />
+          </section>
+          <section className={ styles.section }>
+            <BurgerConstructor />
+          </section>
+        </DndProvider>
       </main>
       { ingredient && (
         <Modal onClose={ handleCloseIngredientModal }>
