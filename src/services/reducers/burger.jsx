@@ -14,26 +14,56 @@ export const burgerReducer = (state = initialState, action) => {
     case ADD_BURGER_INGREDIENT: {
       let bun = state.bun;
       let ingredients = state.ingredients;
+      let total = 0;
 
-      if ('bun' === action.ingredient.type && !bun) {
+      if ('bun' === action.ingredient.type) {
+        if (state.bun) {
+          state.bun.counter = 0;
+        }
+        action.ingredient.counter = 2;
         bun = action.ingredient;
-      } else {
-        throw new Error('Можно добавить только одну булочку в конструктор.');
       }
 
       if ('bun' !== action.ingredient.type) {
+        action.ingredient.counter += 1;
         ingredients.push(action.ingredient);
+      }
+
+      if (bun) {
+        total += bun?.price * 2;
+      } 
+      
+      if (ingredients) {
+        total += ingredients?.reduce((acc, item) => item.price + acc, 0);
       }
 
       return {
         bun,
         ingredients,
-        total: bun?.price * 2 + ingredients?.reduce((acc, item) => item.price + acc, 0)
+        total
       }
     }
     case REMOVE_BURGER_INGREDIENT: {
+      let total = 0;
+      let ingredients = state.ingredients;
+      let index = state.ingredients.findIndex(item => item._id === action.ingredient._id);
+      if (index > -1) {
+        action.ingredient.counter -= 1;
+        ingredients.splice(index, 1);
+      }
+
+      if (state.bun) {
+        total = state.bun.price * 2;
+      }
+      
+      if (ingredients) {
+        total += ingredients.reduce((acc, item) => item.price + acc, 0);
+      }
+
       return {
-        
+        ...state,
+        ingredients,
+        total
       }
     }
     default:

@@ -3,11 +3,15 @@ import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ingredientPropTypes } from '../../utils/constants';
 import { useDispatch } from 'react-redux';
 import { SET_INGREDIENT } from '../../services/actions/ingredient';
+import { useDrag } from 'react-dnd';
 
 import styles from './Ingredient.module.css';
 
 function Ingredient({ ingredient }) {
   const { name, image, price } = ingredient;
+  if (!ingredient.hasOwnProperty('counter')) {
+    ingredient.counter = 0;
+  }
 
   const dispatch = useDispatch();
 
@@ -15,10 +19,18 @@ function Ingredient({ ingredient }) {
     dispatch({type: SET_INGREDIENT, ingredient});
   }
 
+  const [{ isDrag }, dragRef] = useDrag({
+    type: "ingredient",
+    item: ingredient,
+    collect: monitor => ({
+      isDrag: monitor.isDragging()
+    })
+  });
+
   return (
     <>
-      <div className={ styles.item } onClick={ handleIngredientClick }>
-        <Counter count={1} size="default" />
+      <div draggable className={ `${styles.item} ${isDrag ? 'dragged' : ''}` } onClick={ handleIngredientClick } ref={dragRef}>
+        <Counter count={ingredient.counter} size="default" />
         <figure>
           <img className={ styles.image } src={ image } alt={ name }/>
           <figcaption>

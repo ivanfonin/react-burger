@@ -3,6 +3,8 @@ import { Loader } from '../loader/loader';
 import { ConstructorElement, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { checkout } from '../../services/actions/checkout';
+import { useDrop } from 'react-dnd';
+import { ADD_BURGER_INGREDIENT, REMOVE_BURGER_INGREDIENT } from '../../services/actions/burger';
 
 import styles from './BurgerConstructor.module.css';
 
@@ -14,8 +16,11 @@ function BurgerConstructor() {
 
   const dispatch = useDispatch();
 
-  const handleDelete = () => {
-    console.log('delete');
+  const handleDelete = (ingredient) => {
+    dispatch({
+      type: REMOVE_BURGER_INGREDIENT,
+      ingredient
+    });
   }
 
   const handleCheckout = () => {
@@ -28,9 +33,22 @@ function BurgerConstructor() {
     dispatch(checkout({ "ingredients": ingredients }));
   }
 
+  const [{ isHover }, dropTargetRef] = useDrop({
+    accept: "ingredient",
+    collect: monitor => ({
+      isHover: monitor.isOver(),
+    }),
+    drop(ingredient) {
+      dispatch({
+        type: ADD_BURGER_INGREDIENT,
+        ingredient
+      });
+    }
+  });
+
   return (
     <>
-      <section className={ `${styles.section } pl-4 pr-4` }>
+      <section className={ `${styles.section } pl-4 pr-4 ${isHover ? 'hover' : 'no-hover'}` } ref={dropTargetRef}>
         { burger.bun && (
           <ConstructorElement
             type='top'
@@ -43,11 +61,11 @@ function BurgerConstructor() {
         { burger.ingredients.map((ingredient, index) => {
           return <ConstructorElement
             index={ index }
-            key={ ingredient._id }
+            key={ index }
             text={ ingredient.name }
             price={ ingredient.price }
             thumbnail={ ingredient.image }
-            handleClose={ handleDelete }
+            handleClose={ e => handleDelete(ingredient) }
           />
         }) }
         { burger.bun && (
