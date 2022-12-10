@@ -21,6 +21,12 @@
   background-color: var(--color-text-inactive);
 }
 
+.ingredients {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
 .total {
   display: flex;
   align-items: center;

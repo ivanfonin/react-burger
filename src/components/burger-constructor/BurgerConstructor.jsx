@@ -4,9 +4,11 @@ import { ConstructorElement, Button } from '@ya.praktikum/react-developer-burger
 import { useDispatch, useSelector } from 'react-redux';
 import { checkout } from '../../services/actions/checkout';
 import { useDrop } from 'react-dnd';
-import { ADD_BURGER_INGREDIENT, REMOVE_BURGER_INGREDIENT } from '../../services/actions/burger';
+import { ADD_BURGER_INGREDIENT, REMOVE_BURGER_INGREDIENT, MOVE_BURGER_INGREDIENT } from '../../services/actions/burger';
 
 import styles from './BurgerConstructor.module.css';
+import ConstructorIngredient from './constructor-ingredient/ConstructorIngredient';
+import { useCallback } from 'react';
 
 function BurgerConstructor() {
   const { burger, orderRequest } = useSelector(state => ({
@@ -16,12 +18,12 @@ function BurgerConstructor() {
 
   const dispatch = useDispatch();
 
-  const handleDelete = (ingredient) => {
+  const handleDelete = useCallback((id) => {
     dispatch({
       type: REMOVE_BURGER_INGREDIENT,
-      ingredient
+      id
     });
-  }
+  }, [dispatch]);
 
   const handleCheckout = () => {
     const ingredients = [];
@@ -30,11 +32,11 @@ function BurgerConstructor() {
     burger.ingredients.forEach(ingredient => ingredients.push(ingredient._id));
     ingredients.push(burger.bun._id);
 
-    dispatch(checkout({ "ingredients": ingredients }));
+    dispatch(checkout({ 'ingredients': ingredients }));
   }
 
   const [{ isHover }, dropTargetRef] = useDrop({
-    accept: "ingredient",
+    accept: 'ingredient',
     collect: monitor => ({
       isHover: monitor.isOver(),
     }),
@@ -46,33 +48,47 @@ function BurgerConstructor() {
     }
   });
 
+  const moveIngredient = useCallback((dragIndex, hoverIndex) => {
+    dispatch({
+      type: MOVE_BURGER_INGREDIENT,
+      dragIndex,
+      hoverIndex
+    })
+  }, [dispatch]);
+
+  const renderConstructorElement = useCallback((ingredient, index) => {
+    return (
+      <ConstructorIngredient 
+        key={index} 
+        id={ingredient._id} 
+        handleDelete={handleDelete} 
+        moveIngredient={moveIngredient} 
+        index={index} 
+        {...ingredient}
+      />
+    )
+  }, [handleDelete, moveIngredient]);
+
   return (
     <>
-      <section className={ `${styles.section } pl-4 pr-4 ${isHover ? 'hover' : 'no-hover'}` } ref={dropTargetRef}>
+      <section className={ `${styles.section } pr-4 ${isHover ? 'hover' : 'no-hover'}` } ref={dropTargetRef}>
         { burger.bun && (
           <ConstructorElement
             type='top'
             isLocked={ true }
-            text={ burger.bun.name }
+            text={ burger.bun.name + ' (верх)' }
             price={ burger.bun.price }
             thumbnail={ burger.bun.image }
           />
         ) }
-        { burger.ingredients.map((ingredient, index) => {
-          return <ConstructorElement
-            index={ index }
-            key={ index }
-            text={ ingredient.name }
-            price={ ingredient.price }
-            thumbnail={ ingredient.image }
-            handleClose={ e => handleDelete(ingredient) }
-          />
-        }) }
+        <ul className={styles.ingredients}>
+          { burger.ingredients.map((ingredient, index) => renderConstructorElement(ingredient, index)) }
+        </ul>
         { burger.bun && (
           <ConstructorElement
             type='bottom'
             isLocked={ true }
-            text={ burger.bun.name }
+            text={ burger.bun.name + ' (низ)' }
             price={ burger.bun.price }
             thumbnail={ burger.bun.image }
           />
@@ -80,8 +96,8 @@ function BurgerConstructor() {
       </section>
       <div className={ `${styles.total} pl-4 pr-4` }>
         { orderRequest && ( <Loader size="medium" /> ) }
-        <Price icon="primary" size="medium" value={ burger.total } classes='pr-10' />
-        <Button htmlType='button' size="large" onClick={ handleCheckout }>
+        <Price icon='primary' size='medium' value={ burger.total } classes='pr-10' />
+        <Button htmlType='button' size='large' onClick={ handleCheckout } disabled={!burger.bun || !burger.ingredients.length}>
             Оформить заказ
         </Button>
       </div>

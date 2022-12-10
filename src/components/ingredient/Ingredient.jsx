@@ -9,6 +9,7 @@ import styles from './Ingredient.module.css';
 
 function Ingredient({ ingredient }) {
   const { name, image, price } = ingredient;
+  
   if (!ingredient.hasOwnProperty('counter')) {
     ingredient.counter = 0;
   }
@@ -19,22 +20,19 @@ function Ingredient({ ingredient }) {
     dispatch({type: SET_INGREDIENT, ingredient});
   }
 
-  const [{ isDrag }, dragRef] = useDrag({
-    type: "ingredient",
-    item: ingredient,
-    collect: monitor => ({
-      isDrag: monitor.isDragging()
-    })
+  const [, drag] = useDrag({
+    type: 'ingredient',
+    item: ingredient
   });
 
   return (
     <>
-      <div draggable className={ `${styles.item} ${isDrag ? 'dragged' : ''}` } onClick={ handleIngredientClick } ref={dragRef}>
-        <Counter count={ingredient.counter} size="default" />
+      <div ref={drag} draggable className={styles.item} onClick={handleIngredientClick}>
+        <Counter count={ingredient.counter} size='default' />
         <figure>
           <img className={ styles.image } src={ image } alt={ name }/>
           <figcaption>
-            <Price icon="primary" size="default" value={ price } classes='pt-1 pb-1' />
+            <Price icon='primary' size='default' value={ price } classes='pt-1 pb-1' />
             <p className="text text_type_main-default">
               { name }
             </p>

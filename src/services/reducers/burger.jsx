@@ -1,6 +1,7 @@
 import {
   ADD_BURGER_INGREDIENT,
-  REMOVE_BURGER_INGREDIENT
+  REMOVE_BURGER_INGREDIENT,
+  MOVE_BURGER_INGREDIENT
 } from '../actions/burger';
 
 const initialState = {
@@ -46,9 +47,9 @@ export const burgerReducer = (state = initialState, action) => {
     case REMOVE_BURGER_INGREDIENT: {
       let total = 0;
       let ingredients = state.ingredients;
-      let index = state.ingredients.findIndex(item => item._id === action.ingredient._id);
+      let index = state.ingredients.findIndex(item => item._id === action.id);
       if (index > -1) {
-        action.ingredient.counter -= 1;
+        state.ingredients[index].counter -= 1;
         ingredients.splice(index, 1);
       }
 
@@ -64,6 +65,15 @@ export const burgerReducer = (state = initialState, action) => {
         ...state,
         ingredients,
         total
+      }
+    }
+    case MOVE_BURGER_INGREDIENT: {
+      const ingredients = state.ingredients;
+      ingredients.splice(action.hoverIndex, 0, ingredients.splice(action.dragIndex, 1)[0])
+
+      return {
+        ...state,
+        ingredients
       }
     }
     default:
