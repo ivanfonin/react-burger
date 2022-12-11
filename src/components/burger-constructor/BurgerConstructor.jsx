@@ -5,9 +5,8 @@ import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { checkout } from '../../services/actions/checkout';
 import { useDrop } from 'react-dnd';
-import { ADD_BURGER_INGREDIENT, REMOVE_BURGER_INGREDIENT, MOVE_BURGER_INGREDIENT } from '../../services/actions/burger';
+import { addBurgerIngredient, moveBurgerIngredient, removeBurgerIngredient } from '../../services/actions/burger';
 import ConstructorIngredient from './constructor-ingredient/ConstructorIngredient';
-import { v4 as uuidv4 } from 'uuid';
 
 import styles from './BurgerConstructor.module.css';
 
@@ -20,13 +19,10 @@ function BurgerConstructor() {
   const dispatch = useDispatch();
 
   const handleDelete = useCallback((id) => {
-    dispatch({
-      type: REMOVE_BURGER_INGREDIENT,
-      id
-    });
+    dispatch(removeBurgerIngredient(id));
   }, [dispatch]);
 
-  const handleCheckout = () => {
+  const handleCheckout = useCallback(() => {
     const ingredients = [];
 
     ingredients.push(burger.bun._id);
@@ -34,7 +30,7 @@ function BurgerConstructor() {
     ingredients.push(burger.bun._id);
 
     dispatch(checkout({ 'ingredients': ingredients }));
-  }
+  }, [dispatch, burger]);
 
   const [{ isHover }, dropTargetRef] = useDrop({
     accept: 'ingredient',
@@ -42,19 +38,12 @@ function BurgerConstructor() {
       isHover: monitor.isOver(),
     }),
     drop(ingredient) {
-      dispatch({
-        type: ADD_BURGER_INGREDIENT,
-        ingredient: { uuid: uuidv4(), ...ingredient }
-      });
+      dispatch(addBurgerIngredient(ingredient));
     }
   });
 
   const moveIngredient = useCallback((dragIndex, hoverIndex) => {
-    dispatch({
-      type: MOVE_BURGER_INGREDIENT,
-      dragIndex,
-      hoverIndex
-    })
+    dispatch(moveBurgerIngredient(dragIndex, hoverIndex));
   }, [dispatch]);
 
   const renderConstructorElement = useCallback((ingredient, index) => {
