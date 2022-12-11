@@ -1,14 +1,15 @@
 import Price from '../price/Price';
 import { Loader } from '../loader/loader';
 import { ConstructorElement, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { checkout } from '../../services/actions/checkout';
 import { useDrop } from 'react-dnd';
 import { ADD_BURGER_INGREDIENT, REMOVE_BURGER_INGREDIENT, MOVE_BURGER_INGREDIENT } from '../../services/actions/burger';
+import ConstructorIngredient from './constructor-ingredient/ConstructorIngredient';
+import { v4 as uuidv4 } from 'uuid';
 
 import styles from './BurgerConstructor.module.css';
-import ConstructorIngredient from './constructor-ingredient/ConstructorIngredient';
-import { useCallback } from 'react';
 
 function BurgerConstructor() {
   const { burger, orderRequest } = useSelector(state => ({
@@ -43,7 +44,7 @@ function BurgerConstructor() {
     drop(ingredient) {
       dispatch({
         type: ADD_BURGER_INGREDIENT,
-        ingredient
+        ingredient: { uuid: uuidv4(), ...ingredient }
       });
     }
   });
@@ -59,7 +60,7 @@ function BurgerConstructor() {
   const renderConstructorElement = useCallback((ingredient, index) => {
     return (
       <ConstructorIngredient 
-        key={index} 
+        key={ingredient.uuid} 
         id={ingredient._id} 
         handleDelete={handleDelete} 
         moveIngredient={moveIngredient} 
