@@ -26,20 +26,18 @@ function Ingredient({ ingredient }) {
   });
 
   return (
-    <>
-      <div ref={drag} draggable className={styles.item} onClick={handleIngredientClick}>
-        <Counter count={ingredient.counter} size='default' />
-        <figure>
-          <img className={ styles.image } src={ image } alt={ name }/>
-          <figcaption>
-            <Price icon='primary' size='default' value={ price } classes='pt-1 pb-1' />
-            <p className="text text_type_main-default">
-              { name }
-            </p>
-          </figcaption>
-        </figure>
-      </div>
-    </>
+    <div ref={drag} draggable className={styles.item} onClick={handleIngredientClick}>
+      <Counter count={ingredient.counter} size='default' />
+      <figure>
+        <img className={ styles.image } src={ image } alt={ name }/>
+        <figcaption>
+          <Price icon='primary' size='default' value={ price } classes='pt-1 pb-1' />
+          <p className="text text_type_main-default">
+            { name }
+          </p>
+        </figcaption>
+      </figure>
+    </div>
   );
 }
 
