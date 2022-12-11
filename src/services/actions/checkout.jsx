@@ -18,8 +18,7 @@ export const checkout = (order) => (dispatch) => {
           number: res.order.number
         }
       });
-    })
-    .then(() => {
+
       dispatch({ type: RESET_BURGER_INGREDIENTS });
     })
     .catch(err => {
