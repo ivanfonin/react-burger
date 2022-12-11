@@ -1,7 +1,8 @@
 import {
   ADD_BURGER_INGREDIENT,
   REMOVE_BURGER_INGREDIENT,
-  MOVE_BURGER_INGREDIENT
+  MOVE_BURGER_INGREDIENT,
+  RESET_BURGER_INGREDIENTS
 } from '../actions/burger';
 
 const initialState = {
@@ -75,6 +76,13 @@ export const burgerReducer = (state = initialState, action) => {
         ...state,
         ingredients
       }
+    }
+    case RESET_BURGER_INGREDIENTS: {
+      return {
+        bun: null,
+        ingredients: [],
+        total: 0
+      };
     }
     default:
       return state;
