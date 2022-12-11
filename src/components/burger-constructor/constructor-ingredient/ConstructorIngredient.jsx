@@ -34,11 +34,11 @@ function ConstructorIngredient({ id, index, name, price, image, handleDelete, mo
       const hoverClientY = clientOffset.y - hoverBoundingRect.top;
 
       if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
-        return
+        return;
       }
 
       if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
-        return
+        return;
       }
 
       moveIngredient(dragIndex, hoverIndex);
