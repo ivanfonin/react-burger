@@ -7,16 +7,19 @@ export class Api {
     return (res.ok) ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
   }
 
+  _request(url, options) {
+    return fetch(url, options).then(this._checkResponse);
+  }
+
   get(path, parameters = {}) {
-    return fetch(`${this._config.baseUrl}${path}`, parameters)
-      .then(this._checkResponse);
+    return this._request(`${this._config.baseUrl}${path}`, parameters);
   }
 
   post(path, data, parameters = {}) {
     parameters.method = 'POST';
     parameters.headers = { 'Content-Type': 'application/json;charset=utf-8' };
     parameters.body = JSON.stringify(data);
-    return fetch(`${this._config.baseUrl}${path}`, parameters)
-      .then(this._checkResponse);
+
+    return this._request(`${this._config.baseUrl}${path}`, parameters);
   }
 }
