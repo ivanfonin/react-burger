@@ -1,14 +1,15 @@
 import { PropTypes } from 'prop-types';
-// import { useEffect } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector } from 'react-redux';
+
+import styles from './Tabs.module.css';
 
 function Tabs({ onTabClick }) {
   const active = useSelector(state => state.tab);
 
   return (
     <nav className="pt-5">
-      <ul style={{ display: "flex", margin: 0, padding: 0 }}>
+      <ul className={styles.tabs}>
         <Tab value="bun" active={ active === 'bun' } onClick={ onTabClick }>
           Булки
         </Tab>
