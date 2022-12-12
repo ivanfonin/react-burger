@@ -1,5 +1,7 @@
 # Приложение космической бургерной на React
 
+Приложение доступно по ссылке [https://ivanfonin.github.io/react-burger/](https://ivanfonin.github.io/react-burger/).
+
 Для запуска в директории с приложением выполните команду:
 
 ### `npm start`
