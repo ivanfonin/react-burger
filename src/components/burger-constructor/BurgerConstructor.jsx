@@ -1,79 +1,98 @@
 import Price from '../price/Price';
+import { Loader } from '../loader/loader';
 import { ConstructorElement, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { PropTypes } from 'prop-types';
-import { useContext } from 'react';
-import { ConstructorContext } from '../../context/constructor-context/constructorContext';
-import { useMemo } from 'react';
+import { useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { checkout } from '../../services/actions/checkout';
+import { useDrop } from 'react-dnd';
+import { addBurgerIngredient, moveBurgerIngredient, removeBurgerIngredient } from '../../services/actions/burger';
+import ConstructorIngredient from './constructor-ingredient/ConstructorIngredient';
 
 import styles from './BurgerConstructor.module.css';
 
-function BurgerConstructor({ createOrder }) {
-  const { constructorState } = useContext(ConstructorContext);
+function BurgerConstructor() {
+  const { burger, orderRequest } = useSelector(state => ({
+    burger: state.burger,
+    orderRequest: state.checkout.orderRequest
+  }));
 
-  const orderTotal = useMemo(() => {
-    let total = 0;
-    total += constructorState.ingredients?.reduce((prev, current) => current.price + prev, 0 );
-    total += constructorState.bun?.price * 2;
-    return (total >= 0) ? total : 0;
-  }, [
-    constructorState.ingredients,
-    constructorState.bun
-  ]);
+  const dispatch = useDispatch();
 
-  const handleDelete = () => {
-    console.log('delete');
-  }
+  const handleDelete = useCallback((id) => {
+    dispatch(removeBurgerIngredient(id));
+  }, [dispatch]);
 
-  const handleCheckout = () => {
+  const handleCheckout = useCallback(() => {
     const ingredients = [];
-    ingredients.push(constructorState.bun._id)
-    constructorState.ingredients.forEach(ingredient => ingredients.push(ingredient._id))
-    ingredients.push(constructorState.bun._id)
-    createOrder({ "ingredients": ingredients });
-  }
+
+    ingredients.push(burger.bun._id);
+    burger.ingredients.forEach(ingredient => ingredients.push(ingredient._id));
+    ingredients.push(burger.bun._id);
+
+    dispatch(checkout({ 'ingredients': ingredients }));
+  }, [dispatch, burger]);
+
+  const [{ isHover }, dropTargetRef] = useDrop({
+    accept: 'ingredient',
+    collect: monitor => ({
+      isHover: monitor.isOver(),
+    }),
+    drop(ingredient) {
+      dispatch(addBurgerIngredient(ingredient));
+    }
+  });
+
+  const moveIngredient = useCallback((dragIndex, hoverIndex) => {
+    dispatch(moveBurgerIngredient(dragIndex, hoverIndex));
+  }, [dispatch]);
+
+  const renderConstructorElement = useCallback((ingredient, index) => {
+    return (
+      <ConstructorIngredient 
+        key={ingredient.uuid} 
+        id={ingredient._id} 
+        handleDelete={handleDelete} 
+        moveIngredient={moveIngredient} 
+        index={index} 
+        {...ingredient}
+      />
+    )
+  }, [handleDelete, moveIngredient]);
 
   return (
     <>
-      <section className={ `${styles.section } pl-4 pr-4` }>
-        { constructorState.bun && (
+      <section className={ `${styles.section } pr-4 ${isHover ? 'hover' : 'no-hover'}` } ref={dropTargetRef}>
+        { burger.bun && (
           <ConstructorElement
             type='top'
             isLocked={ true }
-            text={ constructorState.bun.name }
-            price={ constructorState.bun.price }
-            thumbnail={ constructorState.bun.image }
+            text={ burger.bun.name + ' (верх)' }
+            price={ burger.bun.price }
+            thumbnail={ burger.bun.image }
           />
         ) }
-        { constructorState.ingredients.map((ingredient, index) => {
-          return <ConstructorElement
-            index={ index }
-            key={ ingredient._id }
-            text={ ingredient.name }
-            price={ ingredient.price }
-            thumbnail={ ingredient.image }
-            handleClose={ handleDelete }
-          />
-        }) }
-        { constructorState.bun && (
+        <ul className={styles.ingredients}>
+          { burger.ingredients.map((ingredient, index) => renderConstructorElement(ingredient, index)) }
+        </ul>
+        { burger.bun && (
           <ConstructorElement
             type='bottom'
             isLocked={ true }
-            text={ constructorState.bun.name }
-            price={ constructorState.bun.price }
-            thumbnail={ constructorState.bun.image }
+            text={ burger.bun.name + ' (низ)' }
+            price={ burger.bun.price }
+            thumbnail={ burger.bun.image }
           />
         ) }
       </section>
       <div className={ `${styles.total} pl-4 pr-4` }>
-        <Price icon="primary" size="medium" value={ orderTotal } classes='pr-10' />
-        <Button htmlType='button' size="large" onClick={ handleCheckout }>Оформить заказ</Button>
+        { orderRequest && ( <Loader size="medium" /> ) }
+        <Price icon='primary' size='medium' value={ burger.total } classes='pr-10' />
+        <Button htmlType='button' size='large' onClick={ handleCheckout } disabled={!burger.bun || !burger.ingredients.length}>
+            Оформить заказ
+        </Button>
       </div>
     </>
   )
-}
-
-BurgerConstructor.propTypes = {
-  createOrder: PropTypes.func.isRequired
 }
 
 export default BurgerConstructor;

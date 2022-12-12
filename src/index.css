@@ -5,6 +5,7 @@
   --color-text-primary: #f2f2f3;
   --color-bg-secondary: #1c1c21;
   --color-bg-muted: #2f2f37;
+  --color-bg-accent: #4c4cff;
 }
 
 body {
@@ -14,6 +15,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
 code {
@@ -30,4 +32,19 @@ code {
 .Price__medium svg {
   width: 33px;
   height: 33px;
+}
+
+.constructor-element {
+  align-items: center;
+  max-height: 80px;
+}
+
+.constructor-element_pos_top,
+.constructor-element_pos_bottom {
+  margin-left: 38px;
+}
+
+.cursor-grabbing,
+.cursor-grabbing:active {
+  cursor: grabbing;
 }

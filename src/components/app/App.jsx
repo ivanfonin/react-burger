@@ -4,73 +4,53 @@ import BurgerConstructor from '../burger-constructor/BurgerConstructor';
 import Modal from '../modal/Modal';
 import IngredientDetails from '../ingredient-details/IngredientDetails';
 import OrderDetails from '../order-details/OrderDetails';
-import config from '../../utils/config';
-import { Api } from '../api/Api';
-import { useEffect, useReducer, useMemo } from 'react';
-import { ConstructorContext, reducer as constructorReducer } from '../../context/constructor-context/constructorContext';
-import { IngredientsContext, reducer as ingredientsReducer } from '../../context/ingredients-context/ingredientsContext';
-import { ModalContext, reducer as modalReducer } from '../../context/modal-context/modalContext';
+import { useSelector, useDispatch } from 'react-redux';
+import { RESET_ORDER } from '../../services/actions/checkout';
+import { RESET_INGREDIENT } from '../../services/actions/ingredient';
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
 import styles from './App.module.css';
 
 function App() {
-  const server = useMemo(() => new Api(config.api), []);
-  const [ingredientsState, ingredientsDispatcher] = useReducer(ingredientsReducer, {ingredients: []});
-  const [constructorState, constructorDispatcher] = useReducer(constructorReducer, {bun: null, ingredients: []});
-  const [modalState, modalDispatcher] = useReducer(modalReducer, {order: null, ingredient: null});
+  const { ingredient, order } = useSelector(state => ({
+    ingredient: state.ingredient,
+    order: state.checkout.order
+  }));
 
-  useEffect(() => {
-    server.get('/ingredients')
-      .then((res) => {
-        ingredientsDispatcher({type: 'set', payload: res.data});
-        constructorDispatcher({type: 'set', payload: res.data});
-      });
-  }, [server]);
+  const dispatch = useDispatch();
 
-  const handleCloseModal = () => {
-    modalDispatcher({type: 'reset'});
+  const handleCloseIngredientModal = () => {
+    dispatch({type: RESET_INGREDIENT});
   }
 
-  const handleIngredientSelected = (ingredient) => {
-    modalDispatcher({type: 'ingredient', payload: ingredient});
-  }
-
-  const handleOrderCreated = (order) => {
-    server.post('/orders', order)
-      .then((res) => modalDispatcher({type: 'order', payload: res.order}));
+  const handleCloseOrderModal = () => {
+    dispatch({type: RESET_ORDER});
   }
 
   return (
     <>
       <AppHeader />
       <main className={ `${styles.main} pt-10` }>
-        <section className={ styles.section }>
-          { ingredientsState.ingredients && (
-            <IngredientsContext.Provider value={{ ingredientsState, ingredientsDispatcher }}>
-              <BurgerIngredients showIngredient={ handleIngredientSelected } />
-            </IngredientsContext.Provider>
-          ) }
-        </section>
-        <section className={ styles.section }>
-          { constructorState.ingredients && (
-            <ConstructorContext.Provider value={{ constructorState, constructorDispatcher }}>
-              <BurgerConstructor createOrder={ handleOrderCreated } />
-            </ConstructorContext.Provider>
-          ) }
-        </section>
+        <DndProvider backend={HTML5Backend}>
+          <section className={ styles.section }>
+            <BurgerIngredients />
+          </section>
+          <section className={ styles.section }>
+            <BurgerConstructor />
+          </section>
+        </DndProvider>
       </main>
-      <ModalContext.Provider value={{ modalState, modalDispatcher }}>
-        { modalState.ingredient && (
-          <Modal onClose={ handleCloseModal }>
-            <IngredientDetails />
-          </Modal>
-        ) }
-        { modalState.order && (
-          <Modal onClose={ handleCloseModal }>
-            <OrderDetails />
-          </Modal>
-        ) }
-      </ModalContext.Provider>
+      { ingredient && (
+        <Modal onClose={ handleCloseIngredientModal }>
+          <IngredientDetails />
+        </Modal>
+      ) }
+      { order && (
+        <Modal onClose={ handleCloseOrderModal }>
+          <OrderDetails />
+        </Modal>
+      ) }
     </>
   );
 }

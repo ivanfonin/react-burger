@@ -1,11 +1,10 @@
-import { useContext } from 'react';
-import { ModalContext } from '../../context/modal-context/modalContext';
+import { useSelector } from 'react-redux';
 
 import styles from './IngredientDetails.module.css';
 
 function IngredientDetails() {
-  const { modalState } = useContext(ModalContext);
-  const { name, proteins, fat, carbohydrates, calories, image_large } = modalState.ingredient;
+  const { ingredient } = useSelector(state => state);
+  const { name, proteins, fat, carbohydrates, calories, image_large } = ingredient;
   return (
     <>
       <div className={ `${styles.header} pl-10 pt-10 pr-10` }>
