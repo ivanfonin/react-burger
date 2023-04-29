@@ -4,6 +4,7 @@
   align-items: center;
   gap: 13.5px;
   margin-top: 10px;
+  transition: all .1s ease-in-out;
 }
 
 .ingredient:first-of-type {
