@@ -18,18 +18,11 @@ export const burgerReducer = (state = initialState, action) => {
       let ingredients = state.ingredients;
       let total = 0;
 
-      console.log(action.ingredient);
-
       if ('bun' === action.ingredient.type) {
-        if (state.bun) {
-          state.bun.counter = 0;
-        }
-        action.ingredient.counter = 2;
         bun = action.ingredient;
       }
 
       if ('bun' !== action.ingredient.type) {
-        action.ingredient.counter += 1;
         ingredients.push(action.ingredient);
       }
 
@@ -52,7 +45,6 @@ export const burgerReducer = (state = initialState, action) => {
       let ingredients = state.ingredients;
       let index = state.ingredients.findIndex(item => item._id === action.id);
       if (index > -1) {
-        state.ingredients[index].counter -= 1;
         ingredients.splice(index, 1);
       }
 
