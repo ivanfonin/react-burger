@@ -18,6 +18,8 @@ export const burgerReducer = (state = initialState, action) => {
       let ingredients = state.ingredients;
       let total = 0;
 
+      console.log(action.ingredient);
+
       if ('bun' === action.ingredient.type) {
         if (state.bun) {
           state.bun.counter = 0;

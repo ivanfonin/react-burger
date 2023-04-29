@@ -8,11 +8,7 @@ import { useDrag } from 'react-dnd';
 import styles from './Ingredient.module.css';
 
 function Ingredient({ ingredient }) {
-  const { name, image, price } = ingredient;
-  
-  if (!ingredient.hasOwnProperty('counter')) {
-    ingredient.counter = 0;
-  }
+  const { name, image, price, counter } = ingredient;
 
   const dispatch = useDispatch();
 
@@ -27,7 +23,7 @@ function Ingredient({ ingredient }) {
 
   return (
     <div ref={drag} draggable className={styles.item} onClick={handleIngredientClick}>
-      <Counter count={ingredient.counter} size='default' />
+      <Counter count={counter} size='default' />
       <figure>
         <img className={ styles.image } src={ image } alt={ name }/>
         <figcaption>

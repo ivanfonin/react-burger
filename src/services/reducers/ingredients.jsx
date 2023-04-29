@@ -1,7 +1,9 @@
 import {
   GET_INGREDIENTS,
   GET_INGREDIENTS_SUCCESS,
-  GET_INGREDIENTS_FAILED
+  GET_INGREDIENTS_FAILED,
+  INCREASE_INGREDIENT_COUNTER,
+  DECREASE_INGREDIENT_COUNTER
 } from '../actions/ingredients';
 
 const initialState = {
@@ -24,7 +26,10 @@ export const ingredientsReducer = (state = initialState, action) => {
         ...state,
         ingredientsRequest: false,
         ingredientsFailed: false,
-        items: action.ingredients
+        items: action.ingredients.map(item => {
+          item.counter = 0;
+          return item;
+        })
       }
     }
     case GET_INGREDIENTS_FAILED: {
@@ -32,6 +37,38 @@ export const ingredientsReducer = (state = initialState, action) => {
         ...state,
         ingredientsRequest: false,
         ingredientsFailed: true
+      }
+    }
+    case INCREASE_INGREDIENT_COUNTER: {
+      return {
+        ...state,
+        items: state.items.map(item => {
+          if (item._id === action.ingredient._id) {
+            if ('bun' !== item.type) {
+              item.counter += 1;
+            } else {
+              item.counter = 2;
+            }
+          } else if ('bun' === item.type) {
+            item.counter = 0;
+          }
+          return item;
+        })
+      }
+    }
+    case DECREASE_INGREDIENT_COUNTER: {
+      return {
+        ...state,
+        items: state.items.map(item => {
+          if (item._id === action.ingredient._id) {
+            if ('bun' !== item.type) {
+              item.counter -= 1;
+            } else {
+              item.counter = 0;
+            }
+          }
+          return item;
+        })
       }
     }
     default:

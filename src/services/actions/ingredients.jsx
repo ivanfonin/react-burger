@@ -3,6 +3,8 @@ import { api } from '../../services/api/client';
 export const GET_INGREDIENTS = 'GET_INGREDIENTS_REQUEST';
 export const GET_INGREDIENTS_SUCCESS = 'GET_INGREDIENTS_SUCCESS';
 export const GET_INGREDIENTS_FAILED = 'GET_INGREDIENTS_FAILED';
+export const INCREASE_INGREDIENT_COUNTER = 'INCREASE_INGREDIENT_COUNTER';
+export const DECREASE_INGREDIENT_COUNTER = 'DECREASE_INGREDIENT_COUNTER';
 
 export const getIngredients = () => (dispatch) => {
   dispatch({type: GET_INGREDIENTS});
@@ -14,5 +16,19 @@ export const getIngredients = () => (dispatch) => {
     });
   }).catch(err => {
     dispatch({type: GET_INGREDIENTS_FAILED});
+  });
+}
+
+export const increaseIngredientCounter = (ingredient) => (dispatch) => {
+  dispatch({
+    type: INCREASE_INGREDIENT_COUNTER,
+    ingredient
+  });
+}
+
+export const decreaseIngredientCounter = (ingredient) => (dispatch) => {
+  dispatch({
+    type: DECREASE_INGREDIENT_COUNTER,
+    ingredient
   });
 }

@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { checkout } from '../../services/actions/checkout';
 import { useDrop } from 'react-dnd';
 import { addBurgerIngredient, moveBurgerIngredient, removeBurgerIngredient } from '../../services/actions/burger';
+import { increaseIngredientCounter, decreaseIngredientCounter } from '../../services/actions/ingredients';
 import ConstructorIngredient from './constructor-ingredient/ConstructorIngredient';
 
 import styles from './BurgerConstructor.module.css';
@@ -20,6 +21,7 @@ function BurgerConstructor() {
 
   const handleDelete = useCallback((id) => {
     dispatch(removeBurgerIngredient(id));
+    dispatch(decreaseIngredientCounter({_id: id}));
   }, [dispatch]);
 
   const handleCheckout = useCallback(() => {
@@ -39,6 +41,7 @@ function BurgerConstructor() {
     }),
     drop(ingredient) {
       dispatch(addBurgerIngredient(ingredient));
+      dispatch(increaseIngredientCounter(ingredient))
     }
   });
 
