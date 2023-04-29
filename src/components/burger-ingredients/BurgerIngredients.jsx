@@ -24,7 +24,9 @@ function BurgerIngredients() {
   
   for (let type in groups) {
     tabRefs[type] = createRef();
-    ingredientsSections.push(<IngredientsSection ref={ tabRefs[type] } key={ type } type={ type } ingredients={ groups[type] } />);
+    ingredientsSections.push(
+      <IngredientsSection ref={tabRefs[type]} key={type} type={type} ingredients={groups[type]} />
+    );
   }
 
   const handleTabSelected = (type) => {
