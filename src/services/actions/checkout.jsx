@@ -7,21 +7,22 @@ export const CREATE_ORDER_FAILED = 'CREATE_ORDER_FAILED';
 export const RESET_ORDER = 'RESET_ORDER';
 
 export const checkout = (order) => (dispatch) => {
-  dispatch({type: CREATE_ORDER});
-    
-  api.post('/orders', order)
-    .then(res => {
+  dispatch({ type: CREATE_ORDER });
+
+  api
+    .post('/orders', order)
+    .then((res) => {
       dispatch({
         type: CREATE_ORDER_SUCCESS,
         order: {
           name: res.name,
-          number: res.order.number
-        }
+          number: res.order.number,
+        },
       });
 
       dispatch({ type: RESET_BURGER_INGREDIENTS });
     })
-    .catch(err => {
-      dispatch({type: CREATE_ORDER_FAILED});
+    .catch((err) => {
+      dispatch({ type: CREATE_ORDER_FAILED });
     });
-}
+};
