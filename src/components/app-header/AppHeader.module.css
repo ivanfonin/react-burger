@@ -1,11 +1,15 @@
-.AppHeader {
+.header {
   background-color: var(--color-bg-secondary);
 }
 
-.AppHeader__container {
-  display: flex;
-  justify-content: space-between;
+.header__container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   align-items: center;
   max-width: 1240px;
   margin: 0 auto;
+}
+
+.header__container svg {
+  justify-self: center;
 }

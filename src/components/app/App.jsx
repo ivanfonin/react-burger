@@ -1,6 +1,14 @@
 import { Routes, Route } from "react-router-dom";
 import AppHeader from "../app-header/AppHeader";
-import { HomePage, NotFound404 } from "../../pages";
+import {
+  HomePage,
+  LoginPage,
+  RegisterPage,
+  NotFound404,
+  ForgotPasswordPage,
+  ResetPasswordPage,
+  ProfilePage,
+} from "../../pages";
 import Modal from "../modal/Modal";
 import IngredientDetails from "../ingredient-details/IngredientDetails";
 import OrderDetails from "../order-details/OrderDetails";
@@ -29,9 +37,14 @@ function App() {
   return (
     <>
       <AppHeader />
-      <main className={`${styles.main} pt-10`}>
+      <main className={`${styles.main}`}>
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+          <Route path="/reset-password" element={<ResetPasswordPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
           <Route path="*" element={<NotFound404 />} />
         </Routes>
       </main>
