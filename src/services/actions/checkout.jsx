@@ -1,4 +1,5 @@
 import { api } from '../../services/api/client';
+import { getCookie } from '../../utils/helpers';
 import { RESET_BURGER_INGREDIENTS } from '../actions/burger';
 
 export const CREATE_ORDER = 'CREATE_ORDER';
@@ -10,7 +11,11 @@ export const checkout = (order) => (dispatch) => {
   dispatch({ type: CREATE_ORDER });
 
   api
-    .post('/orders', order)
+    .post('/orders', order, {
+      headers: {
+        Authorization: 'Bearer ' + getCookie('token'),
+      },
+    })
     .then((res) => {
       dispatch({
         type: CREATE_ORDER_SUCCESS,
