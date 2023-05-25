@@ -8,21 +8,21 @@ export const RESET_BURGER_INGREDIENTS = 'RESET_BURGER_INGREDIENTS';
 export const addBurgerIngredient = (ingredient) => (dispatch) => {
   dispatch({
     type: ADD_BURGER_INGREDIENT,
-    ingredient: { uuid: uuidv4(), ...ingredient }
+    ingredient: { uuid: uuidv4(), ...ingredient },
   });
-}
+};
 
 export const moveBurgerIngredient = (dragIndex, hoverIndex) => (dispatch) => {
   dispatch({
     type: MOVE_BURGER_INGREDIENT,
     dragIndex,
-    hoverIndex
+    hoverIndex,
   });
-}
+};
 
 export const removeBurgerIngredient = (id) => (dispatch) => {
   dispatch({
     type: REMOVE_BURGER_INGREDIENT,
-    id
+    id,
   });
-}
+};
