@@ -11,18 +11,18 @@ function Modal({ children, onClose }) {
     const handleEscKeyDown = (e) => 'Escape' === e.key && onClose();
     window.addEventListener('keydown', handleEscKeyDown);
     return () => document.removeEventListener('keydown', handleEscKeyDown);
-  }, []);
+  }, [onClose]);
 
   const modalRoot = document.getElementById('app-modals');
 
   const modal = (
     <>
-      <ModalOverlay onClose={ onClose }></ModalOverlay>
-      <div className={ styles.modal }>
-        <button type="button" className={ styles.close } onClick={ onClose }>
+      <ModalOverlay onClose={onClose}></ModalOverlay>
+      <div className={styles.modal}>
+        <button type="button" className={styles.close} onClick={onClose}>
           <CloseIcon type="primary" />
         </button>
-        { children }
+        {children}
       </div>
     </>
   );
@@ -32,7 +32,7 @@ function Modal({ children, onClose }) {
 
 Modal.propTypes = {
   children: PropTypes.node.isRequired,
-  onClose: PropTypes.func.isRequired
-}
+  onClose: PropTypes.func.isRequired,
+};
 
 export default Modal;

@@ -1,0 +1,5 @@
+.buttons {
+  max-width: 480px;
+  display: flex;
+  justify-content: flex-end;
+}

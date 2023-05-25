@@ -7,28 +7,31 @@ export const INCREASE_INGREDIENT_COUNTER = 'INCREASE_INGREDIENT_COUNTER';
 export const DECREASE_INGREDIENT_COUNTER = 'DECREASE_INGREDIENT_COUNTER';
 
 export const getIngredients = () => (dispatch) => {
-  dispatch({type: GET_INGREDIENTS});
-    
-  api.get('/ingredients').then(res => {
-    dispatch({
-      type: GET_INGREDIENTS_SUCCESS,
-      ingredients: res.data
+  dispatch({ type: GET_INGREDIENTS });
+
+  api
+    .get('/ingredients')
+    .then((res) => {
+      dispatch({
+        type: GET_INGREDIENTS_SUCCESS,
+        ingredients: res.data,
+      });
+    })
+    .catch((err) => {
+      dispatch({ type: GET_INGREDIENTS_FAILED, error: err.message });
     });
-  }).catch(err => {
-    dispatch({type: GET_INGREDIENTS_FAILED});
-  });
-}
+};
 
 export const increaseIngredientCounter = (ingredient) => (dispatch) => {
   dispatch({
     type: INCREASE_INGREDIENT_COUNTER,
-    ingredient
+    ingredient,
   });
-}
+};
 
 export const decreaseIngredientCounter = (ingredient) => (dispatch) => {
   dispatch({
     type: DECREASE_INGREDIENT_COUNTER,
-    ingredient
+    ingredient,
   });
-}
+};

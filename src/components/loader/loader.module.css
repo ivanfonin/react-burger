@@ -13,7 +13,7 @@
 
 .wrapper_large {
   width: 100%;
-  min-height: 160px;
+  min-height: 120px;
   display: flex;
   justify-content: center;
   flex-direction: column;

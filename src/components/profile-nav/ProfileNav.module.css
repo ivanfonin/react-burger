@@ -1,0 +1,35 @@
+.nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.link {
+  margin: 0;
+  padding: 0;
+  background: unset;
+  border: unset;
+  font-size: 24px;
+  line-height: 30px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  text-align: left;
+  font-weight: 700;
+  color: var(--color-text-inactive);
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.25s ease-in-out;
+}
+
+.link:hover,
+.link:focus {
+  color: var(--color-text-primary);
+}
+
+.link:active {
+  color: var(--color-bg-accent-light);
+}
+
+.link_active {
+  color: var(--color-text-primary);
+}
