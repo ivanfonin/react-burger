@@ -1,30 +1,32 @@
-import Price from "../price/Price";
-import { Loader } from "../loader/loader";
+import Price from '../price/Price';
+import { Loader } from '../loader/loader';
 import {
   ConstructorElement,
   Button,
-} from "@ya.praktikum/react-developer-burger-ui-components";
-import { useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { checkout } from "../../services/actions/checkout";
-import { useDrop } from "react-dnd";
+} from '@ya.praktikum/react-developer-burger-ui-components';
+import { useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { checkout } from '../../services/actions/checkout';
+import { useDrop } from 'react-dnd';
+import { useNavigate } from 'react-router-dom';
 import {
   addBurgerIngredient,
   moveBurgerIngredient,
   removeBurgerIngredient,
-} from "../../services/actions/burger";
+} from '../../services/actions/burger';
 import {
   increaseIngredientCounter,
   decreaseIngredientCounter,
-} from "../../services/actions/ingredients";
-import ConstructorIngredient from "./constructor-ingredient/ConstructorIngredient";
+} from '../../services/actions/ingredients';
+import ConstructorIngredient from './constructor-ingredient/ConstructorIngredient';
 
-import styles from "./BurgerConstructor.module.css";
+import styles from './BurgerConstructor.module.css';
 
 function BurgerConstructor() {
-  const { burger, orderRequest } = useSelector((state) => ({
+  const { burger, orderRequest, user } = useSelector((state) => ({
     burger: state.burger,
     orderRequest: state.checkout.orderRequest,
+    user: state.auth.user,
   }));
 
   const dispatch = useDispatch();
@@ -37,20 +39,26 @@ function BurgerConstructor() {
     [dispatch]
   );
 
+  const navigate = useNavigate();
+
   const handleCheckout = useCallback(() => {
-    const ingredients = [];
+    if (!user) {
+      navigate('/login');
+    } else {
+      const ingredients = [];
 
-    ingredients.push(burger.bun._id);
-    burger.ingredients.forEach((ingredient) =>
-      ingredients.push(ingredient._id)
-    );
-    ingredients.push(burger.bun._id);
+      ingredients.push(burger.bun._id);
+      burger.ingredients.forEach((ingredient) =>
+        ingredients.push(ingredient._id)
+      );
+      ingredients.push(burger.bun._id);
 
-    dispatch(checkout({ ingredients: ingredients }));
-  }, [dispatch, burger]);
+      dispatch(checkout({ ingredients: ingredients }));
+    }
+  }, [dispatch, burger, user, navigate]);
 
   const [{ isHover }, dropTargetRef] = useDrop({
-    accept: "ingredient",
+    accept: 'ingredient',
     collect: (monitor) => ({
       isHover: monitor.isOver(),
     }),
@@ -86,14 +94,14 @@ function BurgerConstructor() {
   return (
     <>
       <section
-        className={`${styles.section} pr-4 ${isHover ? "hover" : "no-hover"}`}
+        className={`${styles.section} pr-4 ${isHover ? 'hover' : 'no-hover'}`}
         ref={dropTargetRef}
       >
         {burger.bun && (
           <ConstructorElement
             type="top"
             isLocked={true}
-            text={burger.bun.name + " (верх)"}
+            text={burger.bun.name + ' (верх)'}
             price={burger.bun.price}
             thumbnail={burger.bun.image}
           />
@@ -107,7 +115,7 @@ function BurgerConstructor() {
           <ConstructorElement
             type="bottom"
             isLocked={true}
-            text={burger.bun.name + " (низ)"}
+            text={burger.bun.name + ' (низ)'}
             price={burger.bun.price}
             thumbnail={burger.bun.image}
           />
