@@ -10,3 +10,8 @@
   flex: 1;
   min-width: 0;
 }
+
+.link {
+  color: var(--color-text-primary);
+  text-decoration: none;
+}

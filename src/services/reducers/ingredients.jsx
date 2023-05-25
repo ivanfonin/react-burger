@@ -27,7 +27,7 @@ export const ingredientsReducer = (state = initialState, action) => {
         ingredientsRequest: false,
         ingredientsFailed: false,
         items: action.ingredients.map((item) => {
-          return { ...item, counter: 0 };
+          return { ...item, id: item._id, counter: 0 };
         }),
       };
     }
