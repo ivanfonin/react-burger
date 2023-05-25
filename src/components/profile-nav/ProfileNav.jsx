@@ -20,7 +20,7 @@ export const ProfileNav = () => {
 
   return (
     <nav className={styles.nav}>
-      <NavLink to={'/profile'} className={getLinkClass}>
+      <NavLink to={'/profile'} className={getLinkClass} end>
         <span className="text text_type_main-medium">Профиль</span>
       </NavLink>
       <NavLink to={'/profile/orders'} className={getLinkClass}>
