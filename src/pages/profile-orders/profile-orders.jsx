@@ -27,8 +27,7 @@ export const ProfileOrdersPage = () => {
         ) : (
           <p className="text text_type_main-default text_color_inactive">
             Здесь будут заказы после выполнения второго этапа работ, ветка
-            month-9/step-2. Начал искать информацию по API заказов и увидел, что
-            о заказах речь идет во второй части работы.
+            month-9/step-2.
           </p>
         )}
       </section>
