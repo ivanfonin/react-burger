@@ -3,19 +3,25 @@ import ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
 import { store } from './store';
 import { Provider } from 'react-redux';
-import { BrowserRouter as Router } from 'react-router-dom';
+// import { BrowserRouter as Router } from 'react-router-dom';
+import { createHashRouter, RouterProvider } from 'react-router-dom';
 import App from './components/app/App';
 
 import './index.css';
 
 const root = ReactDOM.createRoot(document.getElementById('app') as HTMLElement);
 
+const router = createHashRouter([
+  {
+    path: '/*',
+    element: <App />,
+  },
+]);
+
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <Router>
-        <App />
-      </Router>
+      <RouterProvider router={router} />
     </Provider>
   </React.StrictMode>
 );

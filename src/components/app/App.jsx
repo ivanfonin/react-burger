@@ -55,7 +55,7 @@ function App() {
       <AppHeader />
       <main className={`${styles.main}`}>
         <Routes location={background || location}>
-          <Route path="/" element={<HomePage />} exact />
+          <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
