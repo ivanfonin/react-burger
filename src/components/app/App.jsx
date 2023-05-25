@@ -9,6 +9,7 @@ import {
   ForgotPasswordPage,
   ResetPasswordPage,
   ProfilePage,
+  ProfileOrdersPage,
 } from '../../pages';
 import Modal from '../modal/Modal';
 import IngredientDetails from '../ingredient-details/IngredientDetails';
@@ -54,6 +55,10 @@ function App() {
           <Route
             path="/profile"
             element={<ProtectedRoute element={<ProfilePage />} />}
+          />
+          <Route
+            path="/profile/orders"
+            element={<ProtectedRoute element={<ProfileOrdersPage />} />}
           />
           <Route path="*" element={<NotFound404 />} />
         </Routes>

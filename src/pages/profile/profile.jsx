@@ -58,6 +58,10 @@ export const ProfilePage = () => {
     <>
       <section className="section section_size_small pt-30">
         <ProfileNav />
+
+        <p className="text text_type_main-default text_color_inactive mt-20">
+          В этом разделе вы можете изменить свои персональные данные
+        </p>
       </section>
       <section className="section pt-30">
         <form onSubmit={handleSubmit}>
