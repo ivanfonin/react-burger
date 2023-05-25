@@ -56,8 +56,6 @@ export class Api {
     options.referrerPolicy = 'no-referrer';
     options.body = JSON.stringify(data);
 
-    console.log('post data', options);
-
     return this._request(`${this._config.baseUrl}${path}`, options);
   }
 
