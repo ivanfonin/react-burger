@@ -3,10 +3,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getOrders } from '../../services/actions/orders';
 import { Loader } from '../../components/loader/loader';
 import { ProfileNav } from '../../components/profile-nav/ProfileNav';
-// import OrderItem from '../../components/order-item/OrderItem';
 
 export const ProfileOrdersPage = () => {
-  const { items, ordersRequest } = useSelector((state) => state.orders);
+  const { ordersRequest } = useSelector((state) => state.orders);
 
   const dispatch = useDispatch();
 
