@@ -41,6 +41,11 @@ export class Api {
   }
 
   get(path, options = {}) {
+    options = options || {};
+    options.method = 'GET';
+    options.headers = options.headers || {};
+    options.headers['Content-Type'] = 'application/json;charset=utf-8';
+
     return this._request(`${this._config.baseUrl}${path}`, options);
   }
 
