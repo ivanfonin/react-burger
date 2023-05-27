@@ -13,13 +13,11 @@ function IngredientDetails() {
 
   const { containerClass, titleClass } = useMemo(() => {
     if (location?.state?.background?.pathname === '/') {
-      console.log('from homapge');
       return {
         containerClass: styles.ingredient,
         titleClass: 'pr-15 ',
       };
     } else {
-      console.log('not from homapge');
       return {
         containerClass: `${styles.ingredient} mt-15`,
         titleClass: `${styles.title_auto} `,
