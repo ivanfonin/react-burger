@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useForm } from '../../hooks/useForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import { getCookie } from '../../utils/helpers';
@@ -14,7 +14,7 @@ export const ResetPasswordPage = () => {
   const { user, setPasswordRequest, setPasswordRequestMessage } = useSelector(
     (state) => state.auth
   );
-  const [form, setForm] = useState({});
+  const { form, handleChange } = useForm();
   const dispatch = useDispatch();
 
   if (getCookie('password-reset-code') !== 'sent') {
@@ -24,10 +24,6 @@ export const ResetPasswordPage = () => {
   if (user) {
     return <Navigate to={'/'} replace />;
   }
-
-  const handleChange = (evt) => {
-    setForm({ ...form, [evt.target.name]: evt.target.value });
-  };
 
   const handleSubmit = (evt) => {
     evt.preventDefault();

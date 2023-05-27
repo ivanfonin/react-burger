@@ -10,6 +10,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Loader } from '../../components/loader/loader';
 import styles from './Profile.module.css';
+import { useForm } from '../../hooks/useForm';
 
 export const ProfilePage = () => {
   const {
@@ -18,7 +19,7 @@ export const ProfilePage = () => {
     updateProfileRequestMessage,
     updateProfileRequestSuccess,
   } = useSelector((state) => state.auth);
-  const [form, setForm] = useState({});
+  const { form, setForm, handleChange } = useForm();
   const [inputIcons, setInputIcons] = useState({
     name: 'EditIcon',
     email: 'EditIcon',
@@ -29,17 +30,13 @@ export const ProfilePage = () => {
 
   useEffect(() => {
     setForm({ ...user });
-  }, [user]);
+  }, [user, setForm]);
 
   const handleFocus = (evt) => {
     setInputIcons({
       ...inputIcons,
       [evt.target.name]: evt.type === 'focus' ? 'CloseIcon' : 'EditIcon',
     });
-  };
-
-  const handleChange = (evt) => {
-    setForm({ ...form, [evt.target.name]: evt.target.value });
   };
 
   const handleFormReset = () => {

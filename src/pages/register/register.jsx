@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useForm } from '../../hooks/useForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { register } from '../../services/actions/auth';
 import { Loader } from '../../components/loader/loader';
@@ -11,7 +11,7 @@ import {
 import { NavLink, Navigate } from 'react-router-dom';
 
 export const RegisterPage = () => {
-  const [form, setForm] = useState({});
+  const { form, handleChange } = useForm();
   const dispatch = useDispatch();
   const { registerRequest, registerRequestMessage, userRequest, user } =
     useSelector((state) => state.auth);
@@ -23,10 +23,6 @@ export const RegisterPage = () => {
   if (user) {
     return <Navigate to="/" replace />;
   }
-
-  const handleChange = (evt) => {
-    setForm({ ...form, [evt.target.name]: evt.target.value });
-  };
 
   const handleSubmit = (evt) => {
     evt.preventDefault();

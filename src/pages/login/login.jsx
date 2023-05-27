@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { useState } from 'react';
+import { useForm } from '../../hooks/useForm';
 import { NavLink, Navigate } from 'react-router-dom';
 import {
   Button,
@@ -10,7 +10,7 @@ import { Loader } from '../../components/loader/loader';
 import { login } from '../../services/actions/auth';
 
 export const LoginPage = () => {
-  const [form, setForm] = useState({});
+  const { form, handleChange } = useForm();
   const { user, getUserRequest, loginRequest, loginRequestMessage } =
     useSelector((state) => state.auth);
   const dispatch = useDispatch();
@@ -22,10 +22,6 @@ export const LoginPage = () => {
   if (user) {
     return <Navigate to={'/'} replace />;
   }
-
-  const handleChange = (evt) => {
-    setForm({ ...form, [evt.target.name]: evt.target.value });
-  };
 
   const handleSubmit = (evt) => {
     evt.preventDefault();

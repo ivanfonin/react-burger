@@ -1,7 +1,7 @@
 import { NavLink, Navigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetPassword } from '../../services/actions/auth';
-import { useState } from 'react';
+import { useForm } from '../../hooks/useForm';
 import { Loader } from '../../components/loader/loader';
 import {
   Button,
@@ -11,16 +11,12 @@ import {
 export const ForgotPasswordPage = () => {
   const { user, resetPasswordRequest, resetPasswordRequestMessage } =
     useSelector((state) => state.auth);
-  const [form, setForm] = useState({});
+  const { form, handleChange } = useForm();
   const dispatch = useDispatch();
 
   if (user) {
     return <Navigate to={'/'} replace />;
   }
-
-  const handleChange = (evt) => {
-    setForm({ ...form, [evt.target.name]: evt.target.value });
-  };
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
