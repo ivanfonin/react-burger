@@ -56,17 +56,43 @@ function App() {
       <main className={`${styles.main}`}>
         <Routes location={background || location}>
           <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
-          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-          <Route path="/reset-password" element={<ResetPasswordPage />} />
+          <Route
+            path="/login"
+            element={
+              <ProtectedRoute children={<LoginPage />} anonymous={true} />
+            }
+          />
+          <Route
+            path="/register"
+            element={
+              <ProtectedRoute children={<RegisterPage />} anonymous={true} />
+            }
+          />
+          <Route
+            path="/forgot-password"
+            element={
+              <ProtectedRoute
+                children={<ForgotPasswordPage />}
+                anonymous={true}
+              />
+            }
+          />
+          <Route
+            path="/reset-password"
+            element={
+              <ProtectedRoute
+                children={<ResetPasswordPage />}
+                anonymous={true}
+              />
+            }
+          />
           <Route
             path="/profile"
-            element={<ProtectedRoute element={<ProfilePage />} />}
+            element={<ProtectedRoute children={<ProfilePage />} />}
           />
           <Route
             path="/profile/orders"
-            element={<ProtectedRoute element={<ProfileOrdersPage />} />}
+            element={<ProtectedRoute children={<ProfileOrdersPage />} />}
           />
           <Route path="/ingredients/:id" element={<IngredientDetails />} />
           <Route path="*" element={<NotFound404 />} />

@@ -11,7 +11,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
 export const ResetPasswordPage = () => {
-  const { user, setPasswordRequest, setPasswordRequestMessage } = useSelector(
+  const { setPasswordRequest, setPasswordRequestMessage } = useSelector(
     (state) => state.auth
   );
   const { form, handleChange } = useForm();
@@ -19,10 +19,6 @@ export const ResetPasswordPage = () => {
 
   if (getCookie('password-reset-code') !== 'sent') {
     return <Navigate to={'/forgot-password'} replace />;
-  }
-
-  if (user) {
-    return <Navigate to={'/'} replace />;
   }
 
   const handleSubmit = (evt) => {

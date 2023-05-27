@@ -1,5 +1,6 @@
 import { useForm } from '../../hooks/useForm';
 import { useDispatch, useSelector } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 import { register } from '../../services/actions/auth';
 import { Loader } from '../../components/loader/loader';
 import {
@@ -8,20 +9,16 @@ import {
   EmailInput,
   PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { NavLink, Navigate } from 'react-router-dom';
 
 export const RegisterPage = () => {
   const { form, handleChange } = useForm();
   const dispatch = useDispatch();
-  const { registerRequest, registerRequestMessage, userRequest, user } =
-    useSelector((state) => state.auth);
+  const { registerRequest, registerRequestMessage, userRequest } = useSelector(
+    (state) => state.auth
+  );
 
   if (userRequest) {
     return <Loader size={'large'} />;
-  }
-
-  if (user) {
-    return <Navigate to="/" replace />;
   }
 
   const handleSubmit = (evt) => {

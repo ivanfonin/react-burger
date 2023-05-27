@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from '../../hooks/useForm';
-import { NavLink, Navigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import {
   Button,
   EmailInput,
@@ -11,17 +11,10 @@ import { login } from '../../services/actions/auth';
 
 export const LoginPage = () => {
   const { form, handleChange } = useForm();
-  const { user, getUserRequest, loginRequest, loginRequestMessage } =
-    useSelector((state) => state.auth);
+  const { getUserRequest, loginRequest, loginRequestMessage } = useSelector(
+    (state) => state.auth
+  );
   const dispatch = useDispatch();
-
-  if (getUserRequest) {
-    return <Loader size="large" />;
-  }
-
-  if (user) {
-    return <Navigate to={'/'} replace />;
-  }
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
@@ -51,7 +44,7 @@ export const LoginPage = () => {
             {loginRequestMessage}
           </p>
         )}
-        {loginRequest ? (
+        {loginRequest || getUserRequest ? (
           <Loader size={'large'} />
         ) : (
           <Button

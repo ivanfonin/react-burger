@@ -1,4 +1,4 @@
-import { NavLink, Navigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetPassword } from '../../services/actions/auth';
 import { useForm } from '../../hooks/useForm';
@@ -9,14 +9,11 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 
 export const ForgotPasswordPage = () => {
-  const { user, resetPasswordRequest, resetPasswordRequestMessage } =
-    useSelector((state) => state.auth);
+  const { resetPasswordRequest, resetPasswordRequestMessage } = useSelector(
+    (state) => state.auth
+  );
   const { form, handleChange } = useForm();
   const dispatch = useDispatch();
-
-  if (user) {
-    return <Navigate to={'/'} replace />;
-  }
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
