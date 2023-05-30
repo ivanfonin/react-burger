@@ -2,4 +2,10 @@
   display: flex;
   margin: 0;
   padding: 0;
+  width: 100%;
+}
+
+.tabs > div {
+  min-width: unset;
+  flex-grow: 1;
 }

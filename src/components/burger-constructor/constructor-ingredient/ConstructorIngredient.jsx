@@ -47,24 +47,29 @@ function ConstructorIngredient({ id, index, name, price, image, handleDelete, mo
     }
   });
 
-  const [, drag] = useDrag({
+  const [ { isDragging }, drag] = useDrag({
     type: 'constructor-ingredient',
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
+    }),
     item: () => {
       return { id, index }
     }
   });
 
   drag(drop(ref));
+  
+  const opacity = isDragging ? 0 : 1;
 
   return (
-    <li ref={ref} className={styles.ingredient} data-handler-id={handlerId} draggable>
+    <li ref={ref} className={styles.ingredient} data-handler-id={handlerId} style={{ opacity }} draggable>
       <DragIcon type="primary" />
       <ConstructorElement
         index={ index }
         text={ name }
         price={ price }
         thumbnail={ image }
-        handleClose={ e => handleDelete(id) }
+        handleClose={ () => handleDelete(id) }
       />
     </li>
   )

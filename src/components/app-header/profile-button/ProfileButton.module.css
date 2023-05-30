@@ -1,0 +1,7 @@
+.profile {
+  justify-self: flex-end;
+}
+
+.profile a {
+  padding-right: 0;
+}

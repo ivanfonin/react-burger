@@ -1,4 +1,4 @@
-@import "normalize";
+@import 'normalize';
 
 :root {
   --color-text-inactive: #8585ad;
@@ -6,6 +6,7 @@
   --color-bg-secondary: #1c1c21;
   --color-bg-muted: #2f2f37;
   --color-bg-accent: #4c4cff;
+  --color-bg-accent-light: #8585ff;
 }
 
 body {
@@ -23,15 +24,48 @@ code {
     monospace;
 }
 
-.Price {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+p {
+  margin: 0;
 }
 
-.Price__medium svg {
-  width: 33px;
-  height: 33px;
+.flex {
+  display: flex;
+}
+
+.justify-content_end {
+  justify-content: flex-end;
+}
+
+.link {
+  color: var(--color-bg-accent);
+  text-decoration: none;
+  transition: color 0.25s ease-in-out;
+}
+
+.link:hover,
+.link:focus {
+  color: var(--color-bg-accent-light);
+}
+
+.link:active {
+  color: var(--color-bg-accent);
+}
+
+.section {
+  flex: 1;
+  min-width: 0;
+}
+
+.section_size_small {
+  max-width: 320px;
+}
+
+.section_form {
+  width: 100%;
+  max-width: 480px;
+  padding-top: 180px;
+  margin: 0 auto;
+  text-align: center;
 }
 
 .constructor-element {
