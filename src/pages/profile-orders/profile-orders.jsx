@@ -1,16 +1,25 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getOrders } from '../../services/actions/orders';
+import {
+  wsConnectionClose,
+  wsConnectionStart,
+} from '../../services/actions/ws';
 import { Loader } from '../../components/loader/loader';
 import { ProfileNav } from '../../components/profile-nav/ProfileNav';
+import { getCookie } from '../../utils/helpers';
+import config from '../../utils/config';
+const token = getCookie('token');
 
 export const ProfileOrdersPage = () => {
-  const { ordersRequest } = useSelector((state) => state.orders);
+  const { orders, wsRequest, wsConnected } = useSelector((state) => state.ws);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getOrders());
+    dispatch(wsConnectionStart(`${config.ws.baseUrl}/orders?token=${token}`));
+    return () => {
+      dispatch(wsConnectionClose());
+    };
   }, [dispatch]);
   return (
     <>
@@ -22,13 +31,27 @@ export const ProfileOrdersPage = () => {
         </p>
       </section>
       <section className="section pt-30">
-        {ordersRequest ? (
-          <Loader size="large" />
-        ) : (
+        {orders.map((order) => (
+          <p>{order.name}</p>
+        ))}
+        {wsConnected && (
           <p className="text text_type_main-default text_color_inactive">
             Здесь будут заказы после выполнения второго этапа работ, ветка
-            month-9/step-2.
+            month-9/step-2. Соединено: {wsConnected.toString()}
           </p>
+        )}
+        {wsRequest ? (
+          <Loader size="large" />
+        ) : (
+          <>
+            <p className="text text_type_main-default text_color_inactive">
+              Здесь будут заказы после выполнения второго этапа работ, ветка
+              month-9/step-2.
+            </p>
+            {orders.map((order) => (
+              <p>{order.name}</p>
+            ))}
+          </>
         )}
       </section>
     </>

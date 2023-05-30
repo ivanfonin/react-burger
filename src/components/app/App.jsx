@@ -12,10 +12,11 @@ import {
   ResetPasswordPage,
   ProfilePage,
   ProfileOrdersPage,
+  FeedPage,
 } from '../../pages';
 import Modal from '../modal/Modal';
 import IngredientDetails from '../ingredient-details/IngredientDetails';
-import OrderDetails from '../order-details/OrderDetails';
+import OrderConfirmation from '../order-confirmation/OrderConfirmation';
 import { RESET_ORDER } from '../../services/actions/checkout';
 import { RESET_INGREDIENT } from '../../services/actions/ingredient';
 import { getIngredients } from '../../services/actions/ingredients';
@@ -95,6 +96,10 @@ function App() {
             element={<ProtectedRoute children={<ProfileOrdersPage />} />}
           />
           <Route path="/ingredients/:id" element={<IngredientDetails />} />
+          <Route
+            path="/feed"
+            element={<ProtectedRoute children={<FeedPage />} />}
+          />
           <Route path="*" element={<NotFound404 />} />
         </Routes>
       </main>
@@ -112,7 +117,7 @@ function App() {
       )}
       {order && (
         <Modal onClose={handleCloseOrderModal}>
-          <OrderDetails />
+          <OrderConfirmation />
         </Modal>
       )}
     </>
