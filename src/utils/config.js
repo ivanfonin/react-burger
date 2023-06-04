@@ -3,7 +3,7 @@ const config = {
     baseUrl: 'https://norma.nomoreparties.space/api',
   },
   ws: {
-    baseUrl: 'wss://norma.nomoreparties.space/api',
+    baseUrl: 'wss://norma.nomoreparties.space',
   },
 };
 

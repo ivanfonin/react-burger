@@ -6,19 +6,19 @@ import rootReducer from './services/reducers';
 import {
   WS_CONNECTION_START,
   WS_CONNECTION_CLOSE,
-  wsConnectionSuccess,
-  wsConnectionClosed,
-  wsConnectionError,
-  wsGetMessage,
+  WS_CONNECTION_SUCCESS,
+  WS_CONNECTION_CLOSED,
+  WS_CONNECTION_ERROR,
+  WS_GET_MESSAGE,
 } from './services/actions/ws';
 
 const wsActions = {
   wsInit: WS_CONNECTION_START,
   wsClose: WS_CONNECTION_CLOSE,
-  onOpen: wsConnectionSuccess,
-  onClose: wsConnectionClosed,
-  onError: wsConnectionError,
-  onMessage: wsGetMessage,
+  onOpen: WS_CONNECTION_SUCCESS,
+  onClose: WS_CONNECTION_CLOSED,
+  onError: WS_CONNECTION_ERROR,
+  onMessage: WS_GET_MESSAGE,
 };
 
 const composeEnhancers =
@@ -30,4 +30,4 @@ const enhancer = composeEnhancers(
   applyMiddleware(thunkMiddleware, socketMiddleware(wsActions))
 );
 
-export const store = createStore(rootReducer, enhancer);
+export const store = createStore(rootReducer, {}, enhancer);

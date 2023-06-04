@@ -12,7 +12,7 @@ const initialState = {
   wsConnected: false,
   wsError: undefined,
   wsRequest: false,
-  orders: [],
+  orders: null,
 };
 
 export const wsReducer = (state = initialState, action) => {
@@ -37,7 +37,7 @@ export const wsReducer = (state = initialState, action) => {
         wsConnected: false,
         wsError: undefined,
         wsRequest: false,
-        orders: [],
+        orders: null,
       };
     }
     case WS_CONNECTION_CLOSED: {
@@ -58,7 +58,9 @@ export const wsReducer = (state = initialState, action) => {
     case WS_GET_MESSAGE: {
       return {
         ...state,
-        orders: action.payload,
+        orders: action.payload.map((order) => {
+          return { id: order._id, ...order };
+        }),
       };
     }
     default:

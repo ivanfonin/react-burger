@@ -29,10 +29,10 @@ function App() {
     ingredient: state.ingredient,
     order: state.checkout.order,
   }));
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const background = location.state && location.state.background;
-  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getIngredients());
@@ -96,10 +96,7 @@ function App() {
             element={<ProtectedRoute children={<ProfileOrdersPage />} />}
           />
           <Route path="/ingredients/:id" element={<IngredientDetails />} />
-          <Route
-            path="/feed"
-            element={<ProtectedRoute children={<FeedPage />} />}
-          />
+          <Route path="/feed" element={<FeedPage />} />
           <Route path="*" element={<NotFound404 />} />
         </Routes>
       </main>

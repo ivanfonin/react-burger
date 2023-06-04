@@ -1,26 +1,30 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
-  wsConnectionClose,
   wsConnectionStart,
+  wsConnectionClose,
 } from '../../services/actions/ws';
 import { Loader } from '../../components/loader/loader';
 import { ProfileNav } from '../../components/profile-nav/ProfileNav';
 import { getCookie } from '../../utils/helpers';
 import config from '../../utils/config';
-const token = getCookie('token');
 
 export const ProfileOrdersPage = () => {
-  const { orders, wsRequest, wsConnected } = useSelector((state) => state.ws);
-
+  const { orders } = useSelector((state) => state.ws);
   const dispatch = useDispatch();
+  console.log(orders);
 
   useEffect(() => {
+    const token = getCookie('token'); // Заменить на localStorage, чтобы не перезагружаться
+    if (!token) {
+      window.location.reload();
+    }
     dispatch(wsConnectionStart(`${config.ws.baseUrl}/orders?token=${token}`));
     return () => {
       dispatch(wsConnectionClose());
     };
   }, [dispatch]);
+
   return (
     <>
       <section className="section section_size_small pt-30">
@@ -31,27 +35,15 @@ export const ProfileOrdersPage = () => {
         </p>
       </section>
       <section className="section pt-30">
-        {orders.map((order) => (
-          <p>{order.name}</p>
-        ))}
-        {wsConnected && (
-          <p className="text text_type_main-default text_color_inactive">
-            Здесь будут заказы после выполнения второго этапа работ, ветка
-            month-9/step-2. Соединено: {wsConnected.toString()}
-          </p>
-        )}
-        {wsRequest ? (
-          <Loader size="large" />
-        ) : (
+        {orders && orders.length ? (
           <>
-            <p className="text text_type_main-default text_color_inactive">
-              Здесь будут заказы после выполнения второго этапа работ, ветка
-              month-9/step-2.
-            </p>
+            <p>Заказы:</p>
             {orders.map((order) => (
-              <p>{order.name}</p>
+              <p key={order._id}>{order.name}</p>
             ))}
           </>
+        ) : (
+          <Loader size="large" />
         )}
       </section>
     </>
