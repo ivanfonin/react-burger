@@ -1,0 +1,10 @@
+.container {
+  display: grid;
+}
+
+.status {
+}
+
+.status.done {
+  color: green;
+}
