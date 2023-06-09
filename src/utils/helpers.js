@@ -64,3 +64,33 @@ export const getCookie = (name) => {
   );
   return matches ? decodeURIComponent(matches[1]) : undefined;
 };
+
+/**
+ * Функция возвращает статус на русском и класс для текста.
+ *
+ * @param {String} status Статус на английском.
+ */
+export const parseStatus = (status) => {
+  switch (status) {
+    case 'created':
+      return {
+        color: 'text_color_default',
+        label: 'Создан',
+      };
+    case 'pending':
+      return {
+        color: 'text_color_default',
+        label: 'Готовится',
+      };
+    case 'done':
+      return {
+        color: 'text_color_success',
+        label: 'Выполнен',
+      };
+    default:
+      return {
+        color: 'text_color_error',
+        label: 'Отменен',
+      };
+  }
+};
