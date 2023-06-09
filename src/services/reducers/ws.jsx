@@ -8,10 +8,8 @@ import {
 } from '../actions/ws';
 
 const initialState = {
-  wsUrl: undefined,
-  wsConnected: false,
-  wsError: undefined,
   wsRequest: false,
+  wsError: '',
   orders: null,
 };
 
@@ -20,7 +18,6 @@ export const wsReducer = (state = initialState, action) => {
     case WS_CONNECTION_START: {
       return {
         ...state,
-        wsUrl: action.payload,
         wsRequest: true,
       };
     }
@@ -28,30 +25,24 @@ export const wsReducer = (state = initialState, action) => {
       return {
         ...state,
         wsRequest: false,
-        wsConnected: true,
       };
     }
     case WS_CONNECTION_CLOSE: {
       return {
-        wsUrl: undefined,
-        wsConnected: false,
-        wsError: undefined,
+        ...state,
         wsRequest: false,
-        orders: null,
       };
     }
     case WS_CONNECTION_CLOSED: {
       return {
         ...state,
         wsRequest: false,
-        wsConnected: false,
       };
     }
     case WS_CONNECTION_ERROR: {
       return {
         ...state,
         wsRequest: false,
-        wsConnected: false,
         wsError: action.payload,
       };
     }
