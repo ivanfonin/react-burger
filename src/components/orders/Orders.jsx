@@ -14,7 +14,7 @@ function Orders() {
     </ul>
   ) : (
     <p className="text text_type_main-default pt-5">
-      У Вас еще нет заказов, соберите свой бургер в{' '}
+      У Вас еще нет заказов, соберите первый бургер в{' '}
       <Link className="link" to="/">
         конструкторе
       </Link>
