@@ -27,7 +27,6 @@ export const socketMiddleware = (wsActions) => {
           socket.onmessage = (event) => {
             const { data } = event;
             const { orders } = JSON.parse(data);
-            console.log('socketMiddleware: got message', JSON.parse(data));
             dispatch({ type: onMessage, payload: orders });
           };
         }

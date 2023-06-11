@@ -33,7 +33,7 @@ export const ProfileOrdersPage = () => {
           В этом разделе вы можете просмотреть свою историю заказов
         </p>
       </section>
-      <section className="section pt-30">
+      <section className="section profile-orders pt-30">
         {orders ? <Orders /> : <Loader size="large" />}
       </section>
     </>

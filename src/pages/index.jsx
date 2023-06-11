@@ -5,7 +5,7 @@ import { ForgotPasswordPage } from './forgot-password/forgot-password';
 import { ResetPasswordPage } from './reset-password/reset-password';
 import { ProfilePage } from './profile/profile';
 import { ProfileOrdersPage } from './profile-orders/profile-orders';
-import { FeedPage } from './feed/Feed';
+import { FeedPage } from './feed/feed';
 import { NotFound404 } from './404/404';
 
 export {

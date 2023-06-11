@@ -2,13 +2,15 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import OrderItem from '../order-item/OrderItem';
 
+import styles from './Orders.module.css';
+
 function Orders() {
   const { orders } = useSelector((state) => state.ws);
   const { items } = useSelector((state) => state.ingredients);
 
   return orders && items ? (
-    <ul>
-      {orders.reverse().map((order) => (
+    <ul className={`${styles.orders} scroll-section`}>
+      {orders.map((order) => (
         <OrderItem key={order.id} {...order} />
       ))}
     </ul>

@@ -5,8 +5,6 @@ import { groupBy } from '../../utils/helpers';
 import { createRef } from 'react';
 import { useSelector } from 'react-redux';
 
-import styles from './BurgerIngredients.module.css';
-
 function BurgerIngredients() {
   const { items, ingredientsRequest } = useSelector(
     (state) => state.ingredients
@@ -36,7 +34,7 @@ function BurgerIngredients() {
     <>
       <h1 className="text text_type_main-large">Соберите бургер</h1>
       <Tabs onTabClick={handleTabSelected} />
-      <div className={`burger-ingredients ${styles.section}`}>
+      <div className="burger-ingredients scroll-section">
         {ingredientsRequest ? <Loader size="large" /> : ingredientsSections}
       </div>
     </>

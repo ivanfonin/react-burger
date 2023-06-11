@@ -49,7 +49,7 @@ export const wsReducer = (state = initialState, action) => {
     case WS_GET_MESSAGE: {
       return {
         ...state,
-        orders: action.payload.map((order) => {
+        orders: action.payload?.map((order) => {
           return { id: order._id, ...order };
         }),
       };
