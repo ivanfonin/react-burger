@@ -1,17 +1,18 @@
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
 import { parseStatus } from '../../utils/helpers';
 import { PropTypes } from 'prop-types';
+import Price from '../price/Price';
 
 import styles from './OrderItem.module.css';
-import { useSelector } from 'react-redux';
-import Price from '../price/Price';
 
 function OrderItem({ number, createdAt, name, status, ingredients }) {
   const { items } = useSelector((state) => state.ingredients);
   const { color, label } = parseStatus(status);
-  const orderIngredients = items.filter((item) =>
-    ingredients.includes(item.id)
-  );
+  let orderIngredients = items.filter((item) => ingredients.includes(item.id));
+  const counter = orderIngredients.length - 6;
+  orderIngredients.splice(6, Infinity);
   const total = orderIngredients.reduce((acc, i) => {
     if ('bun' === i.type) {
       return i.price * 2 + acc;
@@ -19,9 +20,16 @@ function OrderItem({ number, createdAt, name, status, ingredients }) {
       return i.price + acc;
     }
   }, 0);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const onClick = () => {
+    navigate(`${location.pathname}/${number}`, {
+      state: { background: location },
+    });
+  };
 
   return (
-    <li className={styles.container}>
+    <li className={styles.container} onClick={onClick}>
       <p className={`${styles.number} text text_type_digits-default`}>
         #{number}
       </p>
@@ -31,14 +39,26 @@ function OrderItem({ number, createdAt, name, status, ingredients }) {
       >
         <FormattedDate date={new Date(createdAt)}></FormattedDate>
       </time>
-      <p className={`${styles.name} text text_type_main-medium`}>{name}</p>
+      <p className={`${styles.name} text text_type_main-medium`} title={name}>
+        {name}
+      </p>
       <p className={`${styles.status} text text_type_main-small ${color}`}>
         {label}
       </p>
       <ul className={styles.ingredients}>
-        {orderIngredients.map((i) => (
+        {orderIngredients.map((i, index) => (
           <li key={i.id} className={styles.ingredient}>
-            <img className={styles.img} src={i.image_mobile} alt={i.name} />
+            <img
+              className={styles.img}
+              src={i.image_mobile}
+              alt={i.name}
+              title={i.name}
+            />
+            {index === 5 ? (
+              <p className={`${styles.counter} text text_type_digits-small`}>
+                &nbsp;{counter}+
+              </p>
+            ) : null}
           </li>
         ))}
       </ul>
