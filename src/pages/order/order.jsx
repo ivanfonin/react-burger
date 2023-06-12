@@ -20,7 +20,7 @@ export const OrderPage = () => {
 
   useEffect(() => {
     dispatch(fetchOrder(id));
-  }, []);
+  }, [dispatch]);
 
   if (orderRequest) {
     return <Loader size="large" />;
