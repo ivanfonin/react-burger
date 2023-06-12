@@ -53,6 +53,7 @@ export const wsReducer = (state = initialState, action) => {
     }
     case WS_GET_MESSAGE: {
       const { orders, total, totalToday } = action.payload;
+      // todo: Бред какой-то получился, проще просто очищать стейт, когда происходит отключение сокета,
       if (state.wsUrl.includes('/orders/all')) {
         return {
           ...state,
