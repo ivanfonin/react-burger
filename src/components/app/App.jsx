@@ -12,13 +12,13 @@ import {
   ResetPasswordPage,
   ProfilePage,
   ProfileOrdersPage,
+  OrderPage,
   FeedPage,
 } from '../../pages';
 import Modal from '../modal/Modal';
 import IngredientDetails from '../ingredient-details/IngredientDetails';
 import OrderConfirmation from '../order-confirmation/OrderConfirmation';
 import { RESET_ORDER } from '../../services/actions/checkout';
-import { RESET_INGREDIENT } from '../../services/actions/ingredient';
 import { getIngredients } from '../../services/actions/ingredients';
 import { checkAuth } from '../../services/actions/auth';
 
@@ -42,9 +42,8 @@ function App() {
     dispatch(checkAuth());
   }, [dispatch]);
 
-  const handleCloseIngredientModal = () => {
+  const handleCloseModal = () => {
     navigate(-1);
-    dispatch({ type: RESET_INGREDIENT });
   };
 
   const handleCloseOrderModal = () => {
@@ -95,8 +94,13 @@ function App() {
             path="/profile/orders"
             element={<ProtectedRoute children={<ProfileOrdersPage />} />}
           />
+          <Route
+            path="/profile/orders/:id"
+            element={<ProtectedRoute children={<OrderPage />} />}
+          />
           <Route path="/ingredients/:id" element={<IngredientDetails />} />
           <Route path="/feed" element={<FeedPage />} />
+          <Route path="/feed/:id" element={<OrderPage />} />
           <Route path="*" element={<NotFound404 />} />
         </Routes>
       </main>
@@ -105,11 +109,29 @@ function App() {
           <Route
             path="/ingredients/:id"
             element={
-              <Modal onClose={handleCloseIngredientModal}>
+              <Modal onClose={handleCloseModal}>
                 <IngredientDetails />
               </Modal>
             }
           />
+          <Route
+            path="/feed/:id"
+            element={
+              <Modal onClose={handleCloseModal}>
+                <OrderPage />
+              </Modal>
+            }
+          />
+          <Route
+            path="/profile/orders/:id"
+            element={
+              <ProtectedRoute>
+                <Modal onClose={handleCloseModal}>
+                  <OrderPage />
+                </Modal>
+              </ProtectedRoute>
+            }
+          ></Route>
         </Routes>
       )}
       {order && (

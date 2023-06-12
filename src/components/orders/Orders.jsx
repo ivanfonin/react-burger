@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import OrderItem from '../order-item/OrderItem';
 
 import styles from './Orders.module.css';
@@ -7,10 +7,15 @@ import styles from './Orders.module.css';
 function Orders() {
   const { orders } = useSelector((state) => state.ws);
   const { items } = useSelector((state) => state.ingredients);
+  const location = useLocation();
+  const o = orders.slice();
+  if ('/profile/orders' === location.pathname) {
+    o?.reverse();
+  }
 
   return orders && items ? (
     <ul className={`${styles.orders} scroll-section`}>
-      {orders.map((order) => (
+      {o.map((order) => (
         <OrderItem key={order.id} {...order} />
       ))}
     </ul>

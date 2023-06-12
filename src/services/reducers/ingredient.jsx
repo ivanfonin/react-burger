@@ -1,7 +1,4 @@
-import {
-  SET_INGREDIENT,
-  RESET_INGREDIENT
-} from '../actions/ingredient';
+import { SET_INGREDIENT } from '../actions/ingredient';
 
 const initialState = null;
 
@@ -10,10 +7,7 @@ export const ingredientReducer = (state = initialState, action) => {
     case SET_INGREDIENT: {
       return action.ingredient;
     }
-    case RESET_INGREDIENT: {
-      return null;
-    }
-    default: 
+    default:
       return state;
   }
-}
+};

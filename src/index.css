@@ -21,6 +21,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  color: var(--color-text-primary);
 }
 
 code {
@@ -40,10 +41,12 @@ code {
 
 .scroll-section::-webkit-scrollbar-track {
   background: var(--color-bg-muted);
+  border-radius: 4px;
 }
 
 .scroll-section::-webkit-scrollbar-thumb {
   background-color: var(--color-text-inactive);
+  border-radius: 4px;
 }
 
 p {
