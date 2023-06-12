@@ -11,6 +11,8 @@ const initialState = {
   wsRequest: false,
   wsError: '',
   orders: null,
+  total: null,
+  totalToday: null,
 };
 
 export const wsReducer = (state = initialState, action) => {
@@ -47,9 +49,12 @@ export const wsReducer = (state = initialState, action) => {
       };
     }
     case WS_GET_MESSAGE: {
+      const { orders, total, totalToday } = action.payload;
       return {
         ...state,
-        orders: action.payload?.map((order) => {
+        total,
+        totalToday,
+        orders: orders?.map((order) => {
           return { id: order._id, ...order };
         }),
       };
