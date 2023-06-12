@@ -26,16 +26,18 @@ export const OrderPage = () => {
     return <Loader size="large" />;
   } else if (order) {
     const { color, label } = parseStatus(order.status);
-    const orderIngredients = items.filter((item) =>
-      order.ingredients.includes(item.id)
-    );
-    const total = orderIngredients.reduce((acc, i) => {
-      if ('bun' === i.type) {
-        return i.price * 2 + acc;
-      } else {
-        return i.price + acc;
-      }
-    }, 0);
+    let ingredients = [];
+    order.ingredients.map((id) => {
+      const ingredient = items.find((item) => item._id === id);
+      const index = ingredients.findIndex((i) => i._id === ingredient._id);
+      return index > -1
+        ? (ingredients[index] = {
+            ...ingredients[index],
+            counter: ingredients[index].counter + 1,
+          })
+        : ingredients.push({ ...ingredient, counter: 1 });
+    });
+    const total = ingredients.reduce((acc, i) => i.price * i.counter + acc, 0);
 
     return (
       <section className={styles.order}>
@@ -54,12 +56,12 @@ export const OrderPage = () => {
         </header>
         <p className="text text_type_main-medium pt-15 pb-6">Состав</p>
         <ul className={`${styles.ingredients} scroll-section`}>
-          {orderIngredients.reverse().map((i, index) => (
+          {ingredients.map((i, index) => (
             <li key={index} className={styles.ingredient}>
               <img className={styles.img} src={i.image_mobile} alt={i.name} />
               <p className="text text_type_main-default">{i.name}</p>
               <b className={`${styles.price} text text_type_digits-default`}>
-                {i.type === 'bun' ? '2 x' : '1 x'}
+                {`${i.counter} x`}
                 &nbsp;
                 <Price
                   icon="primary"
