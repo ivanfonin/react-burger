@@ -5,15 +5,18 @@ import OrderItem from '../order-item/OrderItem';
 import styles from './Orders.module.css';
 
 function Orders() {
-  const { orders } = useSelector((state) => state.ws);
+  const { orders, userOrders } = useSelector((state) => state.ws);
   const { items } = useSelector((state) => state.ingredients);
   const location = useLocation();
-  const o = orders.slice();
+  let o;
   if ('/profile/orders' === location.pathname) {
+    o = userOrders?.slice();
     o?.reverse();
+  } else {
+    o = orders?.slice();
   }
 
-  return orders && items ? (
+  return o && items ? (
     <ul className={`${styles.orders} scroll-section`}>
       {o.map((order) => (
         <OrderItem key={order.id} {...order} />

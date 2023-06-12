@@ -8,8 +8,10 @@ import {
 } from '../actions/ws';
 
 const initialState = {
+  wsUrl: '',
   wsRequest: false,
   wsError: '',
+  userOrders: null,
   orders: null,
   total: null,
   totalToday: null,
@@ -21,6 +23,7 @@ export const wsReducer = (state = initialState, action) => {
       return {
         ...state,
         wsRequest: true,
+        wsUrl: action.payload,
       };
     }
     case WS_CONNECTION_SUCCESS: {
@@ -50,14 +53,26 @@ export const wsReducer = (state = initialState, action) => {
     }
     case WS_GET_MESSAGE: {
       const { orders, total, totalToday } = action.payload;
-      return {
-        ...state,
-        total,
-        totalToday,
-        orders: orders?.map((order) => {
-          return { id: order._id, ...order };
-        }),
-      };
+      if (state.wsUrl.includes('/orders/all')) {
+        return {
+          ...state,
+          total,
+          totalToday,
+          orders: orders?.map((order) => {
+            return { id: order._id, ...order };
+          }),
+        };
+      } else if (state.wsUrl.includes('/orders?token')) {
+        return {
+          ...state,
+          total,
+          totalToday,
+          userOrders: orders?.map((order) => {
+            return { id: order._id, ...order };
+          }),
+        };
+      }
+      break;
     }
     default:
       return state;

@@ -11,7 +11,7 @@ import { getCookie } from '../../utils/helpers';
 import config from '../../utils/config';
 
 export const ProfileOrdersPage = () => {
-  const { orders } = useSelector((state) => state.ws);
+  const { wsRequest, orders, userOrders } = useSelector((state) => state.ws);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -34,7 +34,11 @@ export const ProfileOrdersPage = () => {
         </p>
       </section>
       <section className="section profile-orders pt-30">
-        {orders ? <Orders /> : <Loader size="large" />}
+        {!wsRequest && (orders || userOrders) ? (
+          <Orders />
+        ) : (
+          <Loader size="large" />
+        )}
       </section>
     </>
   );
