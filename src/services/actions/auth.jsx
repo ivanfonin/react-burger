@@ -54,8 +54,8 @@ export const register = (form) => (dispatch) => {
     .post('/auth/register', form)
     .then((res) => {
       dispatch({ type: REGISTER_USER_SUCCESS, user: res.user });
-      setCookie('token', res.accessToken.split('Bearer ')[1]);
-      setCookie('refreshToken', res.refreshToken);
+      setCookie('token', res.accessToken.split('Bearer ')[1], { path: '/' });
+      setCookie('refreshToken', res.refreshToken, { path: '/' });
     })
     .catch((error) => {
       dispatch({ type: REGISTER_USER_FAILED, error });
@@ -69,8 +69,8 @@ export const login = (form) => (dispatch) => {
     .post('/auth/login', form)
     .then((res) => {
       dispatch({ type: LOGIN_USER_SUCCESS, user: res.user });
-      setCookie('token', res.accessToken.split('Bearer ')[1]);
-      setCookie('refreshToken', res.refreshToken);
+      setCookie('token', res.accessToken.split('Bearer ')[1], { path: '/' });
+      setCookie('refreshToken', res.refreshToken, { path: '/' });
     })
     .catch((error) => {
       dispatch({ type: LOGIN_USER_FAILED, error });
@@ -122,7 +122,7 @@ export const resetPassword = (form) => (dispatch) => {
     .post('/password-reset', form)
     .then(() => {
       dispatch({ type: RESET_PASSWORD_SUCCESS });
-      setCookie('password-reset-code', 'sent', { expires: 60 * 20 });
+      setCookie('password-reset-code', 'sent', { expires: 60 * 20, path: '/' });
       window.location = '/reset-password';
     })
     .catch((error) => {

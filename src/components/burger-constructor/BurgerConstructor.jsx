@@ -94,7 +94,9 @@ function BurgerConstructor() {
   return (
     <>
       <section
-        className={`${styles.section} pr-4 ${isHover ? 'hover' : 'no-hover'}`}
+        className={`${styles.section} scroll-section pr-4 ${
+          isHover ? 'hover' : 'no-hover'
+        }`}
         ref={dropTargetRef}
       >
         {burger.bun && (

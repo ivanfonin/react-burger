@@ -1,0 +1,110 @@
+.container {
+  display: grid;
+  grid-template-areas:
+    'number time'
+    'name name'
+    'status .'
+    'ingredients price';
+  background-color: var(--color-bg-secondary);
+  border-radius: var(--radius-medium);
+  padding: 24px;
+  transition: background-color 0.25s ease-in-out;
+}
+
+.container:hover,
+.container:focus {
+  cursor: pointer;
+  background-color: var(--color-bg-muted);
+}
+
+.number {
+  grid-area: number;
+}
+
+.time {
+  grid-area: time;
+  justify-self: end;
+  white-space: nowrap;
+}
+
+.name {
+  grid-area: name;
+  padding-top: 24px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.status {
+  grid-area: status;
+  padding-top: 8px;
+}
+
+.ingredients {
+  grid-area: ingredients;
+  margin: 0;
+  padding: 24px 0 0 0;
+  list-style: none;
+  display: flex;
+}
+
+.ingredient {
+  display: flex;
+  position: relative;
+  z-index: 6;
+}
+
+.img {
+  object-fit: cover;
+  width: 64px;
+  height: 64px;
+  box-sizing: border-box;
+  padding: 4px;
+  border-radius: 64px;
+  border: 2px solid #801ab2;
+  background-color: var(--color-bg-secondary);
+}
+
+.counter {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 64px;
+  border: 2px solid #801ab2;
+  box-sizing: border-box;
+  background-color: rgba(28, 28, 33, 0.6);
+}
+
+.ingredient:nth-of-type(2) {
+  right: 20px;
+  z-index: 5;
+}
+
+.ingredient:nth-of-type(3) {
+  right: 40px;
+  z-index: 4;
+}
+
+.ingredient:nth-of-type(4) {
+  right: 60px;
+  z-index: 3;
+}
+
+.ingredient:nth-of-type(5) {
+  right: 80px;
+  z-index: 2;
+}
+
+.ingredient:nth-of-type(6) {
+  right: 100px;
+  z-index: 1;
+}
+
+.price {
+  grid-area: price;
+  padding-top: 24px;
+  justify-self: end;
+}

@@ -1,34 +1,43 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getOrders } from '../../services/actions/orders';
+import {
+  wsConnectionStart,
+  wsConnectionClose,
+} from '../../services/actions/ws';
+import Orders from '../../components/orders/Orders';
 import { Loader } from '../../components/loader/loader';
 import { ProfileNav } from '../../components/profile-nav/ProfileNav';
+import { getCookie } from '../../utils/helpers';
+import config from '../../utils/config';
 
 export const ProfileOrdersPage = () => {
-  const { ordersRequest } = useSelector((state) => state.orders);
-
+  const { wsRequest, orders, userOrders } = useSelector((state) => state.ws);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getOrders());
+    const token = getCookie('token'); // Заменить на localStorage, чтобы не перезагружаться
+    if (!token) {
+      window.location.reload();
+    }
+    dispatch(wsConnectionStart(`${config.ws.baseUrl}/orders?token=${token}`));
+    return () => {
+      dispatch(wsConnectionClose());
+    };
   }, [dispatch]);
+
   return (
     <>
       <section className="section section_size_small pt-30">
         <ProfileNav />
-
         <p className="text text_type_main-default text_color_inactive mt-20">
           В этом разделе вы можете просмотреть свою историю заказов
         </p>
       </section>
-      <section className="section pt-30">
-        {ordersRequest ? (
-          <Loader size="large" />
+      <section className="section profile-orders pt-30">
+        {!wsRequest && (orders || userOrders) ? (
+          <Orders />
         ) : (
-          <p className="text text_type_main-default text_color_inactive">
-            Здесь будут заказы после выполнения второго этапа работ, ветка
-            month-9/step-2.
-          </p>
+          <Loader size="large" />
         )}
       </section>
     </>

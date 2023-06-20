@@ -18,12 +18,12 @@ export class Api {
       .then(this._checkResponse)
       .catch((err) => {
         if ('jwt expired' === err.message) {
-          console.log('jwt expired');
           this.post('/auth/token', { token: getCookie('refreshToken') })
             .then((res) => {
-              console.log('updated jwt');
-              setCookie('token', res.accessToken.split('Bearer ')[1]);
-              setCookie('refreshToken', res.refreshToken);
+              setCookie('token', res.accessToken.split('Bearer ')[1], {
+                path: '/',
+              });
+              setCookie('refreshToken', res.refreshToken, { path: '/' });
               options.headers = options.headers || {};
               options.headers.Authorization = res.refreshToken;
               this._request(url, options);
@@ -32,7 +32,6 @@ export class Api {
               console.log(message);
             });
         } else if ('You should be authorised' === err.message) {
-          console.log('should be authorised');
           window.location.reload();
         } else {
           return Promise.reject(err.message);

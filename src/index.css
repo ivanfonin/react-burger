@@ -7,6 +7,10 @@
   --color-bg-muted: #2f2f37;
   --color-bg-accent: #4c4cff;
   --color-bg-accent-light: #8585ff;
+  --radius-small: 32px;
+  --radius-medium: 40px;
+  --radius-large: 64px;
+  --radius-large: 88px;
 }
 
 body {
@@ -17,11 +21,32 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  color: var(--color-text-primary);
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.scroll-section {
+  max-height: 756px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.scroll-section::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scroll-section::-webkit-scrollbar-track {
+  background: var(--color-bg-muted);
+  border-radius: 4px;
+}
+
+.scroll-section::-webkit-scrollbar-thumb {
+  background-color: var(--color-text-inactive);
+  border-radius: 4px;
 }
 
 p {
