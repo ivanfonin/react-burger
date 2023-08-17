@@ -1,3 +1,5 @@
+type TIngredient = {}; // Импортировать тип ингредиента
+
 /**
  * Функция группировки объектов по заданному свойству.
  *
@@ -7,8 +9,8 @@
  *  свойств переданного key, а значения – массивы объектов с одинаковым key:
  *  [ 'key_value_1': [ {}, {} ], 'key_value_2': [ {}, {} ] ]
  */
-export const groupBy = (arr, key) => {
-  const result = {};
+export const groupBy = (arr: Array<TIngredient>, key: keyof TIngredient) => {
+  let result: any = {};
   arr.forEach((item) => {
     if (item[key] in result) {
       result[item[key]].push(item);
@@ -19,14 +21,22 @@ export const groupBy = (arr, key) => {
   return result;
 };
 
+type TCookieProps = {
+  [key: string]: any;
+};
+
 /**
  * Функция сохранения Cookie в браузере.
  *
  * @param {String} name Название cookie.
- * @param {Object} value Значение cookie.
+ * @param {String} value Значение cookie.
  * @param {Object} props Дополнительные свойства cookie.
  */
-export const setCookie = (name, value, props) => {
+export const setCookie = (
+  name: string,
+  value: string,
+  props: TCookieProps
+): void => {
   props = props || {};
   let exp = props.expires;
   if (typeof exp == 'number' && exp) {
@@ -49,12 +59,14 @@ export const setCookie = (name, value, props) => {
   document.cookie = updatedCookie;
 };
 
+type TCookie = string | undefined;
+
 /**
  * Функция получения Cookie из браузера.
  *
  * @param {String} name Название cookie.
  */
-export const getCookie = (name) => {
+export const getCookie = (name: string): TCookie => {
   const matches = document.cookie.match(
     new RegExp(
       '(?:^|; )' + // eslint-disable-next-line
@@ -65,12 +77,21 @@ export const getCookie = (name) => {
   return matches ? decodeURIComponent(matches[1]) : undefined;
 };
 
+type TStatus = 'created' | 'pending' | 'done';
+interface IStatusResolved {
+  readonly color:
+    | 'text_color_default'
+    | 'text_color_success'
+    | 'text_color_error';
+  readonly label: string;
+}
+
 /**
  * Функция возвращает статус на русском и класс для текста.
  *
  * @param {String} status Статус на английском.
  */
-export const parseStatus = (status) => {
+export const parseStatus = (status: TStatus): IStatusResolved => {
   switch (status) {
     case 'created':
       return {
