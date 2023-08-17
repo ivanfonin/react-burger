@@ -1,7 +1,7 @@
-import { PropTypes } from "prop-types";
-import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import { PropTypes } from 'prop-types';
+import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import "./Price.css";
+import './Price.css';
 
 function Price({ icon, size, value, classes }) {
   return (
