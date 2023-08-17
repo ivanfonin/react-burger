@@ -1,4 +1,4 @@
-type TIngredient = {}; // Импортировать тип ингредиента
+import { TIngredient } from '../services/types/data';
 
 /**
  * Функция группировки объектов по заданному свойству.
