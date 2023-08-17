@@ -1,13 +1,13 @@
 import Ingredient from '../ingredient/Ingredient';
 import IngredientsSectionTitle from './ingredients-section-title/IngredientsSectionTitle';
-import { ingredientsPropTypes } from '../../utils/constants';
-import { PropTypes } from 'prop-types';
 import { useEffect, forwardRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import { SET_ACTIVE_TAB } from '../../services/actions/tabs';
 
 import styles from './IngredientsSection.module.css';
+
+// import TIngredientsSection from '../../services/types/data';
 
 const IngredientsSection = forwardRef(({ type, ingredients }, ref) => {
   const location = useLocation();
@@ -50,7 +50,7 @@ const IngredientsSection = forwardRef(({ type, ingredients }, ref) => {
               state={{ background: location }}
             >
               <li className={styles.item} key={ingredient.id}>
-                <Ingredient ingredient={ingredient} />
+                <Ingredient {...ingredient} />
               </li>
             </Link>
           );
@@ -59,10 +59,5 @@ const IngredientsSection = forwardRef(({ type, ingredients }, ref) => {
     </section>
   );
 });
-
-IngredientsSection.propTypes = {
-  type: PropTypes.string.isRequired,
-  ingredients: ingredientsPropTypes,
-};
 
 export default IngredientsSection;
