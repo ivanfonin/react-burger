@@ -1,11 +1,12 @@
 import Price from '../price/Price';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
-import { ingredientPropTypes } from '../../utils/constants';
 import { useDrag } from 'react-dnd';
 
 import styles from './Ingredient.module.css';
 
-function Ingredient({ ingredient }) {
+import { TIngredient } from '../../services/types/data';
+
+function Ingredient(ingredient: TIngredient) {
   const { name, image, price, counter } = ingredient;
 
   const [, drag] = useDrag({
@@ -31,9 +32,5 @@ function Ingredient({ ingredient }) {
     </div>
   );
 }
-
-Ingredient.propTypes = {
-  ingredient: ingredientPropTypes,
-};
 
 export default Ingredient;
