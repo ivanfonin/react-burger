@@ -1,4 +1,4 @@
-export type TIngredient = {
+export type TServerIngredient = {
   _id: string;
   name: string;
   type: 'bun' | 'main' | 'sauce';
@@ -12,3 +12,5 @@ export type TIngredient = {
   image_large: string;
   __v: number;
 };
+
+export type TIngredient = Omit<TServerIngredient, '_id'> & { id: string };
