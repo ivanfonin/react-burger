@@ -1,25 +1,29 @@
 import { getCookie, setCookie } from '../../utils/helpers';
+import { TResponse } from '../types/data';
+import { IApi } from '../types/data';
 
-export class Api {
-  constructor(config) {
+export class Api implements IApi {
+  _config: any;
+
+  constructor(config: any) {
     this._config = config;
   }
 
-  _checkResponse(res) {
+  _checkResponse(res: TResponse) {
     return res.ok
       ? res.json()
-      : res.json().then((err) => {
+      : res.json().then((err: any) => {
           throw new Error(err.message);
         });
   }
 
-  _request(url, options) {
+  _request(url: string, options: any) {
     return fetch(url, options)
       .then(this._checkResponse)
       .catch((err) => {
         if ('jwt expired' === err.message) {
           this.post('/auth/token', { token: getCookie('refreshToken') })
-            .then((res) => {
+            .then((res: any) => {
               setCookie('token', res.accessToken.split('Bearer ')[1], {
                 path: '/',
               });
@@ -39,11 +43,11 @@ export class Api {
       });
   }
 
-  get(path, options = {}) {
+  get(path: string, options: any = {}) {
     return this._request(`${this._config.baseUrl}${path}`, options);
   }
 
-  post(path, data, options = {}) {
+  post(path: any, data: any, options: any = {}) {
     options = options || {};
     options.method = 'POST';
     options.mode = 'cors';
@@ -58,7 +62,7 @@ export class Api {
     return this._request(`${this._config.baseUrl}${path}`, options);
   }
 
-  patch(path, data, options = {}) {
+  patch(path: string, data: any, options: any = {}) {
     options = options || {};
     options.method = 'PATCH';
     options.mode = 'cors';
