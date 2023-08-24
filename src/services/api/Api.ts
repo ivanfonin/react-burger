@@ -46,7 +46,7 @@ export class Api implements IApi {
     return this._request(`${this._config.baseUrl}${path}`, options);
   }
 
-  post(path: any, data: any, options: any = {}) {
+  post(path: string, data: any, options: any = {}) {
     options = options || {};
     options.method = 'POST';
     options.mode = 'cors';
