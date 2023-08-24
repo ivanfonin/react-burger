@@ -1,11 +1,14 @@
-import { PropTypes } from 'prop-types';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector } from 'react-redux';
 
 import styles from './Tabs.module.css';
 
-function Tabs({ onTabClick }) {
-  const active = useSelector((state) => state.tab);
+type TTabsType = {
+  onTabClick: (value: string) => void;
+};
+
+function Tabs({ onTabClick }: TTabsType) {
+  const active = useSelector((state: any) => state.tab);
 
   return (
     <nav className="pt-5">
@@ -23,9 +26,5 @@ function Tabs({ onTabClick }) {
     </nav>
   );
 }
-
-Tabs.propTypes = {
-  onTabClick: PropTypes.func.isRequired,
-};
 
 export default Tabs;
