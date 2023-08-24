@@ -1,14 +1,14 @@
-import { PropTypes } from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import {
   BurgerIcon,
   ListIcon,
   ProfileIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
+import { THeaderLinkObject } from '../../../services/types/data';
 
 import linkStyles from './Link.module.css';
 
-function Link(props) {
+const Link = (props: THeaderLinkObject) => {
   function getType() {
     return props.current ? 'primary' : 'secondary';
   }
@@ -41,12 +41,6 @@ function Link(props) {
       {icon} <span className="pl-2">{props.name}</span>
     </NavLink>
   );
-}
-
-Link.propTypes = {
-  icon: PropTypes.string.isRequired,
-  link: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
 };
 
 export default Link;

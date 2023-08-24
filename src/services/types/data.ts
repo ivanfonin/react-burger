@@ -67,7 +67,8 @@ export type TEventTarget = {
 };
 
 export type THeaderLinkObject = {
-  link: String;
+  link: Partial<string>;
   name: String;
-  icon: 'burger' | 'list';
+  icon: 'burger' | 'list' | 'profile';
+  current?: boolean;
 };
