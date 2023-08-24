@@ -1,10 +1,11 @@
+import { FC } from 'react';
 import { NavLink } from 'react-router-dom';
 import { ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './ProfileButton.module.css';
 import linkStyles from '../link/Link.module.css';
 
-function ProfileButton() {
+const ProfileButton: FC = () => {
   return (
     <div className={styles.profile}>
       <NavLink
@@ -17,10 +18,11 @@ function ProfileButton() {
             : linkStyles.Link
         }
       >
-        <ProfileIcon /> <span className="pl-2">Личный кабинет</span>
+        <ProfileIcon type="primary" />{' '}
+        <span className="pl-2">Личный кабинет</span>
       </NavLink>
     </div>
   );
-}
+};
 
 export default ProfileButton;
