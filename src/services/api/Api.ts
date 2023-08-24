@@ -1,11 +1,10 @@
 import { getCookie, setCookie } from '../../utils/helpers';
-import { TResponse } from '../types/data';
-import { IApi } from '../types/data';
+import { TApiConfig, TResponse, IApi } from '../types/data';
 
 export class Api implements IApi {
-  _config: any;
+  _config: TApiConfig;
 
-  constructor(config: any) {
+  constructor(config: TApiConfig) {
     this._config = config;
   }
 

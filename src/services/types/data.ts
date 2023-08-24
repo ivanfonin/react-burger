@@ -1,3 +1,7 @@
+export type TApiConfig = {
+  baseUrl: string;
+};
+
 export interface IApi {
   readonly _config: any;
   _checkResponse: any;
