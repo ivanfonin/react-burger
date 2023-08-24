@@ -1,11 +1,8 @@
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector } from 'react-redux';
+import { TTabsType } from '../../services/types/data';
 
 import styles from './Tabs.module.css';
-
-type TTabsType = {
-  onTabClick: (value: string) => void;
-};
 
 function Tabs({ onTabClick }: TTabsType) {
   const active = useSelector((state: any) => state.tab);

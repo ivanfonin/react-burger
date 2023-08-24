@@ -77,3 +77,7 @@ export type TLoaderIconType = {
   color: string;
   size: Required<number>;
 };
+
+export type TTabsType = {
+  onTabClick: (value: string) => void;
+};
