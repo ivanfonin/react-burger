@@ -2,13 +2,13 @@ import { getCookie, setCookie } from '../../utils/helpers';
 import { TApiConfig, TResponse, IApi } from '../types/data';
 
 export class Api implements IApi {
-  _config: TApiConfig;
+  private _config;
 
   constructor(config: TApiConfig) {
     this._config = config;
   }
 
-  _checkResponse(res: TResponse) {
+  private _checkResponse(res: TResponse) {
     return res.ok
       ? res.json()
       : res.json().then((err: any) => {
@@ -16,7 +16,7 @@ export class Api implements IApi {
         });
   }
 
-  _request(url: string, options: any) {
+  private _request(url: string, options: any) {
     return fetch(url, options)
       .then(this._checkResponse)
       .catch((err) => {

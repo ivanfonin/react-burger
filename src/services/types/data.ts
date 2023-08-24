@@ -3,9 +3,6 @@ export type TApiConfig = {
 };
 
 export interface IApi {
-  readonly _config: any;
-  _checkResponse: any;
-  _request: any;
   get: (path: string, options: any) => any;
   post: (path: string, data: any, options: any) => any;
   patch: (path: string, data: any, options: any) => any;
