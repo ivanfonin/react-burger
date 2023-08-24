@@ -1,8 +1,9 @@
 import Link from '../link/Link';
+import { THeaderLinkObject } from '../../../services/types/data';
 
 import styles from './Nav.module.css';
 
-const links = [
+const links: THeaderLinkObject[] = [
   {
     link: '/',
     name: 'Конструктор',

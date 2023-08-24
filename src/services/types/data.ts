@@ -65,3 +65,9 @@ export type TEventTarget = {
     name: string;
   };
 };
+
+export type THeaderLinkObject = {
+  link: String;
+  name: String;
+  icon: 'burger' | 'list';
+};
