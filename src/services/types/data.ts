@@ -72,3 +72,8 @@ export type THeaderLinkObject = {
   icon: 'burger' | 'list' | 'profile';
   current?: boolean;
 };
+
+export type TLoaderIconType = {
+  color: string;
+  size: Required<number>;
+};

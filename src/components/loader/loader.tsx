@@ -1,12 +1,18 @@
 import style from './loader.module.css';
 import { LoaderSvg } from './loader.svg';
 
-const loaderSizes = {
+const loaderSizes: { [key: string]: number } = {
   small: 16,
   medium: 24,
   large: 40,
 };
-export const Loader = ({ size, inverse = false }) => {
+
+type TLoaderType = {
+  size: Required<number>;
+  inverse: boolean;
+};
+
+export const Loader = ({ size, inverse = false }: TLoaderType) => {
   const loaderColor = inverse ? '#fff' : '#3C39EC';
 
   const wrapperStyleKey = 'wrapper_' + size;

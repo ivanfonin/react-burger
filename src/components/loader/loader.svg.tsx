@@ -1,4 +1,9 @@
-export const LoaderSvg = ({ color = 'var(--color-bg-accent)', size }) => {
+import { TLoaderIconType } from '../../services/types/data';
+
+export const LoaderSvg = ({
+  color = 'var(--color-bg-accent)',
+  size,
+}: TLoaderIconType) => {
   return (
     <svg
       width={size}
