@@ -1,4 +1,5 @@
 import Link from '../link/Link';
+import { FC } from 'react';
 import { THeaderLinkObject } from '../../../services/types/data';
 
 import styles from './Nav.module.css';
@@ -16,7 +17,7 @@ const links: THeaderLinkObject[] = [
   },
 ];
 
-function Nav() {
+const Nav: FC = () => {
   return (
     <nav className={styles.nav}>
       {links.map((link, index) => (
@@ -24,6 +25,6 @@ function Nav() {
       ))}
     </nav>
   );
-}
+};
 
 export default Nav;
