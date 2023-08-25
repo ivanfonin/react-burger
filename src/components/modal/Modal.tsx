@@ -17,7 +17,7 @@ const Modal: FunctionComponent<TModalProps> = ({
 }): ReactPortal => {
   const location = useLocation();
   const background = location.state && location.state.background;
-  const modalClass = background
+  const modalClass: string = background
     ? `${styles.modal} ${styles.modal_dark}`
     : `${styles.modal}`;
 
