@@ -10,7 +10,8 @@ export interface IApi {
 
 export type TResponseJson = {
   success: boolean;
-  data: any;
+  data?: any;
+  message?: string;
 };
 
 export type TResponse = {
@@ -60,6 +61,7 @@ export type TInputValues = {
 };
 
 export type TEventTarget = {
+  type?: string;
   target: {
     value: string;
     name: string;
@@ -81,3 +83,22 @@ export type TLoaderIconType = {
 export type TTabsType = {
   onTabClick: (value: string) => void;
 };
+
+export type TIcons =
+  | 'EditIcon'
+  | 'CurrencyIcon'
+  | 'BurgerIcon'
+  | 'LockIcon'
+  | 'DragIcon'
+  | 'DeleteIcon'
+  | 'ArrowUpIcon'
+  | 'ArrowDownIcon'
+  | 'MenuIcon'
+  | 'CloseIcon'
+  | 'CheckMarkIcon'
+  | 'ListIcon'
+  | 'InfoIcon'
+  | 'ShowIcon'
+  | 'HideIcon'
+  | 'LogoutIcon'
+  | 'ProfileIcon';
