@@ -1,3 +1,4 @@
+import { FunctionComponent } from 'react';
 import style from './loader.module.css';
 import { LoaderSvg } from './loader.svg';
 
@@ -7,15 +8,18 @@ const loaderSizes: { [key: string]: number } = {
   large: 40,
 };
 
-type TLoaderType = {
-  size: Required<number>;
-  inverse: boolean;
-};
+interface ILoaderProps {
+  size: Required<string>;
+  inverse?: boolean;
+}
 
-export const Loader = ({ size, inverse = false }: TLoaderType) => {
-  const loaderColor = inverse ? '#fff' : '#3C39EC';
+export const Loader: FunctionComponent<ILoaderProps> = ({
+  size,
+  inverse = false,
+}) => {
+  const loaderColor: string = inverse ? '#fff' : '#3C39EC';
+  const wrapperStyleKey: string = 'wrapper_' + size;
 
-  const wrapperStyleKey = 'wrapper_' + size;
   return (
     <div className={style[wrapperStyleKey]}>
       <LoaderSvg color={loaderColor} size={loaderSizes[size]} />
