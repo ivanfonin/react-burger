@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateProfile } from '../../services/actions/auth';
 import { UPDATE_PROFILE_MESSAGE_HIDE } from '../../services/actions/auth';
@@ -11,6 +11,11 @@ import {
 import { Loader } from '../../components/loader/loader';
 import styles from './Profile.module.css';
 import { useForm } from '../../hooks/useForm';
+import { TIcons } from '../../services/types/data';
+
+type TInputIcons = {
+  [key: string]: TIcons;
+};
 
 export const ProfilePage = () => {
   const {
@@ -18,9 +23,9 @@ export const ProfilePage = () => {
     updateProfileRequest,
     updateProfileRequestMessage,
     updateProfileRequestSuccess,
-  } = useSelector((state) => state.auth);
+  } = useSelector((state: any) => state.auth);
   const { form, setForm, handleChange } = useForm();
-  const [inputIcons, setInputIcons] = useState({
+  const [inputIcons, setInputIcons] = useState<TInputIcons>({
     name: 'EditIcon',
     email: 'EditIcon',
     password: 'EditIcon',
@@ -32,7 +37,7 @@ export const ProfilePage = () => {
     setForm({ ...user });
   }, [user, setForm]);
 
-  const handleFocus = (evt) => {
+  const handleFocus = (evt: any) => {
     setInputIcons({
       ...inputIcons,
       [evt.target.name]: evt.type === 'focus' ? 'CloseIcon' : 'EditIcon',
@@ -43,9 +48,9 @@ export const ProfilePage = () => {
     setForm({ ...user });
   };
 
-  const handleSubmit = (evt) => {
+  const handleSubmit = (evt: FormEvent) => {
     evt.preventDefault();
-    dispatch(updateProfile(form));
+    // dispatch(updateProfile(form));
     setTimeout(() => {
       dispatch({ type: UPDATE_PROFILE_MESSAGE_HIDE });
     }, 2500);
@@ -78,7 +83,7 @@ export const ProfilePage = () => {
             placeholder={'Email'}
             value={form?.email ?? ''}
             required={true}
-            icon={inputIcons.email}
+            isIcon={true}
             onFocus={handleFocus}
             onBlur={handleFocus}
             onChange={handleChange}
