@@ -1,11 +1,11 @@
-import { FC } from 'react';
+import { FunctionComponent } from 'react';
 import { NavLink } from 'react-router-dom';
 import { ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './ProfileButton.module.css';
 import linkStyles from '../link/Link.module.css';
 
-const ProfileButton: FC = () => {
+const ProfileButton: FunctionComponent = () => {
   return (
     <div className={styles.profile}>
       <NavLink

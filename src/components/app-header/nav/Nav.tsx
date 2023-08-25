@@ -1,5 +1,5 @@
 import Link from '../link/Link';
-import { FC } from 'react';
+import { FunctionComponent } from 'react';
 import { THeaderLinkObject } from '../../../services/types/data';
 
 import styles from './Nav.module.css';
@@ -17,7 +17,7 @@ const links: THeaderLinkObject[] = [
   },
 ];
 
-const Nav: FC = () => {
+const Nav: FunctionComponent = () => {
   return (
     <nav className={styles.nav}>
       {links.map((link, index) => (
