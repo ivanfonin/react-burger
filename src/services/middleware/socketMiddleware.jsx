@@ -29,7 +29,7 @@ export const socketMiddleware = (wsActions) => {
             const { orders, total, totalToday } = JSON.parse(data);
             dispatch({
               type: onMessage,
-              payload: { orders, total, totalToday },
+              message: { orders, total, totalToday },
             });
           };
         }

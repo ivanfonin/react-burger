@@ -7,6 +7,36 @@ import {
   WS_GET_MESSAGE,
 } from '../actions/ws';
 
+import { TOrder } from '../types/data';
+
+type TMessage = {
+  orders: TOrder[];
+  total: number;
+  totalToday: number;
+};
+
+interface IAction {
+  type:
+    | 'WS_CONNECTION_START'
+    | 'WS_CONNECTION_SUCCESS'
+    | 'WS_CONNECTION_CLOSE'
+    | 'WS_CONNECTION_CLOSED'
+    | 'WS_CONNECTION_ERROR'
+    | 'WS_GET_MESSAGE';
+  payload: string | Event;
+  message: TMessage;
+}
+
+interface IState {
+  wsUrl: string;
+  wsRequest: boolean;
+  wsError: string;
+  userOrders: TOrder[] | null;
+  orders: TOrder[] | null;
+  total: number | null;
+  totalToday: number | null;
+}
+
 const initialState = {
   wsUrl: '',
   wsRequest: false,
@@ -17,7 +47,7 @@ const initialState = {
   totalToday: null,
 };
 
-export const wsReducer = (state = initialState, action) => {
+export const wsReducer = (state: IState = initialState, action: IAction) => {
   switch (action.type) {
     case WS_CONNECTION_START: {
       return {
@@ -52,7 +82,7 @@ export const wsReducer = (state = initialState, action) => {
       };
     }
     case WS_GET_MESSAGE: {
-      const { orders, total, totalToday } = action.payload;
+      const { orders, total, totalToday } = action.message;
       // todo: Бред какой-то получился, проще просто очищать стейт, когда происходит отключение сокета,
       if (state.wsUrl.includes('/orders/all')) {
         return {
