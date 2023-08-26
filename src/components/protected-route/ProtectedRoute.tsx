@@ -1,9 +1,17 @@
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/hooks';
 import { Navigate, useLocation } from 'react-router-dom';
-import { PropTypes } from 'prop-types';
 import { Loader } from '../loader/loader';
+import { FunctionComponent, ReactElement } from 'react';
 
-export const ProtectedRoute = ({ children, anonymous = false }) => {
+interface IProtectedRoute {
+  children: ReactElement;
+  anonymous: boolean;
+}
+
+export const ProtectedRoute: FunctionComponent<IProtectedRoute> = ({
+  children,
+  anonymous = false,
+}) => {
   const { user, getUserRequest } = useSelector((state) => state.auth);
   const location = useLocation();
   const from = location.state?.from || '/';
@@ -21,11 +29,6 @@ export const ProtectedRoute = ({ children, anonymous = false }) => {
   }
 
   return children;
-};
-
-ProtectedRoute.propTypes = {
-  children: PropTypes.node.isRequired,
-  anonymous: PropTypes.bool,
 };
 
 export default ProtectedRoute;
