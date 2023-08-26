@@ -1,3 +1,4 @@
+import { TCheckoutActions } from '../actions/checkout';
 import {
   CREATE_ORDER,
   CREATE_ORDER_SUCCESS,
@@ -7,31 +8,22 @@ import {
 
 import { TOrder } from '../types/data';
 
-interface IAction {
-  type:
-    | 'CREATE_ORDER'
-    | 'CREATE_ORDER_SUCCESS'
-    | 'CREATE_ORDER_FAILED'
-    | 'RESET_ORDER';
-  order: TOrder;
-}
-
 interface IState {
   orderRequest: Boolean;
   orderFailed: Boolean;
   order: TOrder | null;
 }
 
-const initialState = {
+const initialState: IState = {
   orderRequest: false,
   orderFailed: false,
   order: null,
 };
 
 export const checkoutReducer = (
-  state: IState = initialState,
-  action: IAction
-) => {
+  state = initialState,
+  action: TCheckoutActions
+): IState => {
   switch (action.type) {
     case CREATE_ORDER: {
       return {

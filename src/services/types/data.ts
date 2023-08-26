@@ -9,6 +9,8 @@ export type TResponseJson = {
   message?: string;
   user?: TUser;
   orders?: Array<TOrder>;
+  name?: string;
+  order?: TOrder;
 };
 
 export type TResponse = {
