@@ -4,9 +4,15 @@ import {
   ListIcon,
   ProfileIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { THeaderLinkObject } from '../../../services/types/data';
 
 import linkStyles from './Link.module.css';
+
+type THeaderLinkObject = {
+  link: Partial<string>;
+  name: String;
+  icon: 'burger' | 'list' | 'profile';
+  current?: boolean;
+};
 
 const Link = (props: THeaderLinkObject) => {
   function getType() {

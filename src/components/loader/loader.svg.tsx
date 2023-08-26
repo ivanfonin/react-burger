@@ -1,4 +1,7 @@
-import { TLoaderIconType } from '../../services/types/data';
+type TLoaderIconType = {
+  color: string;
+  size: Required<number>;
+};
 
 export const LoaderSvg = ({
   color = 'var(--color-bg-accent)',

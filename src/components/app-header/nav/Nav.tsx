@@ -1,8 +1,14 @@
 import Link from '../link/Link';
 import { FunctionComponent } from 'react';
-import { THeaderLinkObject } from '../../../services/types/data';
 
 import styles from './Nav.module.css';
+
+type THeaderLinkObject = {
+  link: Partial<string>;
+  name: String;
+  icon: 'burger' | 'list' | 'profile';
+  current?: boolean;
+};
 
 const links: THeaderLinkObject[] = [
   {

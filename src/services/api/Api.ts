@@ -1,5 +1,6 @@
 import { getCookie, setCookie } from '../../utils/helpers';
-import { TApiConfig, TResponse, IApi } from '../types/data';
+import { TApiConfig, IApi } from '../types';
+import { TResponse } from '../types/data';
 
 export class Api implements IApi {
   private _config;

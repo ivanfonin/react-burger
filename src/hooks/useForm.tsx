@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { TEventTarget, TInputValues } from '../services/types/data';
+import { TEventTarget, TInputValues } from '../services/types';
 
 export function useForm(inputValues: TInputValues = {}) {
   const [form, setForm] = useState<TInputValues>(inputValues);

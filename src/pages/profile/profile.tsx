@@ -1,6 +1,6 @@
 import { FormEvent, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateProfile } from '../../services/actions/auth';
+// import { updateProfile } from '../../services/actions/auth';
 import { UPDATE_PROFILE_MESSAGE_HIDE } from '../../services/actions/auth';
 import { ProfileNav } from '../../components/profile-nav/ProfileNav';
 import {
@@ -11,7 +11,7 @@ import {
 import { Loader } from '../../components/loader/loader';
 import styles from './Profile.module.css';
 import { useForm } from '../../hooks/useForm';
-import { TIcons } from '../../services/types/data';
+import { TIcons } from '../../services/types';
 
 type TInputIcons = {
   [key: string]: TIcons;
