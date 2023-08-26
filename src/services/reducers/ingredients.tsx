@@ -6,13 +6,35 @@ import {
   DECREASE_INGREDIENT_COUNTER,
 } from '../actions/ingredients';
 
+import { TServerIngredient, TIngredient } from '../types/data';
+
+interface IAction {
+  type:
+    | 'GET_INGREDIENTS'
+    | 'GET_INGREDIENTS_SUCCESS'
+    | 'GET_INGREDIENTS_FAILED'
+    | 'INCREASE_INGREDIENT_COUNTER'
+    | 'DECREASE_INGREDIENT_COUNTER';
+  ingredients: TServerIngredient[];
+  ingredient: TIngredient;
+}
+
+interface IState {
+  items: TIngredient[];
+  ingredientsRequest: boolean;
+  ingredientsFailed: boolean;
+}
+
 const initialState = {
   items: [],
   ingredientsRequest: false,
   ingredientsFailed: false,
 };
 
-export const ingredientsReducer = (state = initialState, action) => {
+export const ingredientsReducer = (
+  state: IState = initialState,
+  action: IAction
+) => {
   switch (action.type) {
     case GET_INGREDIENTS: {
       return {
@@ -42,8 +64,8 @@ export const ingredientsReducer = (state = initialState, action) => {
       return {
         ...state,
         items: state.items.map((item) => {
-          if ('bun' === action.ingredient.type && 'bun' === item.type) {
-            if (item._id === action.ingredient._id) {
+          if ('bun' === action.ingredient?.type && 'bun' === item?.type) {
+            if (item.id === action.ingredient.id) {
               item.counter = 2;
             } else {
               item.counter = 0;
@@ -51,7 +73,7 @@ export const ingredientsReducer = (state = initialState, action) => {
           }
 
           if (
-            item._id === action.ingredient._id &&
+            item.id === action.ingredient.id &&
             'bun' !== action.ingredient.type
           ) {
             item.counter += 1;
@@ -65,7 +87,7 @@ export const ingredientsReducer = (state = initialState, action) => {
       return {
         ...state,
         items: state.items.map((item) => {
-          if (item._id === action.ingredient._id) {
+          if (item.id === action.ingredient.id) {
             if ('bun' !== item.type) {
               item.counter -= 1;
             } else {
