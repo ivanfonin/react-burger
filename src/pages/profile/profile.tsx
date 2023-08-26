@@ -1,6 +1,6 @@
 import { FormEvent, useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-// import { updateProfile } from '../../services/actions/auth';
+import { useSelector, useDispatch } from '../../services/hooks';
+import { updateProfile } from '../../services/actions/auth';
 import { UPDATE_PROFILE_MESSAGE_HIDE } from '../../services/actions/auth';
 import { ProfileNav } from '../../components/profile-nav/ProfileNav';
 import {
@@ -23,7 +23,7 @@ export const ProfilePage = () => {
     updateProfileRequest,
     updateProfileRequestMessage,
     updateProfileRequestSuccess,
-  } = useSelector((state: any) => state.auth);
+  } = useSelector((state) => state.auth);
   const { form, setForm, handleChange } = useForm();
   const [inputIcons, setInputIcons] = useState<TInputIcons>({
     name: 'EditIcon',
@@ -50,7 +50,7 @@ export const ProfilePage = () => {
 
   const handleSubmit = (evt: FormEvent) => {
     evt.preventDefault();
-    // dispatch(updateProfile(form));
+    dispatch(updateProfile(form));
     setTimeout(() => {
       dispatch({ type: UPDATE_PROFILE_MESSAGE_HIDE });
     }, 2500);
