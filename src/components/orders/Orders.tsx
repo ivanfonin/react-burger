@@ -1,6 +1,7 @@
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/hooks';
 import { Link, useLocation } from 'react-router-dom';
 import OrderItem from '../order-item/OrderItem';
+import { TOrder } from '../../services/types/data';
 
 import styles from './Orders.module.css';
 
@@ -18,8 +19,8 @@ function Orders() {
 
   return o && items ? (
     <ul className={`${styles.orders} scroll-section`}>
-      {o.map((order) => (
-        <OrderItem key={order.id} {...order} />
+      {o.map((order: TOrder) => (
+        <OrderItem key={order._id} {...order} />
       ))}
     </ul>
   ) : (
