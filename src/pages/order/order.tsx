@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector, useDispatch } from '../../services/hooks';
 import { useLocation, useParams } from 'react-router-dom';
 import { FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
 import Price from '../../components/price/Price';
@@ -8,6 +8,7 @@ import { fetchOrder } from '../../services/actions/order';
 import { parseStatus } from '../../utils/helpers';
 
 import styles from './order.module.css';
+import { TIngredient } from '../../services/types/data';
 
 export const OrderPage = () => {
   const { id } = useParams();
@@ -22,14 +23,12 @@ export const OrderPage = () => {
     dispatch(fetchOrder(id));
   }, [dispatch, id]);
 
-  if (orderRequest) {
-    return <Loader size="large" />;
-  } else if (order) {
+  if (order) {
     const { color, label } = parseStatus(order.status);
-    let ingredients = [];
-    order.ingredients.map((id) => {
-      const ingredient = items.find((item) => item._id === id);
-      const index = ingredients.findIndex((i) => i._id === ingredient._id);
+    let ingredients: Array<TIngredient> = [];
+    order.ingredients.map((id: string) => {
+      const ingredient = items.find((item: TIngredient) => item.id === id);
+      const index = ingredients.findIndex((i) => i.id === ingredient.id);
       return index > -1
         ? (ingredients[index] = {
             ...ingredients[index],
@@ -89,6 +88,8 @@ export const OrderPage = () => {
         </footer>
       </section>
     );
+  } else {
+    return orderRequest && <Loader size="large" />;
   }
 };
 

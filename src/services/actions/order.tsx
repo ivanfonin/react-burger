@@ -1,5 +1,6 @@
 import { TOrder } from '../types/data';
 import { api } from '../api/client';
+import { AppDispatch, AppThunk } from '../types';
 
 export const GET_ORDER: 'GET_ORDER' = 'GET_ORDER';
 export const GET_ORDER_SUCCESS: 'GET_ORDER_SUCCESS' = 'GET_ORDER_SUCCESS';
@@ -21,18 +22,19 @@ interface IGetOrderFailed {
 
 export type TOrderActions = IGetOrder | IGetOrderSuccess | IGetOrderFailed;
 
-export const fetchOrder = (number: number) => (dispatch: any) => {
-  dispatch({ type: GET_ORDER });
+export const fetchOrder: AppThunk =
+  (number: number) => (dispatch: AppDispatch) => {
+    dispatch({ type: GET_ORDER });
 
-  api
-    .get(`/orders/${number}`)
-    .then((res) => {
-      dispatch({
-        type: GET_ORDER_SUCCESS,
-        order: res?.orders ? res.orders[0] : null,
+    api
+      .get(`/orders/${number}`)
+      .then((res) => {
+        dispatch({
+          type: GET_ORDER_SUCCESS,
+          order: res?.orders ? res.orders[0] : null,
+        });
+      })
+      .catch((err) => {
+        dispatch({ type: GET_ORDER_FAILED, error: err.message });
       });
-    })
-    .catch((err) => {
-      dispatch({ type: GET_ORDER_FAILED, error: err.message });
-    });
-};
+  };

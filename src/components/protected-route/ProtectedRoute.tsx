@@ -1,11 +1,11 @@
 import { useSelector } from '../../services/hooks';
 import { Navigate, useLocation } from 'react-router-dom';
 import { Loader } from '../loader/loader';
-import { FunctionComponent, ReactElement } from 'react';
+import { FunctionComponent, ReactElement, ReactNode } from 'react';
 
 interface IProtectedRoute {
   children: ReactElement;
-  anonymous: boolean;
+  anonymous?: boolean;
 }
 
 export const ProtectedRoute: FunctionComponent<IProtectedRoute> = ({
