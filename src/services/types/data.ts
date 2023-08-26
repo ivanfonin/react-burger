@@ -11,6 +11,8 @@ export type TResponseJson = {
   orders?: Array<TOrder>;
   name?: string;
   order?: TOrder;
+  accessToken?: string;
+  refreshToken?: string;
 };
 
 export type TResponse = {

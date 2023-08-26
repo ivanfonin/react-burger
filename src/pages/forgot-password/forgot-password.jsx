@@ -26,9 +26,9 @@ export const ForgotPasswordPage = () => {
       <form onSubmit={handleSubmit}>
         <EmailInput
           extraClass="pt-6"
-          name={'name'}
+          name={'email'}
           placeholder={'Укажите Email'}
-          value={form?.name ?? ''}
+          value={form?.email ?? ''}
           required={true}
           onChange={handleChange}
         />

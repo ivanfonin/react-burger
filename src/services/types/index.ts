@@ -44,4 +44,26 @@ export type TEventTarget = {
   };
 };
 
+export type TRegisterForm = {
+  name: string;
+  email: string;
+  password: string;
+};
+
+export type TLoginForm = {
+  email: string;
+  password: string;
+};
+
+export type TProfileForm = TRegisterForm;
+
+export type TForgotPasswordForm = {
+  email: string;
+};
+
+export type TResetPasswordForm = {
+  email: string;
+  token: string;
+};
+
 export type AppDispatch = typeof store.dispatch;

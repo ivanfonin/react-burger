@@ -1,3 +1,4 @@
+import { TAuthActions } from '../actions/auth';
 import {
   GET_USER,
   GET_USER_SUCCESS,
@@ -22,39 +23,7 @@ import {
   SET_PASSWORD_SUCCESS,
   SET_PASSWORD_FAILED,
 } from '../actions/auth';
-
-interface IUser {
-  email: string;
-  name: string;
-}
-
-interface IAction {
-  type:
-    | 'GET_USER'
-    | 'GET_USER_SUCCESS'
-    | 'GET_USER_FAILED'
-    | 'REGISTER_USER'
-    | 'REGISTER_USER_SUCCESS'
-    | 'REGISTER_USER_FAILED'
-    | 'LOGIN_USER'
-    | 'LOGIN_USER_SUCCESS'
-    | 'LOGIN_USER_FAILED'
-    | 'LOGOUT_USER'
-    | 'LOGOUT_USER_SUCCESS'
-    | 'LOGOUT_USER_FAILED'
-    | 'UPDATE_PROFILE'
-    | 'UPDATE_PROFILE_SUCCESS'
-    | 'UPDATE_PROFILE_FAILED'
-    | 'UPDATE_PROFILE_MESSAGE_HIDE'
-    | 'RESET_PASSWORD'
-    | 'RESET_PASSWORD_SUCCESS'
-    | 'RESET_PASSWORD_FAILED'
-    | 'SET_PASSWORD'
-    | 'SET_PASSWORD_SUCCESS'
-    | 'SET_PASSWORD_FAILED';
-  user: IUser | null;
-  error: string;
-}
+import { TUser } from '../types/data';
 
 interface IState {
   getUserRequest: boolean;
@@ -66,6 +35,9 @@ interface IState {
   loginRequest: boolean;
   loginRequestFailed: boolean;
   loginRequestMessage: string;
+  logoutRequest: boolean;
+  logoutRequestFailed: boolean;
+  logoutRequestMessage: string;
   updateProfileRequest: boolean;
   updateProfileRequestFailed: boolean;
   updateProfileRequestSuccess: boolean;
@@ -76,10 +48,10 @@ interface IState {
   setPasswordRequest: boolean;
   setPasswordRequestFailed: boolean;
   setPasswordRequestMessage: string;
-  user: IUser | null;
+  user: TUser | null;
 }
 
-const initialState = {
+const initialState: IState = {
   getUserRequest: true,
   getUserRequestFailed: false,
   getUserRequestMessage: '',
@@ -89,6 +61,9 @@ const initialState = {
   loginRequest: false,
   loginRequestFailed: false,
   loginRequestMessage: '',
+  logoutRequest: false,
+  logoutRequestFailed: true,
+  logoutRequestMessage: '',
   updateProfileRequest: false,
   updateProfileRequestFailed: false,
   updateProfileRequestSuccess: false,
@@ -102,7 +77,10 @@ const initialState = {
   user: null,
 };
 
-export const authReducer = (state: IState = initialState, action: IAction) => {
+export const authReducer = (
+  state = initialState,
+  action: TAuthActions
+): IState => {
   switch (action.type) {
     case GET_USER: {
       return {
