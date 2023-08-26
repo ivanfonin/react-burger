@@ -1,4 +1,4 @@
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/hooks';
 import { ReactNode, useMemo } from 'react';
 
 import styles from './Scoreboard.module.css';
@@ -6,7 +6,7 @@ import styles from './Scoreboard.module.css';
 import { TOrder } from '../../services/types/data';
 
 export const Scoreboard = () => {
-  const { orders, total, totalToday } = useSelector((state: any) => state.ws);
+  const { orders, total, totalToday } = useSelector((state) => state.ws);
   const doneOrders = useMemo<Array<ReactNode>>(() => {
     return orders
       ?.filter((order: TOrder) => order.status === 'done')

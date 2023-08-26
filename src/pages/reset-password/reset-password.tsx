@@ -13,7 +13,7 @@ import { FormEvent } from 'react';
 
 export const ResetPasswordPage = () => {
   const { setPasswordRequest, setPasswordRequestMessage } = useSelector(
-    (state: any) => state.auth
+    (state) => state.auth
   );
   const { form, handleChange } = useForm();
   const dispatch = useDispatch();

@@ -1,10 +1,10 @@
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/hooks';
 import doneImagePath from '../../images/done.svg';
 
 import styles from './OrderConfirmation.module.css';
 
 function OrderConfirmation() {
-  const { order } = useSelector((state: any) => state.checkout);
+  const { order } = useSelector((state) => state.checkout);
   return (
     <div className={styles.container}>
       <h3 className={`${styles.number} text text_type_digits-large`}>

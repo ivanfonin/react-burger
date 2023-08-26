@@ -33,7 +33,7 @@ type TMoveIngredientFunc = (dragIndex: number, hoverIndex: number) => void;
 type TCallbackFunc = () => void;
 
 function BurgerConstructor() {
-  const { burger, orderRequest, user } = useSelector((state: any) => ({
+  const { burger, orderRequest, user } = useSelector((state) => ({
     burger: state.burger,
     orderRequest: state.checkout.orderRequest,
     user: state.auth.user,

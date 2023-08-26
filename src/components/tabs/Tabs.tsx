@@ -1,5 +1,5 @@
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/hooks';
 
 import styles from './Tabs.module.css';
 
@@ -8,7 +8,7 @@ type TTabsType = {
 };
 
 function Tabs({ onTabClick }: TTabsType) {
-  const active = useSelector((state: any) => state.tab);
+  const active = useSelector((state) => state.tab);
 
   return (
     <nav className="pt-5">

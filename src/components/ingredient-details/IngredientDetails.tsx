@@ -1,4 +1,4 @@
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/hooks';
 import { useLocation, useParams } from 'react-router-dom';
 import { useMemo } from 'react';
 import { Loader } from '../loader/loader';
@@ -9,7 +9,7 @@ import { TIngredient } from '../../services/types/data';
 
 function IngredientDetails() {
   const { id } = useParams();
-  const { ingredients } = useSelector((state: any) => state);
+  const { ingredients } = useSelector((state) => state);
   const ingredient = ingredients?.items?.find((i: TIngredient) => i.id === id);
   const location = useLocation();
 
