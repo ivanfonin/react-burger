@@ -9,7 +9,7 @@ import {
 
 import { TOrder } from '../types/data';
 
-type TMessage = {
+export type TMessage = {
   orders: TOrder[];
   total: number;
   totalToday: number;
