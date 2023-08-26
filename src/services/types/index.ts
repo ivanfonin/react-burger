@@ -11,6 +11,15 @@ import { TOrderActions } from '../actions/order';
 import { TTabsActions } from '../actions/tabs';
 import { TWsActions } from '../actions/ws';
 
+import {
+  WS_CONNECTION_START,
+  WS_CONNECTION_CLOSE,
+  WS_CONNECTION_SUCCESS,
+  WS_CONNECTION_CLOSED,
+  WS_CONNECTION_ERROR,
+  WS_GET_MESSAGE,
+} from '../../services/actions/ws';
+
 type TApplicationActions =
   | TAuthActions
   | TBurgerActions
@@ -80,6 +89,15 @@ export type TResetPasswordForm = {
   email: string;
   token: string;
 };
+
+export interface IWsActions {
+  wsInit: typeof WS_CONNECTION_START;
+  wsClose: typeof WS_CONNECTION_CLOSE;
+  onOpen: typeof WS_CONNECTION_SUCCESS;
+  onError: typeof WS_CONNECTION_CLOSED;
+  onClose: typeof WS_CONNECTION_ERROR;
+  onMessage: typeof WS_GET_MESSAGE;
+}
 
 export type RootState = ReturnType<typeof store.getState>;
 
