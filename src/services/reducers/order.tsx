@@ -4,6 +4,21 @@ import {
   GET_ORDER_SUCCESS,
 } from '../actions/order';
 
+import { TOrder } from '../types/data';
+
+interface IAction {
+  type: 'GET_ORDER' | 'GET_ORDER_FAILED' | 'GET_ORDER_SUCCESS';
+  order: TOrder;
+  error: string;
+}
+
+interface IState {
+  order: TOrder | null;
+  orderRequest: boolean;
+  orderRequestFailed: boolean;
+  orderRequestMessage: string;
+}
+
 const initialState = {
   order: null,
   orderRequest: false,
@@ -11,7 +26,7 @@ const initialState = {
   orderRequestMessage: '',
 };
 
-export const orderReducer = (state = initialState, action) => {
+export const orderReducer = (state: IState = initialState, action: IAction) => {
   switch (action.type) {
     case GET_ORDER: {
       return {
