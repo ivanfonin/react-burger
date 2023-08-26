@@ -2,6 +2,7 @@ import { api } from '../api/client';
 import { getCookie } from '../../utils/helpers';
 import { RESET_BURGER_INGREDIENTS } from './burger';
 import { TOrder } from '../types/data';
+import { AppDispatch, AppThunk } from '../types';
 
 export const CREATE_ORDER: 'CREATE_ORDER' = 'CREATE_ORDER';
 export const CREATE_ORDER_SUCCESS: 'CREATE_ORDER_SUCCESS' =
@@ -32,26 +33,27 @@ export type TCheckoutActions =
   | ICreateOrderFailed
   | IResetOrder;
 
-export const checkout = (order: TOrder) => (dispatch: any) => {
-  dispatch({ type: CREATE_ORDER });
+export const checkout: AppThunk =
+  (order: TOrder) => (dispatch: AppDispatch) => {
+    dispatch({ type: CREATE_ORDER });
 
-  api
-    .post('/orders', order, {
-      headers: {
-        Authorization: 'Bearer ' + getCookie('token'),
-      },
-    })
-    .then((res) => {
-      dispatch({
-        type: CREATE_ORDER_SUCCESS,
-        order: {
-          name: res?.name,
-          number: res?.order?.number,
+    api
+      .post('/orders', order, {
+        headers: {
+          Authorization: 'Bearer ' + getCookie('token'),
         },
+      })
+      .then((res) => {
+        dispatch({
+          type: CREATE_ORDER_SUCCESS,
+          order: {
+            name: res?.name,
+            number: res?.order?.number,
+          },
+        });
+        dispatch({ type: RESET_BURGER_INGREDIENTS });
+      })
+      .catch((err) => {
+        dispatch({ type: CREATE_ORDER_FAILED });
       });
-      dispatch({ type: RESET_BURGER_INGREDIENTS });
-    })
-    .catch((err) => {
-      dispatch({ type: CREATE_ORDER_FAILED });
-    });
-};
+  };
