@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector, useDispatch } from '../../services/hooks';
 import { useForm } from '../../hooks/useForm';
 import { NavLink } from 'react-router-dom';
 import {
@@ -8,6 +8,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Loader } from '../../components/loader/loader';
 import { login } from '../../services/actions/auth';
+import { FormEvent } from 'react';
 
 export const LoginPage = () => {
   const { form, handleChange } = useForm();
@@ -16,7 +17,7 @@ export const LoginPage = () => {
   );
   const dispatch = useDispatch();
 
-  const handleSubmit = (evt) => {
+  const handleSubmit = (evt: FormEvent) => {
     evt.preventDefault();
     dispatch(login(form));
   };
