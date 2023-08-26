@@ -62,11 +62,13 @@ export type TOrderOwner = {
   updatedAt: string;
 };
 
+export type TStatus = 'created' | 'pending' | 'done';
+
 export type TOrder = {
-  ingredients: TServerIngredient[];
+  ingredients: Array<string>;
   _id: string;
   owner: TOrderOwner;
-  status: string;
+  status: TStatus;
   name: string;
   createdAt: string;
   updatedAt: string;

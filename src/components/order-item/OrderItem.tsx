@@ -1,16 +1,18 @@
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/hooks';
 import { FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
 import { parseStatus } from '../../utils/helpers';
-import { PropTypes } from 'prop-types';
+import { TIngredient, TOrder } from '../../services/types/data';
 import Price from '../price/Price';
 
 import styles from './OrderItem.module.css';
 
-function OrderItem({ number, createdAt, name, status, ingredients }) {
+function OrderItem({ number, createdAt, name, status, ingredients }: TOrder) {
   const { items } = useSelector((state) => state.ingredients);
   const { color, label } = parseStatus(status);
-  let orderIngredients = items.filter((item) => ingredients.includes(item.id));
+  let orderIngredients: Array<TIngredient> = items.filter((item: TIngredient) =>
+    ingredients.includes(item.id)
+  );
   const counter = orderIngredients.length - 6;
   orderIngredients.splice(6, Infinity);
   const total = orderIngredients.reduce((acc, i) => {
@@ -71,13 +73,5 @@ function OrderItem({ number, createdAt, name, status, ingredients }) {
     </li>
   );
 }
-
-OrderItem.propTypes = {
-  number: PropTypes.number.isRequired,
-  updatedAt: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  status: PropTypes.string.isRequired,
-  ingredients: PropTypes.arrayOf(PropTypes.string).isRequired,
-};
 
 export default OrderItem;

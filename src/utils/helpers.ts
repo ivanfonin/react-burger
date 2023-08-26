@@ -1,4 +1,4 @@
-import { TIngredient } from '../services/types/data';
+import { TIngredient, TStatus } from '../services/types/data';
 
 /**
  * Функция группировки объектов по заданному свойству.
@@ -77,7 +77,6 @@ export const getCookie = (name: string): TCookie => {
   return matches ? decodeURIComponent(matches[1]) : undefined;
 };
 
-type TStatus = 'created' | 'pending' | 'done';
 interface IStatusResolved {
   readonly color:
     | 'text_color_default'
