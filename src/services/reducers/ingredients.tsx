@@ -1,3 +1,4 @@
+import { TIngredientsActions } from '../actions/ingredients';
 import {
   GET_INGREDIENTS,
   GET_INGREDIENTS_SUCCESS,
@@ -5,19 +6,7 @@ import {
   INCREASE_INGREDIENT_COUNTER,
   DECREASE_INGREDIENT_COUNTER,
 } from '../actions/ingredients';
-
-import { TServerIngredient, TIngredient } from '../types/data';
-
-interface IAction {
-  type:
-    | 'GET_INGREDIENTS'
-    | 'GET_INGREDIENTS_SUCCESS'
-    | 'GET_INGREDIENTS_FAILED'
-    | 'INCREASE_INGREDIENT_COUNTER'
-    | 'DECREASE_INGREDIENT_COUNTER';
-  ingredients: TServerIngredient[];
-  ingredient: TIngredient;
-}
+import { TIngredient } from '../types/data';
 
 interface IState {
   items: TIngredient[];
@@ -25,16 +14,16 @@ interface IState {
   ingredientsFailed: boolean;
 }
 
-const initialState = {
+const initialState: IState = {
   items: [],
   ingredientsRequest: false,
   ingredientsFailed: false,
 };
 
 export const ingredientsReducer = (
-  state: IState = initialState,
-  action: IAction
-) => {
+  state = initialState,
+  action: TIngredientsActions
+): IState => {
   switch (action.type) {
     case GET_INGREDIENTS: {
       return {

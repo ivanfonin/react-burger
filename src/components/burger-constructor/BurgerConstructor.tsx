@@ -72,7 +72,7 @@ function BurgerConstructor() {
     collect: (monitor) => ({
       isHover: monitor.isOver(),
     }),
-    drop(ingredient) {
+    drop(ingredient: any) {
       dispatch(addBurgerIngredient(ingredient));
       dispatch(increaseIngredientCounter(ingredient));
     },
