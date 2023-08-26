@@ -46,6 +46,7 @@ export type TServerIngredient = {
 export type TIngredient = Omit<TServerIngredient, '_id'> & {
   id: string;
   counter: number;
+  uuid?: string;
 };
 
 export type TIngredientsSection = {

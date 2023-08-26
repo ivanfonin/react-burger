@@ -11,7 +11,7 @@ import { TIngredient } from '../services/types/data';
  */
 export const groupBy = (arr: Array<TIngredient>, key: keyof TIngredient) => {
   let result: any = {};
-  arr.forEach((item) => {
+  arr.forEach((item: any) => {
     if (item[key] in result) {
       result[item[key]].push(item);
     } else {

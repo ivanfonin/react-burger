@@ -22,8 +22,18 @@ import ConstructorIngredient from './constructor-ingredient/ConstructorIngredien
 
 import styles from './BurgerConstructor.module.css';
 
+import { TIngredient } from '../../services/types/data';
+
+type THandleDeleteFunc = (id: string) => void;
+type TRenderConstructorElementFunc = (
+  ingredient: TIngredient,
+  index: number
+) => void;
+type TMoveIngredientFunc = (dragIndex: number, hoverIndex: number) => void;
+type TCallbackFunc = () => void;
+
 function BurgerConstructor() {
-  const { burger, orderRequest, user } = useSelector((state) => ({
+  const { burger, orderRequest, user } = useSelector((state: any) => ({
     burger: state.burger,
     orderRequest: state.checkout.orderRequest,
     user: state.auth.user,
@@ -31,27 +41,27 @@ function BurgerConstructor() {
 
   const dispatch = useDispatch();
 
-  const handleDelete = useCallback(
+  const handleDelete = useCallback<THandleDeleteFunc>(
     (id) => {
       dispatch(removeBurgerIngredient(id));
-      dispatch(decreaseIngredientCounter({ _id: id }));
+      dispatch(decreaseIngredientCounter({ id }));
     },
     [dispatch]
   );
 
   const navigate = useNavigate();
 
-  const handleCheckout = useCallback(() => {
+  const handleCheckout = useCallback<TCallbackFunc>(() => {
     if (!user) {
       navigate('/login');
     } else {
       const ingredients = [];
 
-      ingredients.push(burger.bun._id);
-      burger.ingredients.forEach((ingredient) =>
-        ingredients.push(ingredient._id)
+      ingredients.push(burger.bun.id);
+      burger.ingredients.forEach((ingredient: TIngredient) =>
+        ingredients.push(ingredient.id)
       );
-      ingredients.push(burger.bun._id);
+      ingredients.push(burger.bun.id);
 
       dispatch(checkout({ ingredients: ingredients }));
     }
@@ -68,19 +78,18 @@ function BurgerConstructor() {
     },
   });
 
-  const moveIngredient = useCallback(
-    (dragIndex, hoverIndex) => {
+  const moveIngredient = useCallback<TMoveIngredientFunc>(
+    (dragIndex: number, hoverIndex: number) => {
       dispatch(moveBurgerIngredient(dragIndex, hoverIndex));
     },
     [dispatch]
   );
 
-  const renderConstructorElement = useCallback(
+  const renderConstructorElement = useCallback<TRenderConstructorElementFunc>(
     (ingredient, index) => {
       return (
         <ConstructorIngredient
           key={ingredient.uuid}
-          id={ingredient._id}
           handleDelete={handleDelete}
           moveIngredient={moveIngredient}
           index={index}
@@ -109,7 +118,7 @@ function BurgerConstructor() {
           />
         )}
         <ul className={styles.ingredients}>
-          {burger.ingredients.map((ingredient, index) =>
+          {burger.ingredients.map((ingredient: TIngredient, index: number) =>
             renderConstructorElement(ingredient, index)
           )}
         </ul>
