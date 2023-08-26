@@ -1,16 +1,10 @@
+import { TOrderActions } from '../actions/order';
 import {
   GET_ORDER,
   GET_ORDER_FAILED,
   GET_ORDER_SUCCESS,
 } from '../actions/order';
-
 import { TOrder } from '../types/data';
-
-interface IAction {
-  type: 'GET_ORDER' | 'GET_ORDER_FAILED' | 'GET_ORDER_SUCCESS';
-  order: TOrder;
-  error: string;
-}
 
 interface IState {
   order: TOrder | null;
@@ -19,14 +13,17 @@ interface IState {
   orderRequestMessage: string;
 }
 
-const initialState = {
+const initialState: IState = {
   order: null,
   orderRequest: false,
   orderRequestFailed: false,
   orderRequestMessage: '',
 };
 
-export const orderReducer = (state: IState = initialState, action: IAction) => {
+export const orderReducer = (
+  state = initialState,
+  action: TOrderActions
+): IState => {
   switch (action.type) {
     case GET_ORDER: {
       return {

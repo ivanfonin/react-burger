@@ -1,7 +1,14 @@
+export type TUser = {
+  email: string;
+  name: string;
+};
+
 export type TResponseJson = {
   success: boolean;
   data?: any;
   message?: string;
+  user?: TUser;
+  orders?: Array<TOrder>;
 };
 
 export type TResponse = {
