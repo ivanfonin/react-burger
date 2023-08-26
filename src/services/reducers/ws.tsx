@@ -1,3 +1,5 @@
+import { TOrder } from '../types/data';
+import { TWsActions } from '../actions/ws';
 import {
   WS_CONNECTION_START,
   WS_CONNECTION_SUCCESS,
@@ -6,26 +8,6 @@ import {
   WS_CONNECTION_ERROR,
   WS_GET_MESSAGE,
 } from '../actions/ws';
-
-import { TOrder } from '../types/data';
-
-export type TMessage = {
-  orders: TOrder[];
-  total: number;
-  totalToday: number;
-};
-
-interface IAction {
-  type:
-    | 'WS_CONNECTION_START'
-    | 'WS_CONNECTION_SUCCESS'
-    | 'WS_CONNECTION_CLOSE'
-    | 'WS_CONNECTION_CLOSED'
-    | 'WS_CONNECTION_ERROR'
-    | 'WS_GET_MESSAGE';
-  payload: string | Event;
-  message: TMessage;
-}
 
 interface IState {
   wsUrl: string;
@@ -37,7 +19,7 @@ interface IState {
   totalToday: number | null;
 }
 
-const initialState = {
+const initialState: IState = {
   wsUrl: '',
   wsRequest: false,
   wsError: '',
@@ -47,7 +29,7 @@ const initialState = {
   totalToday: null,
 };
 
-export const wsReducer = (state: IState = initialState, action: IAction) => {
+export const wsReducer = (state = initialState, action: TWsActions): IState => {
   switch (action.type) {
     case WS_CONNECTION_START: {
       return {
@@ -103,7 +85,7 @@ export const wsReducer = (state: IState = initialState, action: IAction) => {
           }),
         };
       }
-      break;
+      return state;
     }
     default:
       return state;

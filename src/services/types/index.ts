@@ -1,3 +1,5 @@
+import { store } from '../../store';
+
 export type TApiConfig = {
   baseUrl: string;
 };
@@ -41,3 +43,5 @@ export type TEventTarget = {
     name: string;
   };
 };
+
+export type AppDispatch = typeof store.dispatch;

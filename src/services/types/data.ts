@@ -62,3 +62,9 @@ export type TOrder = {
   number: number;
   price: number;
 };
+
+export type TWsMessage = {
+  orders: TOrder[];
+  total: number;
+  totalToday: number;
+};

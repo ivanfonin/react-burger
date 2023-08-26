@@ -1,4 +1,4 @@
-import { TMessage } from '../reducers/ws';
+import { TWsMessage } from '../types/data';
 
 export const WS_CONNECTION_START: 'WS_CONNECTION_START' = 'WS_CONNECTION_START';
 export const WS_CONNECTION_SUCCESS: 'WS_CONNECTION_SUCCESS' =
@@ -14,14 +14,35 @@ interface IWsConnectionStart {
   readonly payload: string;
 }
 
+interface IWsConnectionSuccess {
+  readonly type: typeof WS_CONNECTION_SUCCESS;
+}
+
 interface IWsConnectionClose {
   readonly type: typeof WS_CONNECTION_CLOSE;
 }
 
+interface IWsConnectionClosed {
+  readonly type: typeof WS_CONNECTION_CLOSED;
+}
+
+interface IWsConnectionError {
+  readonly type: typeof WS_CONNECTION_ERROR;
+  readonly payload: string;
+}
+
 interface IWsGetMessage {
   readonly type: typeof WS_GET_MESSAGE;
-  readonly payload: TMessage;
+  readonly message: TWsMessage;
 }
+
+export type TWsActions =
+  | IWsConnectionStart
+  | IWsConnectionSuccess
+  | IWsConnectionClose
+  | IWsConnectionClosed
+  | IWsConnectionError
+  | IWsGetMessage;
 
 export const wsConnectionStart = (url: string): IWsConnectionStart => {
   return {
@@ -36,9 +57,9 @@ export const wsConnectionClose = (): IWsConnectionClose => {
   };
 };
 
-export const wsGetMessage = (message: TMessage): IWsGetMessage => {
+export const wsGetMessage = (message: TWsMessage): IWsGetMessage => {
   return {
     type: WS_GET_MESSAGE,
-    payload: message,
+    message,
   };
 };
