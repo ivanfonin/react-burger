@@ -1,6 +1,8 @@
 import { api } from '../api/client';
 import { setCookie, getCookie } from '../../utils/helpers';
 import {
+  AppThunk,
+  AppDispatch,
   TForgotPasswordForm,
   TLoginForm,
   TProfileForm,
@@ -163,7 +165,7 @@ export type TAuthActions =
   | ISetPasswordSuccess
   | ISetPasswordFailed;
 
-export const checkAuth = () => (dispatch: any) => {
+export const checkAuth: AppThunk = () => (dispatch: AppDispatch) => {
   dispatch({ type: GET_USER });
 
   if (!getCookie('token')) {
@@ -186,45 +188,51 @@ export const checkAuth = () => (dispatch: any) => {
     });
 };
 
-export const register = (form: TRegisterForm) => (dispatch: any) => {
-  dispatch({ type: REGISTER_USER });
+export const register: AppThunk =
+  (form: TRegisterForm) => (dispatch: AppDispatch) => {
+    dispatch({ type: REGISTER_USER });
 
-  api
-    .post('/auth/register', form)
-    .then((res) => {
-      dispatch({ type: REGISTER_USER_SUCCESS, user: res?.user });
-      if (res?.accessToken) {
-        setCookie('token', res?.accessToken.split('Bearer ')[1], { path: '/' });
-      }
-      if (res?.refreshToken) {
-        setCookie('refreshToken', res?.refreshToken, { path: '/' });
-      }
-    })
-    .catch((error) => {
-      dispatch({ type: REGISTER_USER_FAILED, error });
-    });
-};
+    api
+      .post('/auth/register', form)
+      .then((res) => {
+        dispatch({ type: REGISTER_USER_SUCCESS, user: res?.user });
+        if (res?.accessToken) {
+          setCookie('token', res?.accessToken.split('Bearer ')[1], {
+            path: '/',
+          });
+        }
+        if (res?.refreshToken) {
+          setCookie('refreshToken', res?.refreshToken, { path: '/' });
+        }
+      })
+      .catch((error) => {
+        dispatch({ type: REGISTER_USER_FAILED, error });
+      });
+  };
 
-export const login = (form: TLoginForm) => (dispatch: any) => {
-  dispatch({ type: LOGIN_USER });
+export const login: AppThunk =
+  (form: TLoginForm) => (dispatch: AppDispatch) => {
+    dispatch({ type: LOGIN_USER });
 
-  api
-    .post('/auth/login', form)
-    .then((res) => {
-      dispatch({ type: LOGIN_USER_SUCCESS, user: res?.user });
-      if (res?.accessToken) {
-        setCookie('token', res?.accessToken.split('Bearer ')[1], { path: '/' });
-      }
-      if (res?.refreshToken) {
-        setCookie('refreshToken', res?.refreshToken, { path: '/' });
-      }
-    })
-    .catch((error) => {
-      dispatch({ type: LOGIN_USER_FAILED, error });
-    });
-};
+    api
+      .post('/auth/login', form)
+      .then((res) => {
+        dispatch({ type: LOGIN_USER_SUCCESS, user: res?.user });
+        if (res?.accessToken) {
+          setCookie('token', res?.accessToken.split('Bearer ')[1], {
+            path: '/',
+          });
+        }
+        if (res?.refreshToken) {
+          setCookie('refreshToken', res?.refreshToken, { path: '/' });
+        }
+      })
+      .catch((error) => {
+        dispatch({ type: LOGIN_USER_FAILED, error });
+      });
+  };
 
-export const logout = () => (dispatch: any) => {
+export const logout: AppThunk = () => (dispatch: AppDispatch) => {
   dispatch({ type: LOGOUT_USER });
 
   if (!getCookie('refreshToken')) {
@@ -245,52 +253,58 @@ export const logout = () => (dispatch: any) => {
     });
 };
 
-export const updateProfile = (form: TProfileForm) => (dispatch: any) => {
-  dispatch({ type: UPDATE_PROFILE });
+export const updateProfile: AppThunk =
+  (form: TProfileForm) => (dispatch: AppDispatch) => {
+    dispatch({ type: UPDATE_PROFILE });
 
-  api
-    .patch('/auth/user', form, {
-      headers: {
-        Authorization: 'Bearer ' + getCookie('token'),
-      },
-    })
-    .then((res) => {
-      dispatch({
-        type: UPDATE_PROFILE_SUCCESS,
-        user: res?.user,
-        success: true,
+    api
+      .patch('/auth/user', form, {
+        headers: {
+          Authorization: 'Bearer ' + getCookie('token'),
+        },
+      })
+      .then((res) => {
+        dispatch({
+          type: UPDATE_PROFILE_SUCCESS,
+          user: res?.user,
+          success: true,
+        });
+      })
+      .catch((error) => {
+        dispatch({ type: UPDATE_PROFILE_FAILED, error });
       });
-    })
-    .catch((error) => {
-      dispatch({ type: UPDATE_PROFILE_FAILED, error });
-    });
-};
+  };
 
-export const resetPassword = (form: TForgotPasswordForm) => (dispatch: any) => {
-  dispatch({ type: RESET_PASSWORD });
+export const resetPassword: AppThunk =
+  (form: TForgotPasswordForm) => (dispatch: AppDispatch) => {
+    dispatch({ type: RESET_PASSWORD });
 
-  api
-    .post('/password-reset', form)
-    .then(() => {
-      dispatch({ type: RESET_PASSWORD_SUCCESS });
-      setCookie('password-reset-code', 'sent', { expires: 60 * 20, path: '/' });
-      window.location.href = '/reset-password';
-    })
-    .catch((error) => {
-      dispatch({ type: RESET_PASSWORD_FAILED, error });
-    });
-};
+    api
+      .post('/password-reset', form)
+      .then(() => {
+        dispatch({ type: RESET_PASSWORD_SUCCESS });
+        setCookie('password-reset-code', 'sent', {
+          expires: 60 * 20,
+          path: '/',
+        });
+        window.location.href = '/reset-password';
+      })
+      .catch((error) => {
+        dispatch({ type: RESET_PASSWORD_FAILED, error });
+      });
+  };
 
-export const setPassword = (form: TResetPasswordForm) => (dispatch: any) => {
-  dispatch({ type: SET_PASSWORD });
+export const setPassword: AppThunk =
+  (form: TResetPasswordForm) => (dispatch: AppDispatch) => {
+    dispatch({ type: SET_PASSWORD });
 
-  api
-    .post('/password-reset/reset', form)
-    .then(() => {
-      dispatch({ type: SET_PASSWORD_SUCCESS });
-      setCookie('password-reset-code', 'sent', { expires: -1000 });
-    })
-    .catch((error) => {
-      dispatch({ type: SET_PASSWORD_FAILED, error });
-    });
-};
+    api
+      .post('/password-reset/reset', form)
+      .then(() => {
+        dispatch({ type: SET_PASSWORD_SUCCESS });
+        setCookie('password-reset-code', 'sent', { expires: -1000 });
+      })
+      .catch((error) => {
+        dispatch({ type: SET_PASSWORD_FAILED, error });
+      });
+  };

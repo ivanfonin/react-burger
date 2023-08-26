@@ -1,5 +1,4 @@
 import { useForm } from '../../hooks/useForm';
-import { useDispatch, useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import { getCookie } from '../../utils/helpers';
 import { setPassword } from '../../services/actions/auth';
@@ -9,10 +8,12 @@ import {
   Input,
   PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useSelector, useDispatch } from '../../services/hooks';
+import { FormEvent } from 'react';
 
 export const ResetPasswordPage = () => {
   const { setPasswordRequest, setPasswordRequestMessage } = useSelector(
-    (state) => state.auth
+    (state: any) => state.auth
   );
   const { form, handleChange } = useForm();
   const dispatch = useDispatch();
@@ -21,7 +22,7 @@ export const ResetPasswordPage = () => {
     return <Navigate to={'/forgot-password'} replace />;
   }
 
-  const handleSubmit = (evt) => {
+  const handleSubmit = (evt: FormEvent) => {
     evt.preventDefault();
     dispatch(setPassword(form));
   };

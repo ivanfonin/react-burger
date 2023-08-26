@@ -1,4 +1,26 @@
+import { ThunkAction } from 'redux-thunk';
+import { Action, ActionCreator } from 'redux';
+
 import { store } from '../../store';
+import { TAuthActions } from '../actions/auth';
+import { TBurgerActions } from '../actions/burger';
+import { TCheckoutActions } from '../actions/checkout';
+import { TIngredientActions } from '../actions/ingredient';
+import { TIngredientsActions } from '../actions/ingredients';
+import { TOrderActions } from '../actions/order';
+import { TTabsActions } from '../actions/tabs';
+import { TWsActions } from '../actions/ws';
+
+type TApplicationActions =
+  | TAuthActions
+  | TBurgerActions
+  | TBurgerActions
+  | TCheckoutActions
+  | TIngredientActions
+  | TIngredientsActions
+  | TOrderActions
+  | TTabsActions
+  | TWsActions;
 
 export type TApiConfig = {
   baseUrl: string;
@@ -29,13 +51,6 @@ export type TIcons =
   | 'LogoutIcon'
   | 'ProfileIcon';
 
-export type TInputValues = {
-  name?: string;
-  email?: string;
-  password?: string;
-  token?: string;
-};
-
 export type TEventTarget = {
   type?: string;
   target: {
@@ -65,5 +80,11 @@ export type TResetPasswordForm = {
   email: string;
   token: string;
 };
+
+export type RootState = ReturnType<typeof store.getState>;
+
+export type AppThunk<TReturn = void> = ActionCreator<
+  ThunkAction<TReturn, Action, RootState, TApplicationActions>
+>;
 
 export type AppDispatch = typeof store.dispatch;
