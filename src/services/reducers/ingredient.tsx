@@ -1,20 +1,16 @@
+import { TIngredientActions } from '../actions/ingredient';
 import { SET_INGREDIENT } from '../actions/ingredient';
 
 import { TIngredient } from '../types/data';
 
-interface IAction {
-  type: 'SET_INGREDIENT';
-  ingredient: TIngredient;
-}
-
 type TState = null | TIngredient;
 
-const initialState = null;
+const initialState: TState = null;
 
 export const ingredientReducer = (
-  state: TState = initialState,
-  action: IAction
-) => {
+  state = initialState,
+  action: TIngredientActions
+): TState => {
   switch (action.type) {
     case SET_INGREDIENT: {
       return action.ingredient;
