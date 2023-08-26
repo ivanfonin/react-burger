@@ -1,5 +1,5 @@
 import { useForm } from '../../hooks/useForm';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector, useDispatch } from '../../services/hooks';
 import { NavLink } from 'react-router-dom';
 import { register } from '../../services/actions/auth';
 import { Loader } from '../../components/loader/loader';
@@ -9,6 +9,7 @@ import {
   EmailInput,
   PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
+import { FormEvent } from 'react';
 
 export const RegisterPage = () => {
   const { form, handleChange } = useForm();
@@ -21,7 +22,7 @@ export const RegisterPage = () => {
     return <Loader size={'large'} />;
   }
 
-  const handleSubmit = (evt) => {
+  const handleSubmit = (evt: FormEvent) => {
     evt.preventDefault();
     dispatch(register(form));
   };
