@@ -5,24 +5,47 @@ import {
   RESET_BURGER_INGREDIENTS,
 } from '../actions/burger';
 
+import { TIngredient } from '../types/data';
+
+interface IAction {
+  type:
+    | 'ADD_BURGER_INGREDIENT'
+    | 'REMOVE_BURGER_INGREDIENT'
+    | 'MOVE_BURGER_INGREDIENT'
+    | 'RESET_BURGER_INGREDIENTS';
+  ingredient: TIngredient;
+  id: string;
+  hoverIndex: number;
+  dragIndex: number;
+}
+
+interface IState {
+  bun: TIngredient | null;
+  ingredients: Array<TIngredient>;
+  total: number;
+}
+
 const initialState = {
   bun: null,
   ingredients: [],
   total: 0,
 };
 
-export const burgerReducer = (state = initialState, action) => {
+export const burgerReducer = (
+  state: IState = initialState,
+  action: IAction
+) => {
   switch (action.type) {
     case ADD_BURGER_INGREDIENT: {
       let bun = state.bun;
       let ingredients = state.ingredients;
       let total = 0;
 
-      if ('bun' === action.ingredient.type) {
+      if ('bun' === action.ingredient?.type) {
         bun = action.ingredient;
       }
 
-      if ('bun' !== action.ingredient.type) {
+      if ('bun' !== action.ingredient?.type) {
         ingredients.push(action.ingredient);
       }
 
@@ -46,7 +69,7 @@ export const burgerReducer = (state = initialState, action) => {
     case REMOVE_BURGER_INGREDIENT: {
       let total = 0;
       let ingredients = state.ingredients;
-      let index = state.ingredients.findIndex((item) => item._id === action.id);
+      let index = state.ingredients.findIndex((item) => item.id === action.id);
       if (index > -1) {
         ingredients.splice(index, 1);
       }
@@ -68,9 +91,9 @@ export const burgerReducer = (state = initialState, action) => {
     case MOVE_BURGER_INGREDIENT: {
       const ingredients = state.ingredients;
       ingredients.splice(
-        action.hoverIndex,
+        action?.hoverIndex,
         0,
-        ...ingredients.splice(action.dragIndex, 1)
+        ...ingredients.splice(action?.dragIndex, 1)
       );
 
       return {
