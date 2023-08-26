@@ -1,17 +1,15 @@
+import { TTabsActions } from '../actions/tabs';
 import { SET_ACTIVE_TAB } from '../actions/tabs';
-
 import { TIngredientType } from '../types/data';
-
-interface IAction {
-  type: 'SET_ACTIVE_TAB';
-  tab: TIngredientType;
-}
 
 type TState = TIngredientType;
 
-const initialState = 'bun';
+const initialState: TState = 'bun';
 
-export const tabsReducer = (state: TState = initialState, action: IAction) => {
+export const tabsReducer = (
+  state = initialState,
+  action: TTabsActions
+): TState => {
   switch (action.type) {
     case SET_ACTIVE_TAB: {
       return action.tab;
