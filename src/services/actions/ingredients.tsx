@@ -1,4 +1,5 @@
 import { api } from '../api/client';
+import { AppDispatch, AppThunk } from '../types';
 import { TIngredient, TServerIngredient } from '../types/data';
 
 export const GET_INGREDIENTS: 'GET_INGREDIENTS' = 'GET_INGREDIENTS';
@@ -38,7 +39,7 @@ export type TIngredientsActions =
   | IIncreaseIngredientCounter
   | IDecreaseIngredientCounter;
 
-export const getIngredients = () => (dispatch: any) => {
+export const getIngredients: AppThunk = () => (dispatch: AppDispatch) => {
   dispatch({ type: GET_INGREDIENTS });
 
   api
@@ -55,7 +56,7 @@ export const getIngredients = () => (dispatch: any) => {
 };
 
 export const increaseIngredientCounter =
-  (ingredient: TIngredient) => (dispatch: any) => {
+  (ingredient: TIngredient) => (dispatch: AppDispatch) => {
     dispatch({
       type: INCREASE_INGREDIENT_COUNTER,
       ingredient,
@@ -63,7 +64,7 @@ export const increaseIngredientCounter =
   };
 
 export const decreaseIngredientCounter =
-  (ingredient: { id: string }) => (dispatch: any) => {
+  (ingredient: { id: string }) => (dispatch: AppDispatch) => {
     dispatch({
       type: DECREASE_INGREDIENT_COUNTER,
       ingredient,
