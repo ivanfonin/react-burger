@@ -1,23 +1,11 @@
+import { TBurgerActions } from '../actions/burger';
 import {
   ADD_BURGER_INGREDIENT,
   REMOVE_BURGER_INGREDIENT,
   MOVE_BURGER_INGREDIENT,
   RESET_BURGER_INGREDIENTS,
 } from '../actions/burger';
-
 import { TIngredient } from '../types/data';
-
-interface IAction {
-  type:
-    | 'ADD_BURGER_INGREDIENT'
-    | 'REMOVE_BURGER_INGREDIENT'
-    | 'MOVE_BURGER_INGREDIENT'
-    | 'RESET_BURGER_INGREDIENTS';
-  ingredient: TIngredient;
-  id: string;
-  hoverIndex: number;
-  dragIndex: number;
-}
 
 interface IState {
   bun: TIngredient | null;
@@ -25,16 +13,16 @@ interface IState {
   total: number;
 }
 
-const initialState = {
+const initialState: IState = {
   bun: null,
   ingredients: [],
   total: 0,
 };
 
 export const burgerReducer = (
-  state: IState = initialState,
-  action: IAction
-) => {
+  state = initialState,
+  action: TBurgerActions
+): IState => {
   switch (action.type) {
     case ADD_BURGER_INGREDIENT: {
       let bun = state.bun;
