@@ -102,3 +102,22 @@ export type TIcons =
   | 'HideIcon'
   | 'LogoutIcon'
   | 'ProfileIcon';
+
+export type TOrderOwner = {
+  name: string;
+  email: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type TOrder = {
+  ingredients: TServerIngredient[];
+  _id: string;
+  owner: TOrderOwner;
+  status: string;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+  number: number;
+  price: number;
+};
