@@ -1,8 +1,13 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../services/hooks';
 import { logout } from '../../services/actions/auth';
 import { NavLink } from 'react-router-dom';
 
 import styles from './ProfileNav.module.css';
+
+type TGetLinkClassFunc = {
+  isActive: boolean;
+  isPending: boolean;
+};
 
 export const ProfileNav = () => {
   const dispatch = useDispatch();
@@ -11,7 +16,7 @@ export const ProfileNav = () => {
     dispatch(logout());
   };
 
-  const getLinkClass = ({ isActive, isPending }) =>
+  const getLinkClass = ({ isActive, isPending }: TGetLinkClassFunc) =>
     isPending
       ? styles.link
       : isActive
