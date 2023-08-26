@@ -1,17 +1,24 @@
 import { useSelector } from 'react-redux';
 import { useLocation, useParams } from 'react-router-dom';
 import { useMemo } from 'react';
+import { Loader } from '../loader/loader';
 
 import styles from './IngredientDetails.module.css';
-import { Loader } from '../loader/loader';
+
+import { TIngredient } from '../../services/types/data';
 
 function IngredientDetails() {
   const { id } = useParams();
-  const { ingredients } = useSelector((state) => state);
-  const ingredient = ingredients?.items?.find((i) => i.id === id);
+  const { ingredients } = useSelector((state: any) => state);
+  const ingredient = ingredients?.items?.find((i: TIngredient) => i.id === id);
   const location = useLocation();
 
-  const { containerClass, titleClass } = useMemo(() => {
+  interface ICalculatedClasses {
+    containerClass: string;
+    titleClass: string;
+  }
+
+  const { containerClass, titleClass } = useMemo<ICalculatedClasses>(() => {
     if (location?.state?.background?.pathname === '/') {
       return {
         containerClass: styles.ingredient,
