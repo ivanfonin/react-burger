@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import { TIngredient } from '../types/data';
+import { AppDispatch, AppThunk } from '../types';
 
 export const ADD_BURGER_INGREDIENT: 'ADD_BURGER_INGREDIENT' =
   'ADD_BURGER_INGREDIENT';
@@ -33,16 +34,16 @@ export type TBurgerActions =
   | IMoveBurgerIngredient
   | IResetBurgerIngredients;
 
-export const addBurgerIngredient =
-  (ingredient: TIngredient) => (dispatch: any) => {
+export const addBurgerIngredient: AppThunk =
+  (ingredient: TIngredient) => (dispatch: AppDispatch) => {
     dispatch({
       type: ADD_BURGER_INGREDIENT,
       ingredient: { uuid: uuidv4(), ...ingredient },
     });
   };
 
-export const moveBurgerIngredient =
-  (dragIndex: number, hoverIndex: number) => (dispatch: any) => {
+export const moveBurgerIngredient: AppThunk =
+  (dragIndex: number, hoverIndex: number) => (dispatch: AppDispatch) => {
     dispatch({
       type: MOVE_BURGER_INGREDIENT,
       dragIndex,
@@ -50,9 +51,10 @@ export const moveBurgerIngredient =
     });
   };
 
-export const removeBurgerIngredient = (id: string) => (dispatch: any) => {
-  dispatch({
-    type: REMOVE_BURGER_INGREDIENT,
-    id,
-  });
-};
+export const removeBurgerIngredient: AppThunk =
+  (id: string) => (dispatch: AppDispatch) => {
+    dispatch({
+      type: REMOVE_BURGER_INGREDIENT,
+      id,
+    });
+  };

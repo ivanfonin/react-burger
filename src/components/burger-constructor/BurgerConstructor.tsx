@@ -5,7 +5,7 @@ import {
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector, useDispatch } from '../../services/hooks';
 import { checkout } from '../../services/actions/checkout';
 import { useDrop } from 'react-dnd';
 import { useNavigate } from 'react-router-dom';
