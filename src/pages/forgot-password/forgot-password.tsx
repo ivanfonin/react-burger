@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector, useDispatch } from '../../services/hooks';
 import { resetPassword } from '../../services/actions/auth';
 import { useForm } from '../../hooks/useForm';
 import { Loader } from '../../components/loader/loader';
@@ -7,6 +7,7 @@ import {
   Button,
   EmailInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
+import { FormEvent } from 'react';
 
 export const ForgotPasswordPage = () => {
   const { resetPasswordRequest, resetPasswordRequestMessage } = useSelector(
@@ -15,7 +16,7 @@ export const ForgotPasswordPage = () => {
   const { form, handleChange } = useForm();
   const dispatch = useDispatch();
 
-  const handleSubmit = (evt) => {
+  const handleSubmit = (evt: FormEvent) => {
     evt.preventDefault();
     dispatch(resetPassword(form));
   };
