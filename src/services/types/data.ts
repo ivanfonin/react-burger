@@ -51,7 +51,7 @@ export type TIngredient = Omit<TServerIngredient, '_id'> & {
 };
 
 export type TIngredientsSection = {
-  type: TIngredientType;
+  type: string;
   ingredients: ReadonlyArray<TIngredient>;
 };
 

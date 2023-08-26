@@ -3,14 +3,14 @@ import IngredientsSection from '../ingredients-section/IngredientsSection';
 import { Loader } from '../loader/loader';
 import { groupBy } from '../../utils/helpers';
 import { createRef } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/hooks';
 
 function BurgerIngredients() {
   const { items, ingredientsRequest } = useSelector(
     (state) => state.ingredients
   );
 
-  const tabRefs = [];
+  const tabRefs: any = [];
   const ingredientsSections = [];
   const groups = groupBy(items, 'type');
 
@@ -26,7 +26,7 @@ function BurgerIngredients() {
     );
   }
 
-  const handleTabSelected = (type) => {
+  const handleTabSelected = (type: string) => {
     tabRefs[type]?.current.scrollIntoView({ behavior: 'smooth' });
   };
 

@@ -1,6 +1,4 @@
-import { TIngredientType } from '../../../services/types/data';
-
-function IngredientsSectionTitle({ type }: { type: TIngredientType }) {
+function IngredientsSectionTitle({ type }: { type: string }) {
   let name;
   switch (type) {
     case 'bun':
