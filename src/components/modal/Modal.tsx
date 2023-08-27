@@ -2,16 +2,20 @@ import ReactDOM from 'react-dom';
 import { useLocation } from 'react-router-dom';
 import ModalOverlay from './modal-overlay/ModalOverlay';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { FunctionComponent, ReactNode, ReactPortal, useEffect } from 'react';
+import {
+  FunctionComponent,
+  PropsWithChildren,
+  ReactPortal,
+  useEffect,
+} from 'react';
 
 import styles from './Modal.module.css';
 
 type TModalProps = {
-  children: ReactNode;
   onClose: () => void;
 };
 
-const Modal: FunctionComponent<TModalProps> = ({
+const Modal: FunctionComponent<PropsWithChildren<TModalProps>> = ({
   children,
   onClose,
 }): ReactPortal => {
