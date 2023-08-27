@@ -95,3 +95,7 @@ export const getTotalToday = (state: RootState) => ({
 export const getActiveTab = (state: RootState) => ({
   active: state.tab,
 });
+
+export const getOrderInfo = (state: RootState) => ({
+  order: state.order.order,
+});

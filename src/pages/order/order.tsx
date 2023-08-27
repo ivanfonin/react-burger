@@ -7,13 +7,13 @@ import { useEffect } from 'react';
 import { fetchOrder } from '../../services/actions/order';
 import { parseStatus } from '../../utils/helpers';
 import { TIngredient } from '../../services/types/data';
-import { getOrder, getOrderRequest } from '../../utils/storeHelpers';
+import { getOrderInfo, getOrderRequest } from '../../utils/storeHelpers';
 
 import styles from './order.module.css';
 
 export const OrderPage = () => {
   const { id } = useParams();
-  const { order } = useSelector(getOrder);
+  const { order } = useSelector(getOrderInfo);
   const { orderRequest } = useSelector(getOrderRequest);
   const { items } = useSelector((state) => state.ingredients);
   const dispatch = useDispatch();
