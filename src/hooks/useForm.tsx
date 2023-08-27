@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { TEventTarget } from '../services/types';
 
-export function useForm(inputValues: any = {}) {
+type TInputValues = { [key: string]: string };
+
+export function useForm(inputValues?: TInputValues) {
   const [form, setForm] = useState(inputValues);
 
   const handleChange = (evt: TEventTarget) => {

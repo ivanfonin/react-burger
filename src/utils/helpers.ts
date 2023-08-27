@@ -1,4 +1,8 @@
-import { TArrayOfString, TClassesObject } from '../services/types';
+import {
+  TArrayOfString,
+  TClassesObject,
+  TCookieProps,
+} from '../services/types';
 import { TIngredient, TStatus } from '../services/types/data';
 
 /**
@@ -6,12 +10,15 @@ import { TIngredient, TStatus } from '../services/types/data';
  *
  * @param {Array} arr Массив объектов-ингредиентов.
  * @param {String} key Свойство объекта, по которому будем группировать.
+ *
  * @returns {Object} Объект ключ-значение, где ключи – это различные значения
  *  свойств переданного key, а значения – массивы объектов с одинаковым key:
  *  { 'key_value_1': [ {}, {} ], 'key_value_2': [ {}, {} ] }
  */
 export const groupBy = (arr: TIngredient[], key: keyof TIngredient) => {
-  let result: any = [];
+  let result: {
+    [key: string]: Array<TIngredient>;
+  } = {};
   arr.forEach((item: TIngredient) => {
     const keyVal = Object.hasOwn(item, key) ? item[key] : false;
 
@@ -25,11 +32,6 @@ export const groupBy = (arr: TIngredient[], key: keyof TIngredient) => {
   });
   return result;
 };
-
-type TCookieProps = {
-  [key: string]: any;
-};
-
 /**
  * Функция сохранения Cookie в браузере.
  *
