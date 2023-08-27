@@ -8,6 +8,7 @@ import {
   ReactPortal,
   useEffect,
 } from 'react';
+import { classnames } from '../../utils/helpers';
 
 import styles from './Modal.module.css';
 
@@ -20,10 +21,12 @@ const Modal: FunctionComponent<PropsWithChildren<TModalProps>> = ({
   onClose,
 }): ReactPortal => {
   const location = useLocation();
-  const background = location.state && location.state.background;
-  const modalClass: string = background
-    ? `${styles.modal} ${styles.modal_dark}`
-    : `${styles.modal}`;
+  const isBackground = location.state && location.state.background;
+
+  const modalClass = classnames({
+    [styles.modal]: true,
+    [styles.modal_dark]: isBackground,
+  });
 
   useEffect(() => {
     const handleEscKeyDown = (e: KeyboardEvent) =>
@@ -37,7 +40,7 @@ const Modal: FunctionComponent<PropsWithChildren<TModalProps>> = ({
   const modal = (
     <>
       <ModalOverlay onClose={onClose}></ModalOverlay>
-      <div className={`${modalClass}`}>
+      <div className={modalClass}>
         <button type="button" className={styles.close} onClick={onClose}>
           <CloseIcon type="primary" />
         </button>

@@ -1,3 +1,4 @@
+import { TArrayOfString, TClassesObject } from '../services/types';
 import { TIngredient, TStatus } from '../services/types/data';
 
 /**
@@ -116,5 +117,35 @@ export const parseStatus = (status: TStatus): IStatusResolved => {
         color: 'text_color_error',
         label: 'Отменен',
       };
+  }
+};
+
+/**
+ * Функция вычисляет класс на основе переданного объекта или массива.
+ *
+ * @param {Object|Array} classes Передаем данные для вычислений.
+ *
+ * @description Если передан объект, то в ключах должны содержаться классы, в значениях
+ * логическое выражение. Если выражение верно, класс попадет в итоговый результат.
+ * Если передан массив строк, то объединяем все элементы в единый класс.
+ *
+ * @example const modalClass = classnames({ ['one']: true, ['two']: isCondition });
+ * Если условие isCondition верно, то modalClass будет раве 'one two', а иначе только 'one'.
+ *
+ * @returns {String} Возвращаем итоговый класс.
+ */
+export const classnames = (
+  classes: TClassesObject | TArrayOfString
+): string => {
+  if (Array.isArray(classes)) {
+    return classes.join(' ');
+  } else {
+    const result = [];
+    for (let key of Object.keys(classes)) {
+      if (classes[key]) {
+        result.push(key);
+      }
+    }
+    return result.join(' ');
   }
 };

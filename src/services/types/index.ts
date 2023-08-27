@@ -68,6 +68,10 @@ export type TEventTarget = {
   };
 };
 
+export type TClassesObject = { [key: string]: boolean };
+
+export type TArrayOfString = Array<string>;
+
 export type TRegisterForm = {
   name: string;
   email: string;
