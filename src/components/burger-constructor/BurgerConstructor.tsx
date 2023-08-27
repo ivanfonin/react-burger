@@ -19,10 +19,10 @@ import {
   decreaseIngredientCounter,
 } from '../../services/actions/ingredients';
 import ConstructorIngredient from './constructor-ingredient/ConstructorIngredient';
+import { TIngredient } from '../../services/types/data';
+import { getBurger, getOrderRequest, getUser } from '../../utils/storeHelpers';
 
 import styles from './BurgerConstructor.module.css';
-
-import { TIngredient } from '../../services/types/data';
 
 type THandleDeleteFunc = (id: string) => void;
 type TRenderConstructorElementFunc = (
@@ -33,11 +33,9 @@ type TMoveIngredientFunc = (dragIndex: number, hoverIndex: number) => void;
 type TCallbackFunc = () => void;
 
 function BurgerConstructor() {
-  const { burger, orderRequest, user } = useSelector((state) => ({
-    burger: state.burger,
-    orderRequest: state.checkout.orderRequest,
-    user: state.auth.user,
-  }));
+  const { user } = useSelector(getUser);
+  const { burger } = useSelector(getBurger);
+  const { orderRequest } = useSelector(getOrderRequest);
 
   const dispatch = useDispatch();
 

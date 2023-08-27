@@ -1,12 +1,14 @@
 import { useSelector } from '../../services/hooks';
 import { ReactNode, useMemo } from 'react';
+import { TOrder } from '../../services/types/data';
+import { getOrders, getTotalToday, getTotal } from '../../utils/storeHelpers';
 
 import styles from './Scoreboard.module.css';
 
-import { TOrder } from '../../services/types/data';
-
 export const Scoreboard = () => {
-  const { orders, total, totalToday } = useSelector((state) => state.ws);
+  const { orders } = useSelector(getOrders);
+  const { total } = useSelector(getTotal);
+  const { totalToday } = useSelector(getTotalToday);
   const doneOrders = useMemo<Array<ReactNode>>(() => {
     return orders
       ?.filter((order: TOrder) => order.status === 'done')

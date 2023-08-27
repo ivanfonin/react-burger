@@ -10,10 +10,15 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector, useDispatch } from '../../services/hooks';
 import { FormEvent } from 'react';
+import {
+  getSetPasswordRequest,
+  getSetPasswordRequestMessage,
+} from '../../utils/storeHelpers';
 
 export const ResetPasswordPage = () => {
-  const { setPasswordRequest, setPasswordRequestMessage } = useSelector(
-    (state) => state.auth
+  const { setPasswordRequest } = useSelector(getSetPasswordRequest);
+  const { setPasswordRequestMessage } = useSelector(
+    getSetPasswordRequestMessage
   );
   const { form, handleChange } = useForm();
   const dispatch = useDispatch();

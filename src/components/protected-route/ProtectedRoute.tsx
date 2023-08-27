@@ -2,6 +2,10 @@ import { useSelector } from '../../services/hooks';
 import { Navigate, useLocation } from 'react-router-dom';
 import { Loader } from '../loader/loader';
 import { FunctionComponent, ReactElement } from 'react';
+import {
+  getUser,
+  getUserRequest as getUserRequestProgress,
+} from '../../utils/storeHelpers';
 
 interface IProtectedRoute {
   children: ReactElement;
@@ -12,7 +16,8 @@ export const ProtectedRoute: FunctionComponent<IProtectedRoute> = ({
   children,
   anonymous = false,
 }) => {
-  const { user, getUserRequest } = useSelector((state) => state.auth);
+  const { user } = useSelector(getUser);
+  const { getUserRequest } = useSelector(getUserRequestProgress);
   const location = useLocation();
   const from = location.state?.from || '/';
 

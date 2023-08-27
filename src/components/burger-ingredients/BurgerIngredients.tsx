@@ -4,11 +4,14 @@ import { Loader } from '../loader/loader';
 import { groupBy } from '../../utils/helpers';
 import { createRef } from 'react';
 import { useSelector } from '../../services/hooks';
+import {
+  getIngredients,
+  getIngredientsRequest,
+} from '../../utils/storeHelpers';
 
 function BurgerIngredients() {
-  const { items, ingredientsRequest } = useSelector(
-    (state) => state.ingredients
-  );
+  const { items } = useSelector(getIngredients);
+  const { ingredientsRequest } = useSelector(getIngredientsRequest);
 
   const tabRefs: any = [];
   const ingredientsSections = [];

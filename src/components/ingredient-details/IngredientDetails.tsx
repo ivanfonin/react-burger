@@ -2,15 +2,15 @@ import { useSelector } from '../../services/hooks';
 import { useLocation, useParams } from 'react-router-dom';
 import { useMemo } from 'react';
 import { Loader } from '../loader/loader';
+import { TIngredient } from '../../services/types/data';
+import { getIngredients } from '../../utils/storeHelpers';
 
 import styles from './IngredientDetails.module.css';
 
-import { TIngredient } from '../../services/types/data';
-
 function IngredientDetails() {
   const { id } = useParams();
-  const { ingredients } = useSelector((state) => state);
-  const ingredient = ingredients?.items?.find((i: TIngredient) => i.id === id);
+  const { items } = useSelector(getIngredients);
+  const ingredient = items.find((i: TIngredient) => i.id === id);
   const location = useLocation();
 
   interface ICalculatedClasses {

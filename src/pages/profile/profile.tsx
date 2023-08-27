@@ -12,18 +12,26 @@ import { Loader } from '../../components/loader/loader';
 import styles from './Profile.module.css';
 import { useForm } from '../../hooks/useForm';
 import { TIcons } from '../../services/types';
+import {
+  getUser,
+  getUpdateProfileRequest,
+  getUpdateProfileRequestMessage,
+  getUpdateProfileRequestSuccess,
+} from '../../utils/storeHelpers';
 
 type TInputIcons = {
   [key: string]: TIcons;
 };
 
 export const ProfilePage = () => {
-  const {
-    user,
-    updateProfileRequest,
-    updateProfileRequestMessage,
-    updateProfileRequestSuccess,
-  } = useSelector((state) => state.auth);
+  const { user } = useSelector(getUser);
+  const { updateProfileRequest } = useSelector(getUpdateProfileRequest);
+  const { updateProfileRequestMessage } = useSelector(
+    getUpdateProfileRequestMessage
+  );
+  const { updateProfileRequestSuccess } = useSelector(
+    getUpdateProfileRequestSuccess
+  );
   const { form, setForm, handleChange } = useForm();
   const [inputIcons, setInputIcons] = useState<TInputIcons>({
     name: 'EditIcon',

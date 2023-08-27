@@ -10,15 +10,20 @@ import {
   PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { FormEvent } from 'react';
+import {
+  getRegisterRequest,
+  getRegisterRequestMessage,
+  getUserRequest as getUserRequestProgress,
+} from '../../utils/storeHelpers';
 
 export const RegisterPage = () => {
   const { form, handleChange } = useForm();
   const dispatch = useDispatch();
-  const { registerRequest, registerRequestMessage, userRequest } = useSelector(
-    (state) => state.auth
-  );
+  const { getUserRequest } = useSelector(getUserRequestProgress);
+  const { registerRequest } = useSelector(getRegisterRequest);
+  const { registerRequestMessage } = useSelector(getRegisterRequestMessage);
 
-  if (userRequest) {
+  if (getUserRequest) {
     return <Loader size={'large'} />;
   }
 

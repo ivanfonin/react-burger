@@ -7,15 +7,19 @@ import { TIngredient, TStatus } from '../services/types/data';
  * @param {String} key Свойство объекта, по которому будем группировать.
  * @returns {Object} Объект ключ-значение, где ключи – это различные значения
  *  свойств переданного key, а значения – массивы объектов с одинаковым key:
- *  [ 'key_value_1': [ {}, {} ], 'key_value_2': [ {}, {} ] ]
+ *  { 'key_value_1': [ {}, {} ], 'key_value_2': [ {}, {} ] }
  */
-export const groupBy = (arr: Array<TIngredient>, key: keyof TIngredient) => {
-  let result: any = {};
-  arr.forEach((item: any) => {
-    if (item[key] in result) {
-      result[item[key]].push(item);
+export const groupBy = (arr: TIngredient[], key: keyof TIngredient) => {
+  let result: any = [];
+  arr.forEach((item: TIngredient) => {
+    const keyVal = Object.hasOwn(item, key) ? item[key] : false;
+
+    if ('string' !== typeof keyVal) return;
+
+    if (Object.hasOwn(result, keyVal)) {
+      result[keyVal].push(item);
     } else {
-      result[item[key]] = new Array(item);
+      result[keyVal] = new Array(item);
     }
   });
   return result;

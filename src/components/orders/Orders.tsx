@@ -2,12 +2,18 @@ import { useSelector } from '../../services/hooks';
 import { Link, useLocation } from 'react-router-dom';
 import OrderItem from '../order-item/OrderItem';
 import { TOrder } from '../../services/types/data';
+import {
+  getIngredients,
+  getOrders,
+  getUserOrders,
+} from '../../utils/storeHelpers';
 
 import styles from './Orders.module.css';
 
 function Orders() {
-  const { orders, userOrders } = useSelector((state) => state.ws);
-  const { items } = useSelector((state) => state.ingredients);
+  const { orders } = useSelector(getOrders);
+  const { userOrders } = useSelector(getUserOrders);
+  const { items } = useSelector(getIngredients);
   const location = useLocation();
   let o;
   if ('/profile/orders' === location.pathname) {

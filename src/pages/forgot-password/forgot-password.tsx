@@ -8,10 +8,15 @@ import {
   EmailInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { FormEvent } from 'react';
+import {
+  getResetPasswordRequest,
+  getResetPasswordRequestMessage,
+} from '../../utils/storeHelpers';
 
 export const ForgotPasswordPage = () => {
-  const { resetPasswordRequest, resetPasswordRequestMessage } = useSelector(
-    (state) => state.auth
+  const { resetPasswordRequest } = useSelector(getResetPasswordRequest);
+  const { resetPasswordRequestMessage } = useSelector(
+    getResetPasswordRequestMessage
   );
   const { form, handleChange } = useForm();
   const dispatch = useDispatch();

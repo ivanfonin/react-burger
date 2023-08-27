@@ -9,9 +9,16 @@ import { Loader } from '../../components/loader/loader';
 import { ProfileNav } from '../../components/profile-nav/ProfileNav';
 import { getCookie } from '../../utils/helpers';
 import config from '../../utils/config';
+import {
+  getOrders,
+  getUserOrders,
+  getWsRequest,
+} from '../../utils/storeHelpers';
 
 export const ProfileOrdersPage = () => {
-  const { wsRequest, orders, userOrders } = useSelector((state) => state.ws);
+  const { orders } = useSelector(getOrders);
+  const { userOrders } = useSelector(getUserOrders);
+  const { wsRequest } = useSelector(getWsRequest);
   const dispatch = useDispatch();
 
   useEffect(() => {

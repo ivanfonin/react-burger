@@ -9,12 +9,17 @@ import {
 import { Loader } from '../../components/loader/loader';
 import { login } from '../../services/actions/auth';
 import { FormEvent } from 'react';
+import {
+  getUserRequest as getUserRequestProgress,
+  getLoginRequest,
+  getLoginRequestMessage,
+} from '../../utils/storeHelpers';
 
 export const LoginPage = () => {
   const { form, handleChange } = useForm();
-  const { getUserRequest, loginRequest, loginRequestMessage } = useSelector(
-    (state) => state.auth
-  );
+  const { getUserRequest } = useSelector(getUserRequestProgress);
+  const { loginRequest } = useSelector(getLoginRequest);
+  const { loginRequestMessage } = useSelector(getLoginRequestMessage);
   const dispatch = useDispatch();
 
   const handleSubmit = (evt: FormEvent) => {

@@ -4,11 +4,12 @@ import { FormattedDate } from '@ya.praktikum/react-developer-burger-ui-component
 import { parseStatus } from '../../utils/helpers';
 import { TIngredient, TOrder } from '../../services/types/data';
 import Price from '../price/Price';
+import { getIngredients } from '../../utils/storeHelpers';
 
 import styles from './OrderItem.module.css';
 
 function OrderItem({ number, createdAt, name, status, ingredients }: TOrder) {
-  const { items } = useSelector((state) => state.ingredients);
+  const { items } = useSelector(getIngredients);
   const { color, label } = parseStatus(status);
   let orderIngredients: Array<TIngredient> = items.filter((item: TIngredient) =>
     ingredients.includes(item.id)

@@ -8,9 +8,10 @@ import config from '../../utils/config';
 import Orders from '../../components/orders/Orders';
 import { Loader } from '../../components/loader/loader';
 import { Scoreboard } from '../../components/scoreboard/Scoreboard';
+import { getOrders } from '../../utils/storeHelpers';
 
 export const FeedPage = () => {
-  const { orders } = useSelector((state) => state.ws);
+  const { orders } = useSelector(getOrders);
   const dispatch = useDispatch();
 
   useEffect(() => {

@@ -21,14 +21,12 @@ import OrderConfirmation from '../order-confirmation/OrderConfirmation';
 import { RESET_ORDER } from '../../services/actions/checkout';
 import { getIngredients } from '../../services/actions/ingredients';
 import { checkAuth } from '../../services/actions/auth';
+import { getOrder } from '../../utils/storeHelpers';
 
 import styles from './App.module.css';
 
 function App() {
-  const { order } = useSelector((state) => ({
-    ingredient: state.ingredient,
-    order: state.checkout.order,
-  }));
+  const { order } = useSelector(getOrder);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
